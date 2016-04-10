@@ -49,14 +49,32 @@
                     <button name="no_action"
                         type="action"
                         class="oe_stat_button"
-                        icon="fa-ban">
-                        <field name="passanger_count_no_show" widget="statinfo" string="No Show"/>
+                        icon="fa-crosshairs">
+                        <field name="passanger_count_estimation" widget="statinfo" string="Estimation"/>
+                    </button>
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-clock-o">
+                        <field name="passanger_count_waiting" widget="statinfo" string="Waiting"/>
+                    </button>
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-money">
+                        <field name="passanger_count_confirm" widget="statinfo" string="Confirmed"/>
                     </button>
                     <button name="no_action"
                         type="action"
                         class="oe_stat_button"
                         icon="fa-check">
                         <field name="passanger_count_boarding" widget="statinfo" string="Boarding"/>
+                    </button>
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-ban">
+                        <field name="passanger_count_no_show" widget="statinfo" string="No Show"/>
                     </button>
                     <button name="no_action"
                         type="action"

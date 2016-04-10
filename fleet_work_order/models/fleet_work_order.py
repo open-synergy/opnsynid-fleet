@@ -17,13 +17,23 @@ class FleetWorkOrder(models.Model):
         self.passanger_count_boarding = 0
         self.passanger_count_no_show = 0
         self.passanger_count_cancel = 0
+        self.passanger_count_estimation = 0
+        self.passanger_count_waiting = 0
+        self.passanger_count_confirm = 0
         for passanger in self.passanger_manifest_ids:
             if passanger.state == "boarding":
                 self.passanger_count_boarding += 1
+                self.passanger_count_estimation +=1
             elif passanger.state == "no_show":
                 self.passanger_count_no_show += 1
             elif passanger.state == "cancelled":
                 self.passanger_count_cancel += 1
+            elif passanger.state == "draft":
+                self.passanger_count_estimation +=1
+                self.passanger_count_waiting +=1
+            elif passanger.state == "confirmed":
+                self.passanger_count_estimation +=1
+                self.passanger_count_confirm +=1
 
     @api.one
     @api.depends("route_ids")
@@ -127,6 +137,18 @@ class FleetWorkOrder(models.Model):
         inverse_name="order_id",
         readonly=True,
     )
+    passanger_count_estimation = fields.Integer(
+        string="Num. Estimation",
+        store=True,
+        readonly=True,
+        compute="_compute_passanger",
+    )
+    passanger_count_confirm = fields.Integer(
+        string="Num. Confirm",
+        store=True,
+        readonly=True,
+        compute="_compute_passanger",
+    )
     passanger_count_boarding = fields.Integer(
         string="Num. Boarding",
         store=True,
@@ -141,6 +163,12 @@ class FleetWorkOrder(models.Model):
     )
     passanger_count_cancel = fields.Integer(
         string="Num. Cancel",
+        store=True,
+        readonly=True,
+        compute="_compute_passanger",
+    )
+    passanger_count_waiting = fields.Integer(
+        string="Num. Waiting Confirmation",
         store=True,
         readonly=True,
         compute="_compute_passanger",
