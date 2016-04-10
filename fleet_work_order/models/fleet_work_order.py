@@ -23,17 +23,17 @@ class FleetWorkOrder(models.Model):
         for passanger in self.passanger_manifest_ids:
             if passanger.state == "boarding":
                 self.passanger_count_boarding += 1
-                self.passanger_count_estimation +=1
+                self.passanger_count_estimation += 1
             elif passanger.state == "no_show":
                 self.passanger_count_no_show += 1
             elif passanger.state == "cancelled":
                 self.passanger_count_cancel += 1
             elif passanger.state == "draft":
-                self.passanger_count_estimation +=1
-                self.passanger_count_waiting +=1
+                self.passanger_count_estimation += 1
+                self.passanger_count_waiting += 1
             elif passanger.state == "confirmed":
-                self.passanger_count_estimation +=1
-                self.passanger_count_confirm +=1
+                self.passanger_count_estimation += 1
+                self.passanger_count_confirm += 1
 
     @api.one
     @api.depends("route_ids")
@@ -62,7 +62,7 @@ class FleetWorkOrder(models.Model):
         states={
             'draft': [('readonly', False)],
             'confirmed': [('readonly', False)],
-            },
+        },
     )
     driver_id = fields.Many2one(
         string="Driver",
@@ -72,7 +72,7 @@ class FleetWorkOrder(models.Model):
         states={
             'draft': [('readonly', False)],
             'confirmed': [('readonly', False)],
-            },
+        },
     )
     co_driver_id = fields.Many2one(
         string="Co-Driver",
@@ -82,7 +82,7 @@ class FleetWorkOrder(models.Model):
         states={
             'draft': [('readonly', False)],
             'confirmed': [('readonly', False)],
-            },
+        },
     )
     date_start = fields.Datetime(
         string="Date Start",
@@ -90,7 +90,7 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     date_end = fields.Datetime(
         string="Date End",
@@ -98,7 +98,7 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     start_odometer = fields.Float(
         string="Starting Odoometer",
@@ -113,7 +113,7 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     passanger_count = fields.Integer(
         string="Passanger Count",
@@ -121,7 +121,7 @@ class FleetWorkOrder(models.Model):
         states={
             'draft': [('readonly', False)],
             'confirmed': [('readonly', False)],
-            },
+        },
     )
     passanger_manifest = fields.Boolean(
         string="Require Passanger Manifest",
@@ -129,7 +129,7 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     passanger_manifest_ids = fields.One2many(
         string="Passanger Manifest",
@@ -180,7 +180,7 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     start_location_id = fields.Many2one(
         string="Start Location",
@@ -204,7 +204,7 @@ class FleetWorkOrder(models.Model):
     )
     note = fields.Text(
         string="Additional Note",
-        )
+    )
     state = fields.Selection(
         string="State",
         selection=[
@@ -427,30 +427,30 @@ class FleetPassangerManifest(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     date_start = fields.Datetime(
         string="Depart",
         related="order_id.date_start",
         store=True,
-        )
+    )
     date_end = fields.Datetime(
         string="Arrive",
         related="order_id.date_end",
         store=True,
-        )
+    )
     start_location_id = fields.Many2one(
         string="From",
         comodel_name="res.partner",
         related="order_id.start_location_id",
         store=True,
-        )
+    )
     end_location_id = fields.Many2one(
         string="To",
         comodel_name="res.partner",
         related="order_id.end_location_id",
         store=True,
-        )
+    )
     partner_id = fields.Many2one(
         string="Passanger",
         comodel_name="res.partner",
@@ -458,11 +458,11 @@ class FleetPassangerManifest(models.Model):
         readonly=True,
         states={
             'draft': [('readonly', False)],
-            },
+        },
     )
     note = fields.Text(
         string="Note",
-        )
+    )
     state = fields.Selection(
         string="State",
         selection=[
