@@ -9,6 +9,7 @@ from openerp.exceptions import except_orm
 class FleetWorkOrder(models.Model):
     _name = "fleet.work.order"
     _description = "Fleet Work Order"
+    _inherit = ["mail.thread"]
 
     @api.one
     @api.depends("passanger_manifest_ids.state")
@@ -47,24 +48,47 @@ class FleetWorkOrder(models.Model):
         string="Vehicle",
         comodel_name="fleet.vehicle",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            'confirmed': [('readonly', False)],
+            },
     )
     driver_id = fields.Many2one(
         string="Driver",
         comodel_name="res.partner",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            'confirmed': [('readonly', False)],
+            },
     )
     co_driver_id = fields.Many2one(
         string="Co-Driver",
         comodel_name="res.partner",
         required=False,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            'confirmed': [('readonly', False)],
+            },
     )
     date_start = fields.Datetime(
         string="Date Start",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
     date_end = fields.Datetime(
         string="Date End",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
     start_odometer = fields.Float(
         string="Starting Odoometer",
@@ -76,13 +100,26 @@ class FleetWorkOrder(models.Model):
         string="Partner",
         comodel_name="res.partner",
         domain="[('customer','=',True)]",
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
     passanger_count = fields.Integer(
         string="Passanger Count",
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            'confirmed': [('readonly', False)],
+            },
     )
     passanger_manifest = fields.Boolean(
         string="Require Passanger Manifest",
         default=False,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
     passanger_manifest_ids = fields.One2many(
         string="Passanger Manifest",
@@ -112,6 +149,10 @@ class FleetWorkOrder(models.Model):
         string="Routes",
         comodel_name="fleet.route",
         inverse_name="order_id",
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
     start_location_id = fields.Many2one(
         string="Start Location",
@@ -133,6 +174,9 @@ class FleetWorkOrder(models.Model):
         readonly=True,
         compute="_compute_route",
     )
+    note = fields.Text(
+        string="Additional Note",
+        )
     state = fields.Selection(
         string="State",
         selection=[
@@ -340,6 +384,7 @@ class FleetRoute(models.Model):
 class FleetPassangerManifest(models.Model):
     _name = "fleet.passanger.manifest"
     _description = "Fleet Passanger Manifest"
+    _inherit = ["mail.thread"]
 
     name = fields.Char(
         string="# Passanger",
@@ -351,12 +396,45 @@ class FleetPassangerManifest(models.Model):
         string="# Order",
         comodel_name="fleet.work.order",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
+    date_start = fields.Datetime(
+        string="Depart",
+        related="order_id.date_start",
+        store=True,
+        )
+    date_end = fields.Datetime(
+        string="Arrive",
+        related="order_id.date_end",
+        store=True,
+        )
+    start_location_id = fields.Many2one(
+        string="From",
+        comodel_name="res.partner",
+        related="order_id.start_location_id",
+        store=True,
+        )
+    end_location_id = fields.Many2one(
+        string="To",
+        comodel_name="res.partner",
+        related="order_id.end_location_id",
+        store=True,
+        )
     partner_id = fields.Many2one(
         string="Passanger",
         comodel_name="res.partner",
         required=True,
+        readonly=True,
+        states={
+            'draft': [('readonly', False)],
+            },
     )
+    note = fields.Text(
+        string="Note",
+        )
     state = fields.Selection(
         string="State",
         selection=[

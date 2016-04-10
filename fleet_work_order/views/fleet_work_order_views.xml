@@ -33,11 +33,11 @@
     <field name="arch" type="xml">
         <form string="Fleet Work Order">
             <header>
-                <button name="button_confirm" string="Confirm" type="action" class="oe_highlight" states="draft"/>
-                <button name="button_depart" string="Depart" type="action" class="oe_highlight" states="confirm"/>
-                <button name="button_arrive" string="Arrive" type="action" class="oe_highlight" states="depart"/>                
-                <button name="button_cancel" string="Cancel" type="action" states="draft,confirm,depart,arrive"/>
-                <button name="button_restart" string="Set To Draft" type="action" states="cancelled"/>                                
+                <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
+                <button name="button_depart" string="Depart" type="object" class="oe_highlight" states="confirmed"/>
+                <button name="button_arrive" string="Arrive" type="object" class="oe_highlight" states="depart"/>                
+                <button name="button_cancel" string="Cancel" type="object" states="draft,confirmed,depart,arrive"/>
+                <button name="button_restart" string="Set To Draft" type="object" states="cancelled"/>                                
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>
@@ -45,6 +45,26 @@
                 <h1>
                     <field name="name"/>
                 </h1>
+                <div class="oe_right oe_button_box">
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-ban">
+                        <field name="passanger_count_no_show" widget="statinfo" string="No Show"/>
+                    </button>
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-check">
+                        <field name="passanger_count_boarding" widget="statinfo" string="Boarding"/>
+                    </button>
+                    <button name="no_action"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-close">
+                        <field name="passanger_count_cancel" widget="statinfo" string="Cancel"/>
+                    </button>
+                </div>
                 <group name="group_1" colspan="4" col="2">
                     <group name="group_1_1" colspan="1" col="2">
                         <group string="Order Information" name="group_1_1_1" colspan="2" col="2">
@@ -90,8 +110,15 @@
                             </tree>
                         </field>
                     </page>
+                    <page name="page_note" string="Note">
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </page>
                 </notebook>
             </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
         </form>
     </field>
 </record>
@@ -116,6 +143,11 @@
         <tree string="Passanger Manifest">
             <field name="name"/>
             <field name="partner_id"/>
+            <field name="order_id"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="start_location_id"/>
+            <field name="end_location_id"/>
             <field name="state"/>
         </tree>
     </field>
@@ -127,23 +159,40 @@
     <field name="arch" type="xml">
         <form string="Passanger Manifest">
             <header>
-                <button name="button_confirm" string="Confirm" type="action" class="oe_highlight" states="draft"/>
-                <button name="button_boarding" string="Boarding" type="action" class="oe_highlight" states="confirm"/>
-                <button name="button_no_show" string="No Show" type="action" class="oe_highlight" states="confirm"/>
-                <button name="button_cancel" string="Cancel" type="action" class="oe_highlight" states="draft,boarding,no_show"/>
-                <button name="button_restrat" string="Restart" type="action" class="oe_highlight" states="cancelled"/>
+                <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
+                <button name="button_boarding" string="Boarding" type="object" class="oe_highlight" states="confirmed"/>
+                <button name="button_no_show" string="No Show" type="object" class="oe_highlight" states="confirmed"/>
+                <button name="button_cancel" string="Cancel" type="object" states="draft,confirmed,boarding,no_show"/>
+                <button name="button_restart" string="Restart" type="object" states="cancelled"/>
                 <field name="state" widget="statusbar"/>
             </header>
             <sheet>
                 <label for="name"/>
-                <h3>
+                <h1>
                     <field name="name"/>
-                </h3>
+                </h1>
                 <group name="group_1" colspan="4" col="2">
-                    <field name="order_id"/>
-                    <field name="partner_id"/>
+                    <group name="group_1_1" colspan="1" col="2" string="Passanger">
+                        <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                    </group>
+                    <group name="group_1_1" colspan="1" col="2" string="Order">
+                        <field name="order_id"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="start_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                        <field name="end_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                    </group>
                 </group>
+                <notebook colspan="4">
+                    <page name="page_note" string="Note">
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
             </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
         </form>
     </field>
 </record>
