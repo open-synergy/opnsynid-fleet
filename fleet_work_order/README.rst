@@ -6,11 +6,23 @@
 FLEET WORK ORDER
 ================
 
-This module add feature to manage fleet work order
+This module add feature to manage:
+
+1. Fleet work order
+2. Route
+3. Pessanger Manifest
 
 Installation
 ============
 
+To install this module, you need to:
+
+1.  Clone the branch 8.0 of the repository https://github.com/open-synergy/opensynid-fleet
+2.  Add the path to this repository in your configuration (addons-path)
+3.  Update the module list
+4.  Go to menu *Setting -> Modules -> Local Modules*
+5.  Search For *Fleet Work Order*
+6.  Install the module
 
 Configuration
 =============

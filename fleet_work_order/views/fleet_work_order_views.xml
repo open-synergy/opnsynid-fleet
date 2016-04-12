@@ -17,6 +17,7 @@
             <field name="name"/>
             <field name="date_start"/>
             <field name="date_end"/>
+            <field name="type_id"/>
             <field name="partner_id"/>
             <field name="start_location_id"/>
             <field name="end_location_id"/>
@@ -27,6 +28,31 @@
     </field>
 </record>
 
+<record id="fleet_work_order_view_search" model="ir.ui.view">
+    <field name="name">fleet.work.order Search</field>
+    <field name="model">fleet.work.order</field>
+    <field name="arch" type="xml">
+        <search string="Fleet Work Order">
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="type_id"/>
+            <field name="partner_id"/>
+            <field name="start_location_id"/>
+            <field name="end_location_id"/>
+            <field name="vehicle_id"/>
+            <field name="driver_id"/>
+            <group name="group_by" string="Group By..">
+                <filter name="filter_group_type" string="Type" context="{'group_by':'type_id'}"/>
+                <filter name="filter_group_partner" string="Partner" context="{'group_by':'partner_id'}"/>
+                <filter name="filter_group_start_loc" string="Start Location" context="{'group_by':'start_location_id'}"/>
+                <filter name="filter_group_end_loc" string="End Location" context="{'group_by':'end_location_id'}"/>
+                <filter name="filter_group_vehicle" string="Vehicle" context="{'group_by':'vehicle_id'}"/>
+                <filter name="filter_group_driver" string="Driver" context="{'group_by':'driver_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
 <record id="fleet_work_order_view_form" model="ir.ui.view">
     <field name="name">fleet.work.order Form</field>
     <field name="model">fleet.work.order</field>
@@ -34,8 +60,8 @@
         <form string="Fleet Work Order">
             <header>
                 <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
-                <button name="button_depart" string="Depart" type="object" class="oe_highlight" states="confirmed"/>
-                <button name="button_arrive" string="Arrive" type="object" class="oe_highlight" states="depart"/>                
+                <button name="%(work_order_depart_action)d" string="Depart" type="action" class="oe_highlight" states="confirmed"/>
+                <button name="%(work_order_arrive_action)d" string="Arrive" type="action" class="oe_highlight" states="depart"/>                
                 <button name="button_cancel" string="Cancel" type="object" states="draft,confirmed,depart,arrive"/>
                 <button name="button_restart" string="Set To Draft" type="object" states="cancelled"/>                                
                 <field name="state" widget="statusbar"/>
@@ -88,6 +114,7 @@
                         <group string="Order Information" name="group_1_1_1" colspan="2" col="2">
                             <field name="date_start"/>
                             <field name="date_end"/>
+                            <field name="type_id"/>
                             <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
                         </group>
                         <group string="Vehicle" name="group_1_1_1" colspan="2" col="2">
@@ -99,6 +126,7 @@
                     <group name="group_1_2" string="Passanger" colspan="1" col="2">
                         <group name="group_1_2_1" colspan="2" col="2">
                             <field name="passanger_manifest"/>
+                            <field name="max_passanger"/>
                             <field name="passanger_count"/>
                         </group>
                         <group name="group_1_2_1" string="Odometer" colspan="2" col="2">
@@ -146,6 +174,7 @@
     <field name="res_model">fleet.work.order</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="fleet_work_order_view_search"/>
 </record>
 
 <menuitem id="fleet_work_order_menu"
@@ -168,6 +197,36 @@
             <field name="end_location_id"/>
             <field name="state"/>
         </tree>
+    </field>
+</record>
+
+<record id="fleet_passanger_manifest_view_search" model="ir.ui.view">
+    <field name="name">fleet.passanger.manifest Search</field>
+    <field name="model">fleet.passanger.manifest</field>
+    <field name="arch" type="xml">
+        <search string="Passanger Manifest">
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="order_id"/>
+            <field name="date_start"/>
+            <field name="date_end"/>
+            <field name="start_location_id"/>
+            <field name="end_location_id"/>
+            <group name="group_state" string="State">
+                <filter name="filter_state_draft" string="Waiting Confirmation" domain="[('state','=','draft')]"/>
+                <filter name="filter_state_confirm" string="Confirmed" domain="[('state','=','confirmed')]"/>
+                <filter name="filter_state_boarding" string="Boarding" domain="[('state','=','boarding')]"/>
+                <filter name="filter_state_no_show" string="No Show" domain="[('state','=','no_show')]"/>
+                <filter name="filter_state_cancel" string="Cancelled" domain="[('state','=','cancelled')]"/>
+            </group>
+            <group name="group_by" string="Group By..">
+                <filter name="filter_grp_order" string="# Work Order" context="{'group_by':'order_id'}"/>
+                <filter name="filter_grp_start_month" string="Month" context="{'group_by':'date_start:month'}"/>
+                <filter name="filter_grp_start_loc" string="Start Location" context="{'group_by':'start_location_id'}"/>
+                <filter name="filter_grp_end_loc" string="End Location" context="{'group_by':'end_location_id'}"/>
+                <filter name="filter_grp_state" string="State" context="{'group_by':'state'}"/>
+            </group>
+        </search>
     </field>
 </record>
 
@@ -270,5 +329,75 @@
     action="fleet_route_template_action"
     sequence="1"/>
 
+<record id="fleet_work_order_type_view_tree" model="ir.ui.view">
+    <field name="name">fleet.work.order.type Tree</field>
+    <field name="model">fleet.work.order.type</field>
+    <field name="arch" type="xml">
+        <tree string="Work Order Type">
+            <field name="name"/>
+            <field name="vehicle_id"/>
+            <field name="driver_id"/>
+            <field name="passanger_manifest"/>
+            <field name="start_location_id"/>
+            <field name="end_location_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="fleet_work_order_type_view_form" model="ir.ui.view">
+    <field name="name">fleet.work.order.type Form</field>
+    <field name="model">fleet.work.order.type</field>
+    <field name="arch" type="xml">
+        <form string="Work Order Type">
+            <label for="name"/>
+            <h1>
+                <field name="name"/>
+            </h1>
+            <group name="group_1" colspan="4" col="2">
+                <group name="group_1_1" string="Vehicle" colspan="1" col="2">
+                    <field name="vehicle_id"/>
+                    <field name="driver_id"/>
+                    <field name="co_driver_id"/>
+                </group>
+                <group name="group_1_1" string="Passanger" colspan="1" col="2">
+                    <field name="passanger_manifest"/>
+                    <field name="active"/>
+                </group>
+            </group>
+            <notebook colspan="4">
+                <page name="page_route" string="Routes">
+                    <group name="group_2" colspan="4" col="6">
+                        <field name="start_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                        <field name="end_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                        <field name="distance"/>
+                    </group>
+                <field name="route_ids" colspan="4" nolabel="1">
+                    <tree string="Routes" editable="bottom" mode="tree">
+                        <field name="sequence" widget="handle"/>
+                        <field name="name"/>
+                            <field name="route_template_id"/>
+                            <field name="start_location_id"/>
+                            <field name="end_location_id"/>
+                            <field name="distance"/>
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_work_order_type_action" model="ir.actions.act_window">
+    <field name="name">Work Order Type</field>
+    <field name="res_model">fleet.work.order.type</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_work_order_type_menu"
+    parent="fleet.fleet_configuration"
+    name="Work Order Type"
+    action="fleet_work_order_type_action"
+    sequence="2"/>
 </data>
 </openerp>

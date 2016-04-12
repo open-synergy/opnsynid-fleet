@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="work_order_depart_view_form" model="ir.ui.view">
+    <field name="name">Depart</field>
+    <field name="model">fleet.work.order.depart</field>
+    <field name="arch" type="xml">
+        <form string="Depart">
+            <group name="group_1" colspan="4" col="2">
+                <field name="date_depart"/>
+                <field name="start_odometer"/>
+            </group>
+            <footer>
+                <button name="button_depart"
+                        type="object"
+                        string="Depart"
+                        class="oe_highlight"/>
+                or
+                <button special="cancel"
+                        string="Cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="work_order_depart_action" model="ir.actions.act_window">
+    <field name="name">Depart</field>
+    <field name="res_model">fleet.work.order.depart</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>

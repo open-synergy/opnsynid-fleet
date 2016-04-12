@@ -1,5 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 acess_user_work_order,Fleet Work Order - All Users,model_fleet_work_order,base.group_user,1,0,0,0
+acess_user_work_order_type,Fleet Work Order Type - All Users,model_fleet_work_order_type,base.group_user,1,0,0,0
+acess_user_work_order_type_route,Fleet Work Order Type Route - All Users,model_fleet_work_order_type_route,base.group_user,1,0,0,0
 acess_user_route,Fleet Route - All Users,model_fleet_route,base.group_user,1,0,0,0
 acess_user_route_template,Fleet Route Template - All Users,model_fleet_route_template,base.group_user,1,0,0,0
 acess_user_passanger,Passanger - All Users,model_fleet_passanger_manifest,base.group_user,1,0,0,0
@@ -7,7 +9,11 @@ acess_fleet_user_work_order,Fleet Work Order - Fleet Users,model_fleet_work_orde
 acess_fleet_user_route,Fleet Route - Fleet Users,model_fleet_route,fleet.group_fleet_user,1,0,0,0
 acess_fleet_user_route_template,Fleet Route Template - Fleet Users,model_fleet_route_template,fleet.group_fleet_user,1,0,0,0
 acess_fleet_user_passanger,Passanger - Fleet Users,model_fleet_passanger_manifest,fleet.group_fleet_user,1,1,1,1
+acess_fleet_user_work_order_type,Fleet Work Order Type - Fleet Users,model_fleet_work_order_type,fleet.group_fleet_user,1,1,1,1
+acess_fleet_user_work_order_type_route,Fleet Work Order Type Route - Fleet Users,model_fleet_work_order_type_route,fleet.group_fleet_user,1,1,1,1
 acess_fleet_manager_work_order,Fleet Work Order - Fleet Managers,model_fleet_work_order,fleet.group_fleet_manager,1,1,1,1
 acess_fleet_manager_route,Fleet Route - Fleet Managers,model_fleet_route,fleet.group_fleet_manager,1,1,1,1
 acess_fleet_manager_route_template,Fleet Route Template - Fleet Managers,model_fleet_route_template,fleet.group_fleet_manager,1,1,1,1
 acess_fleet_manager_passanger,Passanger - Fleet Managers,model_fleet_passanger_manifest,fleet.group_fleet_manager,1,1,1,1
+acess_fleet_manager_work_order_type,Fleet Work Order Type - Fleet Users,model_fleet_work_order_type,fleet.group_fleet_manager,1,1,1,1
+acess_fleet_manager_work_order_type_route,Fleet Work Order Type Route - Fleet Users,model_fleet_work_order_type_route,fleet.group_fleet_manager,1,1,1,1
