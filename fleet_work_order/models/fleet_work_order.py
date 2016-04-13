@@ -75,8 +75,8 @@ class FleetWorkOrder(models.Model):
     )
     max_passanger = fields.Integer(
         string="Max. Passanger",
-        )
-        
+    )
+
     driver_id = fields.Many2one(
         string="Driver",
         comodel_name="res.partner",
@@ -117,11 +117,11 @@ class FleetWorkOrder(models.Model):
     real_date_depart = fields.Datetime(
         string="Real Depart Time",
         readonly=True,
-        )
+    )
     real_date_arrive = fields.Datetime(
         string="Real Arrive Time",
         readonly=True,
-        )
+    )
     start_odometer = fields.Float(
         string="Starting Odoometer",
     )
@@ -249,16 +249,16 @@ class FleetWorkOrder(models.Model):
     @api.multi
     def button_depart(self):
         for order in self:
-            order._action_depart(self, 
-                fields.Datetime.now(),
-                order.start_odometer)
+            order._action_depart(self,
+                                 fields.Datetime.now(),
+                                 order.start_odometer)
 
     @api.multi
     def button_arrive(self):
         for order in self:
             order._action_arrive(self,
-                fields.Datetime.now(),
-                order.end_odometer)
+                                 fields.Datetime.now(),
+                                 order.end_odometer)
 
     @api.multi
     def button_cancel(self):
@@ -277,8 +277,7 @@ class FleetWorkOrder(models.Model):
             if not self.vehicle_id or \
                     not self.driver_id:
                 raise except_orm(_("Warning!"), _(
-                "Vehicle and driver required"))
-
+                    "Vehicle and driver required"))
 
     @api.onchange("vehicle_id")
     def onchange_vehicle_id(self):
@@ -287,7 +286,6 @@ class FleetWorkOrder(models.Model):
         if self.vehicle_id:
             self.driver_id = self.vehicle_id.driver_id
             self.max_passanger = self.vehicle_id.seats
-        
 
     @api.onchange('type_id')
     def onchange_type_id(self):
@@ -315,11 +313,9 @@ class FleetWorkOrder(models.Model):
                         'start_location_id': route.start_location_id.id,
                         'end_location_id': route.end_location_id.id,
                         'distance': route.distance,
-                        }
-                    routes.append((0,0,res))
+                    }
+                    routes.append((0, 0, res))
                 self.route_ids = routes
-                    
-
 
     @api.model
     def _action_confirm(self, order):
@@ -328,23 +324,23 @@ class FleetWorkOrder(models.Model):
 
     @api.model
     def _action_depart(self, order,
-            date_depart=fields.Datetime.now(),
-            starting_odometer=0.0):
+                       date_depart=fields.Datetime.now(),
+                       starting_odometer=0.0):
         self.ensure_one()
         if not order._check_passanger_count(order):
             raise except_orm(_("Invalid passanger count"), _(
                 "Passanger count is not equal with passanger manifest"))
 
         order.write(self._prepare_depart_data(order,
-            date_depart, starting_odometer))
+                                              date_depart, starting_odometer))
 
     @api.model
     def _action_arrive(self, order,
-            date_arrive=fields.Datetime.now(),
-            ending_odometer=0.0):
+                       date_arrive=fields.Datetime.now(),
+                       ending_odometer=0.0):
         self.ensure_one()
         order.write(self._prepare_arrive_data(order,
-            date_arrive, ending_odometer))
+                                              date_arrive, ending_odometer))
 
     @api.model
     def _action_cancel(self, order):
@@ -544,8 +540,8 @@ class FleetPassangerManifest(models.Model):
             'draft': [('readonly', False)],
         },
         domain=[
-            ("is_company","=",False),
-            ],
+            ("is_company", "=", False),
+        ],
     )
     note = fields.Text(
         string="Note",
@@ -660,6 +656,7 @@ class FleetPassangerManifest(models.Model):
             name = passanger.name
         return name
 
+
 class WorkOrderType(models.Model):
     _name = 'fleet.work.order.type'
     _description = 'Work Order Type'
@@ -680,35 +677,35 @@ class WorkOrderType(models.Model):
     name = fields.Char(
         string='Name',
         required=True,
-        )
+    )
     code = fields.Char(
         string='Code',
         required=True,
-        )
+    )
     active = fields.Boolean(
         string='Active',
         default=True,
-        )
+    )
     passanger_manifest = fields.Boolean(
         string='Required Passanger Manifest',
-        )
+    )
     vehicle_id = fields.Many2one(
         string='Vehicle',
         comodel_name='fleet.vehicle',
-        )
+    )
     driver_id = fields.Many2one(
         string='Driver',
         comodel_name='res.partner',
-        )
+    )
     co_driver_id = fields.Many2one(
         string='Co-Driver',
         comodel_name='res.partner',
-        )
+    )
     route_ids = fields.One2many(
         string='Routes',
         comodel_name='fleet.work.order.type.route',
         inverse_name='type_id',
-        )
+    )
     start_location_id = fields.Many2one(
         string="Start Location",
         store=True,
@@ -730,38 +727,38 @@ class WorkOrderType(models.Model):
         compute="_compute_route",
     )
 
+
 class WorkOrderTypeRoute(models.Model):
     _description = 'Work Order Type Route'
     _name = 'fleet.work.order.type.route'
 
-
     name = fields.Char(
         string='Name',
         required=True,
-        )
+    )
     sequence = fields.Integer(
         string="Sequence",
         default=5,
-        )
+    )
     type_id = fields.Many2one(
         string='Work Order Type',
         comodel_name='fleet.work.order.type',
-        )
+    )
     route_template_id = fields.Many2one(
         comodel_name="fleet.route.template",
         string="Route Template",
-        )
+    )
     start_location_id = fields.Many2one(
         string='From',
         comodel_name='res.partner',
-        )
+    )
     end_location_id = fields.Many2one(
         string='To',
         comodel_name='res.partner',
-        )
+    )
     distance = fields.Float(
         string="Distance",
-        )
+    )
 
     @api.onchange('route_template_id')
     def onchange_route_template(self):
@@ -771,4 +768,3 @@ class WorkOrderTypeRoute(models.Model):
             self.start_location_id = template.start_location_id.id
             self.end_location_id = template.end_location_id.id
             self.distance = template.distance
-

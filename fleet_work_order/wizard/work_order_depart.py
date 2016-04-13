@@ -13,11 +13,11 @@ class WorkOrderDepart(models.TransientModel):
         string="Date Depart",
         required=True,
         default=fields.Datetime.now(),
-        )
+    )
     start_odometer = fields.Float(
         string="Starting Odometer",
         required=True,
-        )
+    )
 
     @api.multi
     def button_depart(self):
@@ -29,7 +29,7 @@ class WorkOrderDepart(models.TransientModel):
         order_ids = self.env.context["active_ids"]
         order = self.env["fleet.work.order"].browse(order_ids)
 
-        order._action_depart(order, 
-            date_depart=wizard.date_depart,
-            starting_odometer=wizard.start_odometer,
-            )
+        order._action_depart(order,
+                             date_depart=wizard.date_depart,
+                             starting_odometer=wizard.start_odometer,
+                             )

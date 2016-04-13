@@ -13,11 +13,11 @@ class WorkOrderArive(models.TransientModel):
         string="Date Arrive",
         required=True,
         default=fields.Datetime.now(),
-        )
+    )
     end_odometer = fields.Float(
         string="Ending Odometer",
         required=True,
-        )
+    )
 
     @api.multi
     def button_arrive(self):
@@ -29,7 +29,7 @@ class WorkOrderArive(models.TransientModel):
         order_ids = self.env.context["active_ids"]
         order = self.env["fleet.work.order"].browse(order_ids)
 
-        order._action_arrive(order, 
-            date_arrive=wizard.date_arrive,
-            ending_odometer=wizard.end_odometer,
-            )
+        order._action_arrive(order,
+                             date_arrive=wizard.date_arrive,
+                             ending_odometer=wizard.end_odometer,
+                             )
