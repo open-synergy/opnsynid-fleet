@@ -34,6 +34,7 @@ Usage
 
 Known issues / Roadmap
 ======================
+* No migration script from earlier version
 
 
 Bug Tracker

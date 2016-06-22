@@ -72,89 +72,27 @@
                     <field name="name"/>
                 </h1>
                 <div class="oe_right oe_button_box">
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-crosshairs">
-                        <field name="passanger_count_estimation" widget="statinfo" string="Estimation"/>
-                    </button>
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-clock-o">
-                        <field name="passanger_count_waiting" widget="statinfo" string="Waiting"/>
-                    </button>
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-money">
-                        <field name="passanger_count_confirm" widget="statinfo" string="Confirmed"/>
-                    </button>
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-check">
-                        <field name="passanger_count_boarding" widget="statinfo" string="Boarding"/>
-                    </button>
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-ban">
-                        <field name="passanger_count_no_show" widget="statinfo" string="No Show"/>
-                    </button>
-                    <button name="no_action"
-                        type="action"
-                        class="oe_stat_button"
-                        icon="fa-close">
-                        <field name="passanger_count_cancel" widget="statinfo" string="Cancel"/>
-                    </button>
                 </div>
                 <group name="group_1" colspan="4" col="2">
-                    <group name="group_1_1" colspan="1" col="2">
-                        <group string="Order Information" name="group_1_1_1" colspan="2" col="2">
-                            <field name="date_start"/>
-                            <field name="date_end"/>
-                            <field name="type_id"/>
-                            <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                        </group>
-                        <group string="Vehicle" name="group_1_1_1" colspan="2" col="2">
-                            <field name="vehicle_id"/>
-                            <field name="driver_id"/>
-                            <field name="co_driver_id"/>
-                        </group>
+                    <group string="Order Information" name="group_1_2" colspan="1" col="2">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                        <field name="type_id"/>
+                        <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
                     </group>
-                    <group name="group_1_2" string="Passanger" colspan="1" col="2">
-                        <group name="group_1_2_1" colspan="2" col="2">
-                            <field name="passanger_manifest"/>
-                            <field name="max_passanger"/>
-                            <field name="passanger_count"/>
-                        </group>
-                        <group name="group_1_2_1" string="Odometer" colspan="2" col="2">
-                            <field name="start_odometer"/>
-                            <field name="end_odometer"/>
-                        </group>
+                    <group string="Vehicle" name="group_1_3" colspan="1" col="2">
+                        <field name="vehicle_id"/>
+                        <field name="driver_id"/>
+                        <field name="co_driver_id"/>
                     </group>
                 </group>
                 <notebook colspan="4">
-                    <page name="page_passanger" string="Passanger Manifest" attrs="{'invisible':[('passanger_manifest','=',False)]}">
-                        <field name="passanger_manifest_ids" colspan="4"/>
-                    </page>
-                    <page name="page_route" string="Detail Routes">
-                        <group name="group_2" colspan="4" col="6">
-                            <field name="start_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                            <field name="end_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                    <page name="page_route" string="Route">
+                        <group string="Route" name="group_route_1" colspan="4" col="4">
+                            <field name="start_location_id"/>
+                            <field name="end_location_id"/>
                             <field name="distance"/>
                         </group>
-                        <field name="route_ids" colspan="4">
-                            <tree string="Routes" editable="bottom">
-                                <field name="sequence" widget="handle"/>
-                                <field name="name"/>
-                                <field name="route_template_id"/>
-                                <field name="start_location_id"/>
-                                <field name="end_location_id"/>
-                                <field name="distance"/>
-                            </tree>
-                        </field>
                     </page>
                     <page name="page_note" string="Note">
                         <field name="note" colspan="4" nolabel="1"/>
@@ -183,151 +121,6 @@
     action="fleet_work_order_action"
     sequence="1"/>
 
-<record id="fleet_passanger_manifest_view_tree" model="ir.ui.view">
-    <field name="name">fleet.passanger.manifest Tree</field>
-    <field name="model">fleet.passanger.manifest</field>
-    <field name="arch" type="xml">
-        <tree string="Passanger Manifest">
-            <field name="name"/>
-            <field name="partner_id"/>
-            <field name="order_id"/>
-            <field name="date_start"/>
-            <field name="date_end"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
-            <field name="state"/>
-        </tree>
-    </field>
-</record>
-
-<record id="fleet_passanger_manifest_view_search" model="ir.ui.view">
-    <field name="name">fleet.passanger.manifest Search</field>
-    <field name="model">fleet.passanger.manifest</field>
-    <field name="arch" type="xml">
-        <search string="Passanger Manifest">
-            <field name="name"/>
-            <field name="partner_id"/>
-            <field name="order_id"/>
-            <field name="date_start"/>
-            <field name="date_end"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
-            <group name="group_state" string="State">
-                <filter name="filter_state_draft" string="Waiting Confirmation" domain="[('state','=','draft')]"/>
-                <filter name="filter_state_confirm" string="Confirmed" domain="[('state','=','confirmed')]"/>
-                <filter name="filter_state_boarding" string="Boarding" domain="[('state','=','boarding')]"/>
-                <filter name="filter_state_no_show" string="No Show" domain="[('state','=','no_show')]"/>
-                <filter name="filter_state_cancel" string="Cancelled" domain="[('state','=','cancelled')]"/>
-            </group>
-            <group name="group_by" string="Group By..">
-                <filter name="filter_grp_order" string="# Work Order" context="{'group_by':'order_id'}"/>
-                <filter name="filter_grp_start_month" string="Month" context="{'group_by':'date_start:month'}"/>
-                <filter name="filter_grp_start_loc" string="Start Location" context="{'group_by':'start_location_id'}"/>
-                <filter name="filter_grp_end_loc" string="End Location" context="{'group_by':'end_location_id'}"/>
-                <filter name="filter_grp_state" string="State" context="{'group_by':'state'}"/>
-            </group>
-        </search>
-    </field>
-</record>
-
-<record id="fleet_passanger_manifest_view_form" model="ir.ui.view">
-    <field name="name">fleet.passanger.manifest Form</field>
-    <field name="model">fleet.passanger.manifest</field>
-    <field name="arch" type="xml">
-        <form string="Passanger Manifest">
-            <header>
-                <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
-                <button name="button_boarding" string="Boarding" type="object" class="oe_highlight" states="confirmed"/>
-                <button name="button_no_show" string="No Show" type="object" class="oe_highlight" states="confirmed"/>
-                <button name="button_cancel" string="Cancel" type="object" states="draft,confirmed,boarding,no_show"/>
-                <button name="button_restart" string="Restart" type="object" states="cancelled"/>
-                <field name="state" widget="statusbar"/>
-            </header>
-            <sheet>
-                <label for="name"/>
-                <h1>
-                    <field name="name"/>
-                </h1>
-                <group name="group_1" colspan="4" col="2">
-                    <group name="group_1_1" colspan="1" col="2" string="Passanger">
-                        <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                    </group>
-                    <group name="group_1_1" colspan="1" col="2" string="Order">
-                        <field name="order_id"/>
-                        <field name="date_start"/>
-                        <field name="date_end"/>
-                        <field name="start_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                        <field name="end_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                    </group>
-                </group>
-                <notebook colspan="4">
-                    <page name="page_note" string="Note">
-                        <field name="note" colspan="4" nolabel="1"/>
-                    </page>
-                </notebook>
-            </sheet>
-            <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="message_ids" widget="mail_thread"/>
-            </div>
-        </form>
-    </field>
-</record>
-
-<record id="fleet_passanger_manifest_action" model="ir.actions.act_window">
-    <field name="name">Passanger</field>
-    <field name="res_model">fleet.passanger.manifest</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">tree,form</field>
-</record>
-
-<menuitem id="fleet_passanger_manifest_menu"
-    parent="fleet_work_order_root_menu"
-    name="Passanger"
-    action="fleet_passanger_manifest_action"
-    sequence="2"/>
-
-<record id="fleet_route_template_view_tree" model="ir.ui.view">
-    <field name="name">fleet.route.template Tree</field>
-    <field name="model">fleet.route.template</field>
-    <field name="arch" type="xml">
-        <tree string="Route Template">
-            <field name="name"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
-            <field name="distance"/>
-        </tree>
-    </field>
-</record>
-
-<record id="fleet_route_template_view_form" model="ir.ui.view">
-    <field name="name">fleet.route.template Form</field>
-    <field name="model">fleet.route.template</field>
-    <field name="arch" type="xml">
-        <form string="Route Template">
-            <group name="group_1">
-                <field name="name"/>
-                <field name="start_location_id"/>
-                <field name="end_location_id"/>
-                <field name="distance"/>
-                <field name="active"/>
-            </group>
-        </form>
-    </field>
-</record>
-
-<record id="fleet_route_template_action" model="ir.actions.act_window">
-    <field name="name">Route Template</field>
-    <field name="res_model">fleet.route.template</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">tree,form</field>
-</record>
-
-<menuitem id="fleet_route_template_menu"
-    parent="fleet.fleet_configuration"
-    name="Route Template"
-    action="fleet_route_template_action"
-    sequence="1"/>
 
 <record id="fleet_work_order_type_view_tree" model="ir.ui.view">
     <field name="name">fleet.work.order.type Tree</field>
@@ -337,7 +130,6 @@
             <field name="name"/>
             <field name="vehicle_id"/>
             <field name="driver_id"/>
-            <field name="passanger_manifest"/>
             <field name="start_location_id"/>
             <field name="end_location_id"/>
         </tree>
@@ -360,27 +152,16 @@
                     <field name="co_driver_id"/>
                 </group>
                 <group name="group_1_1" string="Passanger" colspan="1" col="2">
-                    <field name="passanger_manifest"/>
                     <field name="active"/>
                 </group>
             </group>
             <notebook colspan="4">
-                <page name="page_route" string="Routes">
-                    <group name="group_2" colspan="4" col="6">
-                        <field name="start_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
-                        <field name="end_location_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                <page name="page_route" string="Route">
+                    <group string="Route" name="group_route_1" colspan="4" col="4">
+                        <field name="start_location_id"/>
+                        <field name="end_location_id"/>
                         <field name="distance"/>
                     </group>
-                <field name="route_ids" colspan="4" nolabel="1">
-                    <tree string="Routes" editable="bottom" mode="tree">
-                        <field name="sequence" widget="handle"/>
-                        <field name="name"/>
-                            <field name="route_template_id"/>
-                            <field name="start_location_id"/>
-                            <field name="end_location_id"/>
-                            <field name="distance"/>
-                        </tree>
-                    </field>
                 </page>
             </notebook>
         </form>
