@@ -4,94 +4,11 @@
 
 <openerp>
 <data>
-
-<record id="route_template_1" model="fleet.route.template">
-    <field name="name">Brisbane - Hervey Bay</field>
-    <field name="start_location_id" ref="point3"/>
-    <field name="end_location_id" ref="point4"/>
-    <field name="distance">297</field>
-</record>
-
-<record id="route_template_2" model="fleet.route.template">
-    <field name="name">Hervey Bay - Brisbance</field>
-    <field name="start_location_id" ref="point4"/>
-    <field name="end_location_id" ref="point3"/>
-    <field name="distance">297</field>
-</record>
-
-<record id="route_template_3" model="fleet.route.template">
-    <field name="name">Airlie Beach - Agnes Water</field>
-    <field name="start_location_id" ref="point1"/>
-    <field name="end_location_id" ref="point2"/>
-    <field name="distance">708</field>
-</record>
-
-<record id="route_template_4" model="fleet.route.template">
-    <field name="name">Agnes Water - Airlie Beach</field>
-    <field name="start_location_id" ref="point2"/>
-    <field name="end_location_id" ref="point1"/>
-    <field name="distance">708</field>
-</record>
-
-<record id="work_order_1" model="fleet.work.order">
-    <field name="date_start">2016-04-10 07:00:00</field>
-    <field name="date_end">2016-04-10 17:00:00</field>    
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="driver_id" ref="base.user_demo_res_partner"/>
-</record>
-
-<record id="route_1" model="fleet.route">
-    <field name="name">Brisbane - Hervey Bay</field>
-    <field name="route_template_id" ref="route_template_1"/>
-    <field name="start_location_id" ref="point1"/>
-    <field name="end_location_id" ref="point2"/>    
-    <field name="distance">297</field>
-    <field name="order_id" ref="work_order_1"/>
-</record>
-
-<record id="route_2" model="fleet.route">
-    <field name="name">Hervey Bay - Brisbance</field>
-    <field name="route_template_id" ref="route_template_2"/>
-    <field name="start_location_id" ref="point2"/>
-    <field name="end_location_id" ref="point1"/>    
-    <field name="distance">297</field>
-    <field name="order_id" ref="work_order_1"/>
-</record>
-
-<record id="type_1" model="fleet.work.order.type">
-    <field name="name">Brisbane - Hervey Bay</field>
-    <field name="code">0001</field>
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="driver_id" ref="base.user_demo_res_partner"/>
-    <field name="passanger_manifest" eval="1"/>
-</record>
-
-<record id="type_route_1" model="fleet.work.order.type.route">
-    <field name="name">Brisbane - Hervey Bay</field>
-    <field name="sequence">1</field>
-    <field name="type_id" ref="type_1"/>
-    <field name="route_template_id" ref="route_template_1"/>
-    <field name="start_location_id" ref="point3"/>
-    <field name="end_location_id" ref="point4"/>    
-    <field name="distance">297</field>
-</record>
-
 <record id="type_2" model="fleet.work.order.type">
     <field name="name">Hervey Bay - Brisbane</field>
     <field name="code">0002</field>
     <field name="vehicle_id" ref="fleet.vehicle_1"/>
     <field name="driver_id" ref="base.user_demo_res_partner"/>
-    <field name="passanger_manifest" eval="1"/>
-</record>
-
-<record id="type_route_2" model="fleet.work.order.type.route">
-    <field name="name">Hervey Bay - Brisbane</field>
-    <field name="sequence">1</field>
-    <field name="type_id" ref="type_2"/>
-    <field name="route_template_id" ref="route_template_2"/>
-    <field name="start_location_id" ref="point4"/>
-    <field name="end_location_id" ref="point3"/>    
-    <field name="distance">297</field>
 </record>
 
 <record id="type_3" model="fleet.work.order.type">
@@ -99,17 +16,6 @@
     <field name="code">0003</field>
     <field name="vehicle_id" ref="fleet.vehicle_1"/>
     <field name="driver_id" ref="base.user_demo_res_partner"/>
-    <field name="passanger_manifest" eval="1"/>
-</record>
-
-<record id="type_route_3" model="fleet.work.order.type.route">
-    <field name="name">Airlie Beach - Agnes Water</field>
-    <field name="sequence">1</field>
-    <field name="type_id" ref="type_3"/>
-    <field name="route_template_id" ref="route_template_3"/>
-    <field name="start_location_id" ref="point1"/>
-    <field name="end_location_id" ref="point2"/>    
-    <field name="distance">708</field>
 </record>
 
 <record id="type_4" model="fleet.work.order.type">
@@ -117,17 +23,6 @@
     <field name="code">0004</field>
     <field name="vehicle_id" ref="fleet.vehicle_1"/>
     <field name="driver_id" ref="base.user_demo_res_partner"/>
-    <field name="passanger_manifest" eval="1"/>
-</record>
-
-<record id="type_route_4" model="fleet.work.order.type.route">
-    <field name="name">Agnes Water - Airlie Beach</field>
-    <field name="sequence">1</field>
-    <field name="type_id" ref="type_4"/>
-    <field name="route_template_id" ref="route_template_4"/>
-    <field name="start_location_id" ref="point2"/>
-    <field name="end_location_id" ref="point1"/>    
-    <field name="distance">708</field>
 </record>
 </data>
 </openerp>
