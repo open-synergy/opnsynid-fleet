@@ -9,8 +9,6 @@ FLEET WORK ORDER
 This module add feature to manage:
 
 1. Fleet work order
-2. Route
-3. Pessanger Manifest
 
 Installation
 ============
