@@ -16,6 +16,9 @@
     <field name="code">0003</field>
     <field name="vehicle_id" ref="fleet.vehicle_1"/>
     <field name="driver_id" ref="base.user_demo_res_partner"/>
+    <field name="start_location_id" ref="point1"/>
+    <field name="end_location_id" ref="point2"/>
+    <field name="distance" eval="123"/>
 </record>
 
 <record id="type_4" model="fleet.work.order.type">
