@@ -13,6 +13,8 @@ class TestWorkOrder(TransactionCase):
         self.driver = self.env.ref("fleet_work_order.driver1")
         self.vehicle = self.env.ref("fleet.vehicle_1")
         self.wo_type = self.env.ref("fleet_work_order.type_3")
+        self.obj_depart = self.env["fleet.work.order.depart"]
+        self.obj_arrive = self.env["fleet.work.order.arrive"]
 
         return result
 
@@ -126,7 +128,14 @@ class TestWorkOrder(TransactionCase):
         self.assertEqual(order.state, "confirmed")
 
     def _depart_no_error(self, order):
-        order.button_depart()
+        wzd_depart = self.obj_depart.create({
+            "date_depart": order.date_start,
+            "start_odometer": 0
+        })
+
+        wzd_depart.with_context({
+            "active_ids": [order.id],
+        }).button_depart()
         self.assertEqual(order.state, "depart")
         self.assertNotEqual(order.name, "/")
 
@@ -135,7 +144,14 @@ class TestWorkOrder(TransactionCase):
             order.button_depart()
 
     def _arrive_no_error(self, order):
-        order.button_arrive()
+        wzd_arrive = self.obj_arrive.create({
+            "date_arrive": order.date_end,
+            "end_odometer": order.distance,
+        })
+
+        wzd_arrive.with_context({
+            "active_ids": [order.id],
+        }).button_arrive()
         self.assertEqual(order.state, "arrive")
 
     def _cancel_no_error(self, order):
