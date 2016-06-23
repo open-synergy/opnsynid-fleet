@@ -18,7 +18,7 @@ class TestWorkOrder(TransactionCase):
     def _prepare_work_order_data(self):
         data = {
             "vehicle_id": self.vehicle.id,
-            "driver_id": self.driver.id,
+            # "driver_id": self.driver.id,
             "date_start": "2016-01-01 00:00:00",
             "date_end": "2016-01-02 00:00:00",
         }
@@ -65,6 +65,7 @@ class TestWorkOrder(TransactionCase):
     def _create_no_error(self, data):
         order_obj = self.env["fleet.work.order"]
         order = order_obj.create(data)
+        order.onchange_vehicle_id()
         self.assertIsNotNone(order)
         self.assertEqual(order.state, "draft")
 
