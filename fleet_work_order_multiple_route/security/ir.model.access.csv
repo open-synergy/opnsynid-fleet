@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acess_user_work_order_type_route,Fleet Work Order Type Route - All Users,model_fleet_work_order_type_route,base.group_user,1,0,0,0
+acess_user_route,Fleet Route - All Users,model_fleet_route,base.group_user,1,0,0,0
+acess_user_route_template,Fleet Route Template - All Users,model_fleet_route_template,base.group_user,1,0,0,0
+acess_fleet_user_route,Fleet Route - Fleet Users,model_fleet_route,fleet.group_fleet_user,1,0,0,0
+acess_fleet_user_work_order_type_route,Fleet Work Order Type Route - Fleet Users,model_fleet_work_order_type_route,fleet.group_fleet_user,1,1,1,1
+acess_fleet_user_route_template,Fleet Route Template - Fleet Users,model_fleet_route_template,fleet.group_fleet_user,1,0,0,0
+acess_fleet_manager_route,Fleet Route - Fleet Managers,model_fleet_route,fleet.group_fleet_manager,1,1,1,1
+acess_fleet_manager_route_template,Fleet Route Template - Fleet Managers,model_fleet_route_template,fleet.group_fleet_manager,1,1,1,1
+acess_fleet_manager_work_order_type_route,Fleet Work Order Type Route - Fleet Users,model_fleet_work_order_type_route,fleet.group_fleet_manager,1,1,1,1
