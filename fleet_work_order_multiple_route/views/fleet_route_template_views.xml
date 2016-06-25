@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="fleet_route_template_view_tree" model="ir.ui.view">
+    <field name="name">fleet.route.template Tree</field>
+    <field name="model">fleet.route.template</field>
+    <field name="arch" type="xml">
+        <tree string="Route Template">
+            <field name="name"/>
+            <field name="start_location_id"/>
+            <field name="end_location_id"/>
+            <field name="distance"/>
+        </tree>
+    </field>
+</record>
+
+<record id="fleet_route_template_view_form" model="ir.ui.view">
+    <field name="name">fleet.route.template Form</field>
+    <field name="model">fleet.route.template</field>
+    <field name="arch" type="xml">
+        <form string="Route Template">
+            <group name="group_1">
+                <field name="name"/>
+                <field name="start_location_id"/>
+                <field name="end_location_id"/>
+                <field name="distance"/>
+                <field name="active"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_route_template_action" model="ir.actions.act_window">
+    <field name="name">Route Template</field>
+    <field name="res_model">fleet.route.template</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_route_template_menu"
+    parent="fleet.fleet_configuration"
+    name="Route Template"
+    action="fleet_route_template_action"
+    sequence="1"/>
+</data>
+</openerp>
