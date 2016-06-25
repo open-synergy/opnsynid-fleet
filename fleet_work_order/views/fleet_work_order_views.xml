@@ -88,7 +88,7 @@
                 </group>
                 <notebook colspan="4">
                     <page name="page_route" string="Route">
-                        <group string="Route" name="group_route_1" colspan="4" col="4">
+                        <group name="group_route_1" colspan="4" col="4">
                             <field name="start_location_id"/>
                             <field name="end_location_id"/>
                             <field name="distance"/>
@@ -157,7 +157,7 @@
             </group>
             <notebook colspan="4">
                 <page name="page_route" string="Route">
-                    <group string="Route" name="group_route_1" colspan="4" col="4">
+                    <group name="group_route_1" colspan="4" col="4">
                         <field name="start_location_id"/>
                         <field name="end_location_id"/>
                         <field name="distance"/>
