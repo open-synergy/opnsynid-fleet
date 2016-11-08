@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="shipment_plan_view_form" model="ir.ui.view">
+    <field name="name">Add fleet work order reference</field>
+    <field name="model">shipment.plan</field>
+    <field name="inherit_id" ref="stock_shipment_management.view_shipment_plan_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//sheet/group/group[2]/div[2]" position="after">
+            <field name="fleet_work_order_id"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>

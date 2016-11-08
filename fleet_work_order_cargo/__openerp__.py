@@ -15,5 +15,7 @@
         "stock_shipment_management",
     ],
     "data": [
+        "views/fleet_work_order_views.xml",
+        "views/shipment_plan_views.xml",
     ],
 }
