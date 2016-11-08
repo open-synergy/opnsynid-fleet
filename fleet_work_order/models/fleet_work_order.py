@@ -207,7 +207,7 @@ class FleetWorkOrder(models.Model):
                        starting_odometer=0.0):
         self.ensure_one()
 
-        self.write(self._prepare_depart_data(date_depart, 
+        self.write(self._prepare_depart_data(date_depart,
                                              starting_odometer))
 
     @api.multi
@@ -215,7 +215,7 @@ class FleetWorkOrder(models.Model):
                        date_arrive=fields.Datetime.now(),
                        ending_odometer=0.0):
         self.ensure_one()
-        self.write(self._prepare_arrive_data(date_arrive, 
+        self.write(self._prepare_arrive_data(date_arrive,
                                              ending_odometer))
 
     @api.multi
