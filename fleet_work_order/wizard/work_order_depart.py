@@ -22,14 +22,13 @@ class WorkOrderDepart(models.TransientModel):
     @api.multi
     def button_depart(self):
         self.ensure_one()
-        self._depart(self)
+        self._depart()
 
-    @api.model
-    def _depart(self, wizard):
+    @api.multi
+    def _depart(self):
         order_ids = self.env.context["active_ids"]
         order = self.env["fleet.work.order"].browse(order_ids)
 
-        order._action_depart(order,
-                             date_depart=wizard.date_depart,
-                             starting_odometer=wizard.start_odometer,
+        order._action_depart(date_depart=self.date_depart,
+                             starting_odometer=self.start_odometer,
                              )

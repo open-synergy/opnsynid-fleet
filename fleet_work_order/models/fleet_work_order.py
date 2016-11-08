@@ -139,33 +139,30 @@ class FleetWorkOrder(models.Model):
     @api.multi
     def button_confirm(self):
         for order in self:
-            order._action_confirm(self)
+            order._action_confirm()
 
     @api.multi
     def button_depart(self):
         for order in self:
-            order._action_depart(self,
-                                 fields.Datetime.now(),
+            order._action_depart(fields.Datetime.now(),
                                  order.start_odometer)
 
     @api.multi
     def button_arrive(self):
         for order in self:
-            order._action_arrive(self,
-                                 fields.Datetime.now(),
+            order._action_arrive(fields.Datetime.now(),
                                  order.end_odometer)
 
     @api.multi
     def button_cancel(self):
         for order in self:
-            order._action_cancel(self)
+            order._action_cancel()
 
     @api.multi
     def button_restart(self):
         for order in self:
-            order._action_restart(self)
+            order._action_restart()
 
-    @api.one
     @api.constrains("state", "vehicle_id", "driver_id")
     def _check_vehicle_driver(self):
         if self.state == "depart":
@@ -199,48 +196,48 @@ class FleetWorkOrder(models.Model):
                 wo_type.end_location_id.id or False
             self.distance = wo_type.distance
 
-    @api.model
-    def _action_confirm(self, order):
+    @api.multi
+    def _action_confirm(self):
         self.ensure_one()
-        order.write(self._prepare_confirm_data(order))
+        self.write(self._prepare_confirm_data())
 
-    @api.model
-    def _action_depart(self, order,
+    @api.multi
+    def _action_depart(self,
                        date_depart=fields.Datetime.now(),
                        starting_odometer=0.0):
         self.ensure_one()
 
-        order.write(self._prepare_depart_data(order,
-                                              date_depart, starting_odometer))
+        self.write(self._prepare_depart_data(date_depart,
+                                             starting_odometer))
 
-    @api.model
-    def _action_arrive(self, order,
+    @api.multi
+    def _action_arrive(self,
                        date_arrive=fields.Datetime.now(),
                        ending_odometer=0.0):
         self.ensure_one()
-        order.write(self._prepare_arrive_data(order,
-                                              date_arrive, ending_odometer))
+        self.write(self._prepare_arrive_data(date_arrive,
+                                             ending_odometer))
 
-    @api.model
-    def _action_cancel(self, order):
+    @api.multi
+    def _action_cancel(self):
         self.ensure_one()
-        order.write(self._prepare_cancel_data(order))
+        self.write(self._prepare_cancel_data())
 
-    @api.model
-    def _action_restart(self, order):
+    @api.multi
+    def _action_restart(self):
         self.ensure_one()
-        order.write(self._prepare_restart_data(order))
+        self.write(self._prepare_restart_data())
 
-    @api.model
-    def _prepare_confirm_data(self, order):
+    @api.multi
+    def _prepare_confirm_data(self):
         self.ensure_one()
         return {
-            'name': self._create_sequence(order),
+            'name': self._create_sequence(),
             'state': 'confirmed',
         }
 
-    @api.model
-    def _prepare_depart_data(self, order, date_depart, starting_odometer):
+    @api.multi
+    def _prepare_depart_data(self, date_depart, starting_odometer):
         self.ensure_one()
         return {
             'state': 'depart',
@@ -248,8 +245,8 @@ class FleetWorkOrder(models.Model):
             'start_odometer': starting_odometer,
         }
 
-    @api.model
-    def _prepare_arrive_data(self, order, date_arrive, ending_odometer):
+    @api.multi
+    def _prepare_arrive_data(self, date_arrive, ending_odometer):
         self.ensure_one()
         return {
             'state': 'arrive',
@@ -257,27 +254,27 @@ class FleetWorkOrder(models.Model):
             'end_odometer': ending_odometer,
         }
 
-    @api.model
-    def _prepare_cancel_data(self, order):
+    @api.multi
+    def _prepare_cancel_data(self):
         self.ensure_one()
         return {
             'state': 'cancelled',
         }
 
-    @api.model
-    def _prepare_restart_data(self, order):
+    @api.multi
+    def _prepare_restart_data(self):
         self.ensure_one()
         return {
             'state': 'draft',
         }
 
-    @api.model
-    def _create_sequence(self, order):
+    @api.multi
+    def _create_sequence(self):
         self.ensure_one()
-        if order.name == '/':
+        if self.name == '/':
             name = self.env['ir.sequence'].get('fleet.work.order')
         else:
-            name = order.name
+            name = self.name
         return name
 
 

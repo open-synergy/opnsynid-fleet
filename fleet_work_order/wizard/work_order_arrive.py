@@ -22,14 +22,14 @@ class WorkOrderArive(models.TransientModel):
     @api.multi
     def button_arrive(self):
         self.ensure_one()
-        self._arrive(self)
+        self._arrive()
 
-    @api.model
-    def _arrive(self, wizard):
+    @api.multi
+    def _arrive(self):
+        self.ensure_one()
         order_ids = self.env.context["active_ids"]
         order = self.env["fleet.work.order"].browse(order_ids)
 
-        order._action_arrive(order,
-                             date_arrive=wizard.date_arrive,
-                             ending_odometer=wizard.end_odometer,
+        order._action_arrive(date_arrive=self.date_arrive,
+                             ending_odometer=self.end_odometer,
                              )
