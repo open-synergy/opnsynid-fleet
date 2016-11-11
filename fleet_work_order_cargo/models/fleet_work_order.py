@@ -10,11 +10,42 @@ from openerp.exceptions import Warning as UserError
 class FleetWorkOrder(models.Model):
     _inherit = "fleet.work.order"
 
+    @api.depends(
+        "vehicle_id",
+        "vehicle_id.loading_space",
+        "vehicle_id.load_capacity",
+        "cargo_ids",
+        "cargo_ids.volume",
+        "cargo_ids.weight",
+        "cargo_ids.weight_net")
+    def _compute_cargo(self):
+        for order in self:
+            for cargo in order.cargo_ids:
+                order.cargo_volume += cargo.volume
+                order.cargo_weight += cargo.weight
+
     cargo_ids = fields.One2many(
         string="Cargo",
         comodel_name="shipment.plan",
         inverse_name="fleet_work_order_id",
     )
+    
+    loading_space = fields.Float(
+        string="Loading Space",
+        related="vehicle_id.loading_space",
+        )
+    load_capacity = fields.Float(
+        string="Load Capacity",
+        related="vehicle_id.load_capacity",
+        )
+    cargo_volume = fields.Float(
+        string="Cargo Volume",
+        compute="_compute_cargo",
+        )
+    cargo_weight = fields.Float(
+        string="Cargo Weight",
+        compute="_compute_cargo",
+        )
 
     @api.constrains(
         "state", "cargo_ids")

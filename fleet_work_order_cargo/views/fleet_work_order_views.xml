@@ -13,6 +13,14 @@
         <xpath expr="//notebook" position="inside">
             <page name="page_cargo" string="Cargo">
                 <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many"/>
+                <group name="group_cargo_1">
+                    <group name="group_cargo_1_1">
+                        <field name="cargo_volume"/>
+                        <field name="cargo_weight"/>
+                        <field name="loading_space"/>
+                        <field name="load_capacity"/>
+                    </group>
+                </group>
             </page>
         </xpath>
     </field>
