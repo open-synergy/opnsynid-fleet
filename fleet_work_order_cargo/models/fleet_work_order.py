@@ -16,24 +16,19 @@ class FleetWorkOrder(models.Model):
         inverse_name="fleet_work_order_id",
     )
 
-    @api.multi
-    def _check_cargo_ready(self):
-        self.ensure_one()
+    @api.constrains(
+        "state", "cargo_ids")
+    def _constraint_cargo(self):
         if not self.cargo_ids:
-            return True
+            pass
 
-        for cargo in self.cargo_ids:
-            strWarning = _("Cargo %s still not ready" % (cargo.name))
-            if cargo.state != "in_transit":
-                raise UserError(strWarning)
-
-        return True
-
-    @api.multi
-    def _action_depart(self,
-                       date_depart=fields.Datetime.now(),
-                       starting_odometer=0.0):
-        self._check_cargo_ready()
-        super(FleetWorkOrder, self)\
-            ._action_depart(
-                date_depart, starting_odometer)
+        if self.state == "depart":
+            for cargo in self.cargo_ids:
+                strWarning = _("Cargo %s still not ready" % (cargo.name))
+                if cargo.state != "in_transit":
+                    raise UserError(strWarning)
+        elif self.state == "arrive":
+            for cargo in self.cargo_ids:
+                strWarning = _("Cargo %s still not done" % (cargo.name))
+                if cargo.state != "done":
+                    raise UserError(strWarning)

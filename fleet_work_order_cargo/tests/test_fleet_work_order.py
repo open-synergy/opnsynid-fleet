@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.tests.common import TransactionCase
-from openerp.exceptions import Warning as UserError
+from openerp.exceptions import ValidationError
 
 
 class TestFleetWorkOrder(TransactionCase):
@@ -103,8 +103,20 @@ class TestFleetWorkOrder(TransactionCase):
             "date_depart": order.date_start,
             "start_odometer": 0
         })
-        with self.assertRaises(UserError):
+        with self.assertRaises(ValidationError):
             wzd_depart.button_depart()
+
+
+    def _arrive_error(self, order):
+        wzd_arrive = self.obj_arrive.create({
+            "date_arrive": order.date_end,
+            "end_odometer": order.distance,
+        })
+
+        with self.assertRaises(ValidationError):
+            wzd_arrive.with_context({
+                "active_ids": [order.id],
+            }).button_arrive()
 
     def _arrive_no_error(self, order):
         wzd_arrive = self.obj_arrive.create({
@@ -146,7 +158,7 @@ class TestFleetWorkOrder(TransactionCase):
         wizard.action_create_shipment()
         return moves[0].departure_shipment_id
 
-    def test_fleet_work_order_cargo_no_ready(self):
+    def test_fleet_work_order_cargo_not_ready(self):
         cr = self._create_customer_reception()
         cr.action_confirm()
         do = self._process_procurement(cr)
@@ -154,3 +166,35 @@ class TestFleetWorkOrder(TransactionCase):
         wo = self._create_work_order(shipment)
         self._confirm_no_error(wo)
         self._depart_error_cargo_not_ready(wo)
+
+    def test_fleet_work_order_cargo_not_done(self):
+        cr = self._create_customer_reception()
+        cr.action_confirm()
+        do = self._process_procurement(cr)
+        shipment = self._create_shipments(do.move_lines[0])
+        wo = self._create_work_order(shipment)
+        do.action_confirm()
+        do.force_assign()
+        do.action_done()
+        self._confirm_no_error(wo)
+        shipment.signal_workflow("shipment_confirm")
+        shipment.button_action_transit()
+        self._depart_no_error(wo)
+        self._arrive_error(wo)
+
+    def test_fleet_work_order_cargo_no_error(self):
+        cr = self._create_customer_reception()
+        cr.action_confirm()
+        do = self._process_procurement(cr)
+        shipment = self._create_shipments(do.move_lines[0])
+        wo = self._create_work_order(shipment)
+        do.action_confirm()
+        do.force_assign()
+        do.action_done()
+        self._confirm_no_error(wo)
+        shipment.signal_workflow("shipment_confirm")
+        shipment.button_action_transit()
+        self._depart_no_error(wo)
+        cr.force_assign()
+        cr.action_done()
+        self._arrive_no_error(wo)
