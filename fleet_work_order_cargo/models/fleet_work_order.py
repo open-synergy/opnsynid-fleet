@@ -33,8 +33,9 @@ class FleetWorkOrder(models.Model):
     def _action_depart(self, 
                        date_depart=fields.Datetime.now(), 
                        starting_odometer=0.0):
-        self.ensure_one()
+        res = super(FleetWorkOrder, self)\
+            ._action_depart(
+                date_depart,starting_odometer)
         self._check_cargo_ready()
 
-        super(FleetWorkOrder, self).button_depart(date_depart,
-                                                  starting_odometer)
+        return res

@@ -60,6 +60,7 @@ class TestFleetWorkOrder(TransactionCase):
     def _create_work_order(self, cargos=False):
         data = {
             "vehicle_id": self.vehicle.id,
+            "driver_id": self.driver.id,
             "date_start": "2016-01-01 00:00:00",
             "date_end": "2016-01-02 00:00:00",
             "cargo_ids": [],
