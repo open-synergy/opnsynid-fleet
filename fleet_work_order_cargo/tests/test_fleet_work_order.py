@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.tests.common import TransactionCase
+from openerp.exceptions import Warning as UserError
 
 
 class TestFleetWorkOrder(TransactionCase):
@@ -65,8 +66,11 @@ class TestFleetWorkOrder(TransactionCase):
             "date_end": "2016-01-02 00:00:00",
             "cargo_ids": [],
         }
+        self.assertEqual(
+            len(cargos),
+            1)
         if cargos:
-            data["cargo_ids"].append(6, 0, cargos.ids)
+            data["cargo_ids"].append((6, 0, cargos.ids))
 
         wo = self.obj_wo.create(data)
         return wo
@@ -87,10 +91,30 @@ class TestFleetWorkOrder(TransactionCase):
         self.assertEqual(order.state, "depart")
         self.assertNotEqual(order.name, "/")
 
-    def test_fleet_work_order(self):
-        cr = self._create_customer_reception()
-        cr.action_confirm()
-        move1 = cr.move_lines[0]
+    def _depart_error_cargo_not_ready(self, order):
+        context = {
+            "active_ids": [order.id],
+            }
+        wzd_depart = self.obj_depart.with_context(context).create({
+            "date_depart": order.date_start,
+            "start_odometer": 0
+        })
+        with self.assertRaises(UserError):
+            wzd_depart.button_depart()
+
+    def _arrive_no_error(self, order):
+        wzd_arrive = self.obj_arrive.create({
+            "date_arrive": order.date_end,
+            "end_odometer": order.distance,
+        })
+
+        wzd_arrive.with_context({
+            "active_ids": [order.id],
+        }).button_arrive()
+        self.assertEqual(order.state, "arrive")
+
+    def _process_procurement(self, picking):
+        move1 = picking.move_lines[0]
         criteria = [
             ("move_dest_id", "=", move1.id)]
         procurement = self.obj_procurement.search(
@@ -104,14 +128,25 @@ class TestFleetWorkOrder(TransactionCase):
             "running")
         move2 = procurement.move_ids[0]
         do = move2.picking_id
+        return do
 
+    def _create_shipments(self, moves):
         context = {
             "active_model": "stock.move",
-            "active_ids": [move2.id],
+            "active_ids": moves.ids,
             }
 
-        self.obj_wizard.with_context(context).create({})
-        shipment = move2.departure_shipment_id
+        wizard = self.obj_wizard.with_context(context).create({
+            "from_address_id": self.warehouse.partner_id.id,
+            "to_address_id": self.partner1.id})
+        wizard.action_create_shipment()
+        return moves[0].departure_shipment_id
+
+    def test_fleet_work_order_cargo_no_ready(self):
+        cr = self._create_customer_reception()
+        cr.action_confirm()
+        do = self._process_procurement(cr)
+        shipment = self._create_shipments(do.move_lines[0])
         wo = self._create_work_order(shipment)
         self._confirm_no_error(wo)
-        self._depart_no_error(wo)
+        self._depart_error_cargo_not_ready(wo)

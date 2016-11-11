@@ -33,9 +33,7 @@ class FleetWorkOrder(models.Model):
     def _action_depart(self, 
                        date_depart=fields.Datetime.now(), 
                        starting_odometer=0.0):
-        res = super(FleetWorkOrder, self)\
+        self._check_cargo_ready()
+        super(FleetWorkOrder, self)\
             ._action_depart(
                 date_depart,starting_odometer)
-        self._check_cargo_ready()
-
-        return res
