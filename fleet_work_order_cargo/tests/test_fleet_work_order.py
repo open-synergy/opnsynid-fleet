@@ -37,7 +37,7 @@ class TestFleetWorkOrder(TransactionCase):
             ("location_id", "=",  self.cr_type.default_location_dest_id.id),
             ("location_src_id", "=", self.cr_type.default_location_src_id.id),
             ("warehouse_id", "=", self.warehouse.id),
-            ]
+        ]
         self.rule = self.env[
             "procurement.rule"].search(
                 criteria, limit=1)
@@ -105,7 +105,6 @@ class TestFleetWorkOrder(TransactionCase):
         })
         with self.assertRaises(ValidationError):
             wzd_depart.button_depart()
-
 
     def _arrive_error(self, order):
         wzd_arrive = self.obj_arrive.create({
