@@ -14,7 +14,7 @@ class FleetWorkOrder(models.Model):
         string="Cargo",
         comodel_name="shipment.plan",
         inverse_name="fleet_work_order_id",
-        )
+    )
 
     @api.multi
     def _check_cargo_ready(self):
@@ -30,10 +30,10 @@ class FleetWorkOrder(models.Model):
         return True
 
     @api.multi
-    def _action_depart(self, 
-                       date_depart=fields.Datetime.now(), 
+    def _action_depart(self,
+                       date_depart=fields.Datetime.now(),
                        starting_odometer=0.0):
         self._check_cargo_ready()
         super(FleetWorkOrder, self)\
             ._action_depart(
-                date_depart,starting_odometer)
+                date_depart, starting_odometer)

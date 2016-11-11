@@ -12,4 +12,4 @@ class ShipmentPlan(models.Model):
         string="# Work Order",
         comodel_name="fleet.work.order",
         readonly=True,
-        )
+    )

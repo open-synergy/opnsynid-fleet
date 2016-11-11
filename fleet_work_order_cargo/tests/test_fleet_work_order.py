@@ -7,6 +7,7 @@ from openerp.exceptions import Warning as UserError
 
 
 class TestFleetWorkOrder(TransactionCase):
+
     def setUp(self, *args, **kwargs):
         super(TestFleetWorkOrder, self).setUp(*args, **kwargs)
 
@@ -23,20 +24,23 @@ class TestFleetWorkOrder(TransactionCase):
             "base.res_partner_19")
         self.warehouse.write({
             "delivery_steps": "ship_transit",
-            })
+        })
         self.transit_loc = self.warehouse.wh_transit_out_loc_id
         self.do_type = self.warehouse.out_type_id
         self.cr_type = self.warehouse.transit_out_type_id
+        self.loc = self.cr_type.default_location_src_id
+        self.dest_loc = self.cr_type.default_location_dest_id
         self.product1 = self.env.ref("product.product_product_5b")
         self.driver = self.env.ref("fleet_work_order.driver1")
         self.vehicle = self.env.ref("fleet.vehicle_1")
+        criteria = [
+            ("location_id", "=",  self.cr_type.default_location_dest_id.id),
+            ("location_src_id", "=", self.cr_type.default_location_src_id.id),
+            ("warehouse_id", "=", self.warehouse.id),
+            ]
         self.rule = self.env[
             "procurement.rule"].search(
-                [
-                    ("location_id", "=",  self.cr_type.default_location_dest_id.id),
-                    ("location_src_id", "=", self.cr_type.default_location_src_id.id),
-                    ("warehouse_id", "=", self.warehouse.id),
-                    ], limit=1)
+                criteria, limit=1)
 
     def _create_customer_reception(self):
         res = {
@@ -50,11 +54,11 @@ class TestFleetWorkOrder(TransactionCase):
                     "product_id": self.product1.id,
                     "product_uom_qty": 3.0,
                     "product_uom": self.product1.uom_id.id,
-                    "location_id": self.cr_type.default_location_src_id.id,
-                    "location_dest_id": self.cr_type.default_location_dest_id.id,
+                    "location_id": self.loc.id,
+                    "location_dest_id": self.dest_loc.id,
                     "procure_method": "make_to_order",
-                    })],
-                }
+                })],
+        }
         picking = self.obj_picking.create(res)
         return picking
 
@@ -82,7 +86,7 @@ class TestFleetWorkOrder(TransactionCase):
     def _depart_no_error(self, order):
         context = {
             "active_ids": [order.id],
-            }
+        }
         wzd_depart = self.obj_depart.with_context(context).create({
             "date_depart": order.date_start,
             "start_odometer": 0
@@ -94,7 +98,7 @@ class TestFleetWorkOrder(TransactionCase):
     def _depart_error_cargo_not_ready(self, order):
         context = {
             "active_ids": [order.id],
-            }
+        }
         wzd_depart = self.obj_depart.with_context(context).create({
             "date_depart": order.date_start,
             "start_odometer": 0
@@ -118,7 +122,7 @@ class TestFleetWorkOrder(TransactionCase):
         criteria = [
             ("move_dest_id", "=", move1.id)]
         procurement = self.obj_procurement.search(
-                criteria, limit=1)[0]
+            criteria, limit=1)[0]
         procurement.write({
             "rule_id": self.rule.id})
         procurement.run()
@@ -134,7 +138,7 @@ class TestFleetWorkOrder(TransactionCase):
         context = {
             "active_model": "stock.move",
             "active_ids": moves.ids,
-            }
+        }
 
         wizard = self.obj_wizard.with_context(context).create({
             "from_address_id": self.warehouse.partner_id.id,
