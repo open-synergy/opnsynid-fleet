@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="shipment_plan_view_kanban" model="ir.ui.view">
+    <field name="name">shipment.plant kanban</field>
+    <field name="model">shipment.plan</field>
+    <field name="arch" type="xml">
+        <kanban default_group_by="fleet_work_order_id" quick_create="false">
+            <field name="fleet_work_order_id"/>
+            <field name="loading_space" min="Loading Space"/>
+            <field name="load_capacity" min="Load Capacity"/>
+            <field name="weight" sum="Total Weight"/>
+            <field name="weight_net" sum="Total Net Weight"/>
+            <field name="volume" sum="Total Volume"/>
+
+            <templates>
+                <t t-name="kanban-box">
+                    <t t-set="border">oe_kanban_color_black</t>
+                    <div tattf-class="oe_kanban_color_#{kanban_getcolor(0)} oe_kanban_card oe_kanban_global_click">
+                        <div class="oe_kanban_box oe_kanban_color_borer">
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <b><field name="name"/></b>
+                                </div>
+                                <div>
+                                    <field name="to_address_id"/>
+                                </div>
+                                <div style="padding-left: 0.5em">
+                                    ETD: <field name="etd"/>
+                                </div>
+                                <div style="padding-left: 0.5em">
+                                    Weight (kg): <field name="weight"/>
+                                </div>
+                                <div style="padding-left: 0.5em">
+                                    Weight Nett (kg): <field name="weight_net"/>
+                                </div>
+                                <div style="padding-left: 0.5em">
+                                    Volume (m3): <field name="volume"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>
+        </kanban>
+
+    </field>
+</record>
+
+<record id="shipment_plan_action_allocate" model="ir.actions.act_window">
+    <field name="name">Allocate Shipment Order</field>
+    <field name="res_model">shipment.plan</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">kanban</field>
+    <field name="view_id" ref="shipment_plan_view_kanban"/>
+    <field name="domain">[('state','in',['draft','confirmed'])]</field>
+</record>
+
+<menuitem id="shipment_plant_allocate_menu"
+    parent="stock_shipment_management.menu_shipment"
+    name="Allocate to Work Order"
+    action="shipment_plan_action_allocate"
+    sequence="1"/>
+
+<record id="shipment_plan_view_form" model="ir.ui.view">
+    <field name="name">Add fleet work order reference</field>
+    <field name="model">shipment.plan</field>
+    <field name="inherit_id" ref="stock_shipment_management.view_shipment_plan_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//sheet/group/group[2]/div[2]" position="after">
+            <field name="fleet_work_order_id"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>

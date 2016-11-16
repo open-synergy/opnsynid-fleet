@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="fleet_work_order_view_form" model="ir.ui.view">
+    <field name="name">Cargo information on fleet work order</field>
+    <field name="model">fleet.work.order</field>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//notebook" position="inside">
+            <page name="page_cargo" string="Cargo">
+                <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many"/>
+                <group name="group_cargo_1">
+                    <group name="group_cargo_1_1" string="Cargo Information">
+                        <field name="cargo_volume"/>
+                        <field name="cargo_weight"/>
+                        <field name="weight_diff"/>
+                        <field name="volume_diff"/>
+                        <field name="cargo_limit_override"/>
+                    </group>
+                    <group name="group_cargo_1_2" string="Cargo Capacity">
+                        <field name="loading_space"/>
+                        <field name="load_capacity"/>
+                    </group>
+                </group>
+            </page>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
