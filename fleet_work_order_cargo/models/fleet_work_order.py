@@ -20,32 +20,53 @@ class FleetWorkOrder(models.Model):
         "cargo_ids.weight_net")
     def _compute_cargo(self):
         for order in self:
+            order.weight_diff = 0.0
+            order.volume_diff = 0.0
             for cargo in order.cargo_ids:
                 order.cargo_volume += cargo.volume
                 order.cargo_weight += cargo.weight
+            order.weight_diff = order.loading_space - \
+                order.cargo_volume
+            order.volume_diff = order.load_capacity - \
+                order.cargo_weight
 
     cargo_ids = fields.One2many(
         string="Cargo",
         comodel_name="shipment.plan",
         inverse_name="fleet_work_order_id",
     )
-    
+
     loading_space = fields.Float(
         string="Loading Space",
         related="vehicle_id.loading_space",
-        )
+        store=True,
+        readonly=False,
+    )
     load_capacity = fields.Float(
         string="Load Capacity",
         related="vehicle_id.load_capacity",
-        )
+        store=True,
+        readonly=False,
+    )
     cargo_volume = fields.Float(
         string="Cargo Volume",
         compute="_compute_cargo",
-        )
+    )
     cargo_weight = fields.Float(
         string="Cargo Weight",
         compute="_compute_cargo",
-        )
+    )
+    weight_diff = fields.Float(
+        string="Cargo Weight Diff",
+        compute="_compute_cargo",
+    )
+    volume_diff = fields.Float(
+        string="Cargo Volume Diff",
+        compute="_compute_cargo",
+    )
+    cargo_limit_override = fields.Boolean(
+        string="Cargo Limit Override",
+    )
 
     @api.constrains(
         "state", "cargo_ids")

@@ -14,9 +14,14 @@
             <page name="page_cargo" string="Cargo">
                 <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many"/>
                 <group name="group_cargo_1">
-                    <group name="group_cargo_1_1">
+                    <group name="group_cargo_1_1" string="Cargo Information">
                         <field name="cargo_volume"/>
                         <field name="cargo_weight"/>
+                        <field name="weight_diff"/>
+                        <field name="volume_diff"/>
+                        <field name="cargo_limit_override"/>
+                    </group>
+                    <group name="group_cargo_1_2" string="Cargo Capacity">
                         <field name="loading_space"/>
                         <field name="load_capacity"/>
                     </group>
