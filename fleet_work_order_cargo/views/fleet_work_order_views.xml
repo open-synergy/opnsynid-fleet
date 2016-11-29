@@ -15,15 +15,37 @@
                 <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many"/>
                 <group name="group_cargo_1">
                     <group name="group_cargo_1_1" string="Cargo Information">
-                        <field name="cargo_volume"/>
-                        <field name="cargo_weight"/>
-                        <field name="weight_diff"/>
-                        <field name="volume_diff"/>
+                        <group name="group_cargo_1_1_1" colspan="3">
+                            <label for="cargo_volume"/>
+                            <div>
+                                <field name="cargo_volume" class="oe_inline" style="vertical-align:baseline"/> m3
+                            </div>
+                            <label for="cargo_weight"/>
+                            <div>
+                                <field name="cargo_weight" class="oe_inline" style="vertical-align:baseline"/> kg
+                            </div>
+                            <label for="weight_diff"/>
+                            <div>
+                                <field name="weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
+                            </div>
+                            <label for="volume_diff"/>
+                            <div>
+                                <field name="volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                            </div>
+                        </group>
                         <field name="cargo_limit_override"/>
                     </group>
                     <group name="group_cargo_1_2" string="Cargo Capacity">
-                        <field name="loading_space"/>
-                        <field name="load_capacity"/>
+                        <group name="group_cargo_1_2_1" colspan="3">
+                            <label for="loading_space"/>
+                            <div>
+                                <field name="loading_space" class="oe_inline" style="vertical-align:baseline"/> m3
+                            </div>
+                            <label for="load_capacity"/>
+                            <div>
+                                <field name="load_capacity" class="oe_inline" style="vertical-align:baseline"/> kg
+                            </div>
+                        </group>
                     </group>
                 </group>
             </page>
