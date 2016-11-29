@@ -33,7 +33,6 @@
                                 <field name="volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
                             </div>
                         </group>
-                        <field name="cargo_limit_override"/>
                     </group>
                     <group name="group_cargo_1_2" string="Cargo Capacity">
                         <group name="group_cargo_1_2_1" colspan="3">
