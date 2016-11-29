@@ -12,7 +12,7 @@
     <field name="arch" type="xml">
         <xpath expr="//notebook" position="inside">
             <page name="page_cargo" string="Cargo">
-                <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many"/>
+                <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many" readonly="1"/>
                 <group name="group_cargo_1">
                     <group name="group_cargo_1_1" string="Cargo Information">
                         <group name="group_cargo_1_1_1" colspan="3">

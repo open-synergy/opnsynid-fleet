@@ -51,18 +51,22 @@ class FleetWorkOrder(models.Model):
     cargo_volume = fields.Float(
         string="Cargo Volume",
         compute="_compute_cargo",
+        store=True,
     )
     cargo_weight = fields.Float(
         string="Cargo Weight",
         compute="_compute_cargo",
+        store=True,
     )
     weight_diff = fields.Float(
         string="Cargo Weight Diff",
         compute="_compute_cargo",
+        store=True,
     )
     volume_diff = fields.Float(
         string="Cargo Volume Diff",
         compute="_compute_cargo",
+        store=True,
     )
     cargo_limit_override = fields.Boolean(
         string="Cargo Limit Override",
