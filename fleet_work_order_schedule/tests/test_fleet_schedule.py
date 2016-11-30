@@ -38,7 +38,3 @@ class TestFleetSchedule(TransactionCase):
             before + 1)
 
         self.type3.schedule_ids[0].unlink()
-
-        
-
-
