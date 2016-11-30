@@ -36,7 +36,7 @@ class FleetWorkOrderType(models.Model):
         cron = obj_cron.create({
             "name": name,
             "user_id": self.env.user.id,
-            "active": True,
+            "active": False,
             "model": "fleet.work.order.type.schedule",
             "function": "run_schedule",
             "args": args,
