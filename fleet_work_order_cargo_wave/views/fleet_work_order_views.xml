@@ -11,7 +11,13 @@
     <field name="inherit_id" ref="fleet_work_order_cargo.fleet_work_order_view_form"/>
     <field name="arch" type="xml">
         <xpath expr="//field[@name='cargo_ids']" position="before">
-            <button name="action_add_in_wave" type="object" string="Add Loading Wave"/>
+            <group name="group_wave">
+                <button name="action_add_in_wave" type="object" string="Add Loading Wave" attrs="{'invisible':[('in_wave_id','!=',False)]}"/>
+                <newline/>
+                <button name="action_reload_in_wave" type="object" string="Reload Loading Wave" attrs="{'invisible':[('in_wave_id','=',False)]}"/>
+                <newline/>
+                <field name="in_wave_id"/>
+            </group>
         </xpath>
     </field>
 </record>
