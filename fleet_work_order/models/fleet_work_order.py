@@ -58,7 +58,7 @@ class FleetWorkOrder(models.Model):
         },
     )
     date_start = fields.Datetime(
-        string="Date Start",
+        string="ETD",
         required=True,
         readonly=True,
         states={
@@ -66,7 +66,7 @@ class FleetWorkOrder(models.Model):
         },
     )
     date_end = fields.Datetime(
-        string="Date End",
+        string="ETA",
         required=True,
         readonly=True,
         states={
@@ -74,11 +74,11 @@ class FleetWorkOrder(models.Model):
         },
     )
     real_date_depart = fields.Datetime(
-        string="Real Depart Time",
+        string="RTD",
         readonly=True,
     )
     real_date_arrive = fields.Datetime(
-        string="Real Arrive Time",
+        string="RTA",
         readonly=True,
     )
     start_odometer = fields.Float(
