@@ -13,7 +13,7 @@ class FleetWorkOrder(models.Model):
     in_wave_id = fields.Many2one(
         string="Wave In",
         comodel_name="stock.picking.wave",
-        )
+    )
 
     @api.multi
     def action_add_in_wave(self):
@@ -38,7 +38,7 @@ class FleetWorkOrder(models.Model):
         in_wave = obj_wave.create({})
         self.write({
             "in_wave_id": in_wave.id,
-            })
+        })
 
     @api.multi
     def _assign_in_picking_to_wave(self):
@@ -47,12 +47,12 @@ class FleetWorkOrder(models.Model):
         in_wave_pickings = self.in_wave_id.picking_ids
         departure_pickings = self.env[
             "stock.picking"].search([
-                ("id","=",0),
-                ])
+                ("id", "=", 0),
+            ])
         for shipment in self.cargo_ids:
             departure_pickings += shipment.departure_picking_ids
         # add to wave
         pickings = departure_pickings - in_wave_pickings
         pickings.write({
             "wave_id": self.in_wave_id.id,
-            })
+        })
