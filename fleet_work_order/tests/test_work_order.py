@@ -10,11 +10,15 @@ class TestWorkOrder(TransactionCase):
 
     def setUp(self, *args, **kwargs):
         result = super(TestWorkOrder, self).setUp(*args, **kwargs)
+        # Data
         self.driver = self.env.ref("fleet_work_order.driver1")
         self.vehicle = self.env.ref("fleet.vehicle_1")
         self.wo_type = self.env.ref("fleet_work_order.type_3")
         self.obj_depart = self.env["fleet.work.order.depart"]
         self.obj_arrive = self.env["fleet.work.order.arrive"]
+
+        # Object
+        self.order_obj = self.env["fleet.work.order"]
 
         return result
 
@@ -28,6 +32,7 @@ class TestWorkOrder(TransactionCase):
 
     def _prepare_work_order_data_2(self):
         data = {
+            "name": "TST-0001",
             "type_id": self.wo_type.id,
             "date_start": "2016-01-01 00:00:00",
             "date_end": "2016-01-02 00:00:00",
@@ -85,8 +90,7 @@ class TestWorkOrder(TransactionCase):
         return order
 
     def _create_no_error(self, data):
-        order_obj = self.env["fleet.work.order"]
-        order = order_obj.create(data)
+        order = self.order_obj.create(data)
         order.onchange_vehicle_id()
         self.assertIsNotNone(order)
         self.assertEqual(order.state, "draft")
@@ -97,8 +101,7 @@ class TestWorkOrder(TransactionCase):
         return order
 
     def _create_no_error_2(self, data):
-        order_obj = self.env["fleet.work.order"]
-        order = order_obj.create(data)
+        order = self.order_obj.create(data)
         order.onchange_type_id()
         self.assertIsNotNone(order)
         self.assertEqual(order.state, "draft")
@@ -166,4 +169,3 @@ class TestWorkOrder(TransactionCase):
     def _restart_number_no_assign(self, order):
         order.button_restart()
         self.assertEqual(order.state, "draft")
-        self.assertEqual(order.name, "/")

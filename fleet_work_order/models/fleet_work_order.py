@@ -14,7 +14,7 @@ class FleetWorkOrder(models.Model):
     name = fields.Char(
         string="# Order",
         required=True,
-        readonly=True,
+        readonly=False,
         default="/",
     )
     type_id = fields.Many2one(
@@ -228,12 +228,18 @@ class FleetWorkOrder(models.Model):
         self.ensure_one()
         self.write(self._prepare_restart_data())
 
+    @api.model
+    def create(self, vals):
+        if vals.get('name', '/') == '/':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'fleet.work.order') or '/'
+        return super(FleetWorkOrder, self).create(vals)
+
     @api.multi
     def _prepare_confirm_data(self):
         self.ensure_one()
         return {
-            'name': self._create_sequence(),
-            'state': 'confirmed',
+            'state': 'confirmed'
         }
 
     @api.multi
@@ -267,15 +273,6 @@ class FleetWorkOrder(models.Model):
         return {
             'state': 'draft',
         }
-
-    @api.multi
-    def _create_sequence(self):
-        self.ensure_one()
-        if self.name == '/':
-            name = self.env['ir.sequence'].get('fleet.work.order')
-        else:
-            name = self.name
-        return name
 
 
 class WorkOrderType(models.Model):

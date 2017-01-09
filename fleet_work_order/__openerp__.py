@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Fleet Work Order",
-    "version": "8.0.2.2.1",
+    "version": "8.0.3.2.2",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
