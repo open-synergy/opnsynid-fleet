@@ -68,6 +68,6 @@ class FleetWorkOrder(models.Model):
             )
             distance_value =\
                 distance_matrix['rows'][0]['elements'][0]['distance']['value']
-            self.distance = distance_value / 1000
+            self.distance = distance_value / 1000.0
         else:
             raise UserError("Start Location and End Location can't be empty")
