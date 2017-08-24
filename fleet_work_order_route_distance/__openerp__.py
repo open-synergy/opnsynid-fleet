@@ -14,6 +14,11 @@
         "base_geolocalize",
         "keychain"
     ],
+    "external_dependencies": {
+        "python": [
+            "googlemaps",
+            ],
+        },
     "data": [
         "views/fleet_work_order_views.xml"
     ],
