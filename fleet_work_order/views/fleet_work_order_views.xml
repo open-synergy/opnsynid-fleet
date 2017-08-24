@@ -128,6 +128,7 @@
     <field name="arch" type="xml">
         <tree string="Work Order Type">
             <field name="name"/>
+            <field name="code"/>
             <field name="vehicle_id"/>
             <field name="driver_id"/>
             <field name="start_location_id"/>
@@ -141,6 +142,8 @@
     <field name="model">fleet.work.order.type</field>
     <field name="arch" type="xml">
         <form string="Work Order Type">
+            <label for="code"/>
+            <field name="code"/>
             <label for="name"/>
             <h1>
                 <field name="name"/>
