@@ -7,6 +7,7 @@ from openerp.exceptions import ValidationError
 
 
 class TestKeyChain(BaseFleetWorkOrderRouteDistance):
+
     def test_google_maps_validation_data(self):
         account = self._create_account()
         value_data = ("{'type':'wrong'}")

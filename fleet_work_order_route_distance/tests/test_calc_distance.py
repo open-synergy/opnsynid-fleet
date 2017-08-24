@@ -7,6 +7,7 @@ from openerp.exceptions import Warning as UserError
 
 
 class TestCalcDistance(BaseFleetWorkOrderRouteDistance):
+
     def _create_work_order(self):
         data = {
             "date_start": "2016-01-01 00:00:00",
