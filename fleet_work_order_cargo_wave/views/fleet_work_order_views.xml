@@ -10,24 +10,8 @@
     <field name="model">fleet.work.order</field>
     <field name="inherit_id" ref="fleet_work_order_cargo.fleet_work_order_view_form"/>
     <field name="arch" type="xml">
-        <xpath expr="//field[@name='cargo_ids']" position="before">
-            <group name="group_wave">
-                <button name="action_add_in_wave" 
-                    type="object" string="Loading Wave" 
-                    attrs="{'invisible':[('in_wave_id','!=',False)]}"
-                    class="oe_inline oe_stat_button"
-                    icon="fa-upload"
-                    />
-                <newline/>
-                <button name="action_reload_in_wave" 
-                    type="object" string="Reload Wave" 
-                    attrs="{'invisible':[('in_wave_id','=',False)]}"
-                    class="oe_inline oe_stat_button"
-                    icon="fa-refresh"
-                    />
-                <newline/>
-                <field name="in_wave_id" readonly="1"/>
-            </group>
+        <xpath expr="//header/field[@name='state']" position="before">
+            <button name="%(load_wave_to_cargo_action)d" string="Load Cargo" type="action" states="draft,confirm"/>
         </xpath>
     </field>
 </record>
