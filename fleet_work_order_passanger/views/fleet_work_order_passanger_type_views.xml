@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="fleet_work_order_passanger_type_view_tree" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger_type Tree</field>
+    <field name="model">fleet.work_order_passanger_type</field>
+    <field name="arch" type="xml">
+        <tree string="Work Order Type">
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="fleet_work_order_passanger_type_view_form" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger_type Form</field>
+    <field name="model">fleet.work_order_passanger_type</field>
+    <field name="arch" type="xml">
+        <form string="Work Order Type">
+            <group name="group_1" colspan="4" col="2">
+                <field name="code"/>
+                <field name="name"/>            
+                <field name="active"/>
+            </group>
+            <notebook colspan="4">
+                <page name="note" string="Note">
+                    <field name="note" nolabel="1" colspan="4"/>
+                </page>
+            </notebook>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_work_order_passanger_type_action" model="ir.actions.act_window">
+    <field name="name">Passanger Type</field>
+    <field name="res_model">fleet.work_order_passanger_type</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_work_order_passanger_type_menu"
+    parent="fleet.fleet_configuration"
+    name="Passanger Type"
+    action="fleet_work_order_passanger_type_action"
+    sequence="2"/>
+</data>
+</openerp>

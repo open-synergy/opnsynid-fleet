@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="fleet_passanger_boarding_disembark_view_form" model="ir.ui.view">
+    <field name="name">Passanger Boarding/Disembark</field>
+    <field name="model">fleet.passanger_boarding_disembark</field>
+    <field name="arch" type="xml">
+        <form string="Passanger Boarding/Disembark">
+            <label for="passanger_code"/>
+            <h1>
+                <field name="passanger_code"/>
+            </h1>
+            <group name="doors">
+            </group>
+            <footer>
+                    <button name="action_clear_barcode"
+                        string="Clear Barcode"
+                        type="object"
+                        />
+                    <button special="cancel"
+                        string="Close"
+                        />
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_passanger_boarding_disembark_action" model="ir.actions.act_window">
+    <field name="name">Passanger Boarding/Disembark</field>
+    <field name="res_model">fleet.passanger_boarding_disembark</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>

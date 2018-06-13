@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="fleet_work_order_view_form" model="ir.ui.view">
+    <field name="name">fleet.work.order form - Passanger</field>
+    <field name="model">fleet.work.order</field>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='state']" position="before">
+            <button name="%(fleet_passanger_boarding_disembark_action)d"
+                string="Passanger Boarding/Disembark"
+                type="action"
+                states="depart"
+                />
+        </xpath>
+        <xpath expr="//notebook" position="inside">
+            <page name="passanger" string="Passanger(s)">
+                <field name="passanger_ids" colspan="4" nolabel="1" readonly="1"/>
+            </page>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
