@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="fleet_work_order_passanger_view_tree" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger Tree</field>
+    <field name="model">fleet.work_order_passanger</field>
+    <field name="arch" type="xml">
+        <tree string="Passanger">
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="type_id"/>
+            <field name="seat_id"/>
+            <field name="work_order_id"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="fleet_work_order_passanger_view_form" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger Form</field>
+    <field name="model">fleet.work_order_passanger</field>
+    <field name="arch" type="xml">
+        <form string="Passanger">
+            <header>
+                <button
+                    name="action_confirm" string="Confirm"
+                    class="oe_highlight"
+                    type="object"
+                    states="draft"
+                    />
+                <button
+                    name="action_valid" string="Valid"
+                    class="oe_highlight"
+                    type="object"
+                    states="confirm"
+                    />
+                <button
+                    name="action_boarding" string="Boarding"
+                    type="object"
+                    class="oe_highlight"
+                    states="valid"
+                    />
+                <button
+                    name="action_disembarking" string="Disembarking"
+                    type="object"
+                    class="oe_highlight"
+                    states="boarding"
+                    />
+                <button
+                    name="action_cancel" string="Cancel"
+                    type="object"
+                    states="draft,confirm,valid,boarding,disembarking"
+                    />
+                <button
+                    name="action_restart" string="Reset to Draft"
+                    type="object"
+                    states="cancel"
+                    />
+                <field name="state" widget="statusbar"
+                    statusbar_visible="draft,confirm,valid,boarding,disembarking"
+                    />
+            </header>
+            <sheet>
+                <label for="name"/>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <div class="oe_right oe_button_box">
+                </div>
+                <group name="header1" colspan="4" col="2">
+                    <group name="header1_1" colspan="1" col="2">
+                        <field name="type_id"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <group name="header1_2" colspan="1" col="2">
+                        <field name="work_order_id"/>
+                        <field name="vehicle_id"/>
+                        <field name="seat_id"/>
+                        <field name="start_location_id"/>
+                        <field name="end_location_id"/>
+                    </group>
+                </group>
+                <notebook colspan="4">
+                </notebook>
+            </sheet>
+            <div class="oe_chatter">
+                <field name="message_follower_ids" widget="mail_followers"/>
+                <field name="message_ids" widget="mail_thread"/>
+            </div>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_work_order_passanger_action" model="ir.actions.act_window">
+    <field name="name">Passangers</field>
+    <field name="res_model">fleet.work_order_passanger</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="fleet_work_order_passanger_menu"
+    parent="fleet_passanger_root_menu"
+    name="Passangers"
+    action="fleet_work_order_passanger_action"
+    sequence="1"/>
+</data>
+</openerp>
