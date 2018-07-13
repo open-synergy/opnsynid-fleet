@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<record id="fleet_vehicle_door_view_tree" model="ir.ui.view">
+    <field name="name">fleet.vehicle.door tree</field>
+    <field name="model">fleet.vehicle.door</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="vehicle_id" />
+            <field name="device_type_id" />
+            <field name="device_id" />
+            <field name="door_control" />
+        </tree>
+    </field>
+</record>
+
+<record id="fleet_vehicle_door_view_form" model="ir.ui.view">
+    <field name="name">fleet.vehicle.door form</field>
+    <field name="model">fleet.vehicle.door</field>
+    <field name="arch" type="xml">
+        <form string="Vehicle Doors">
+            <header/>
+            <sheet>
+                <group colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="vehicle_id" />
+                    <field name="door_control" />
+                    <field name="device_type_id" attrs="{'required':[('door_control','!=',False)]}"/>
+                    <field name="device_id" attrs="{'required':[('door_control','!=',False)]}"/>
+                    <field name="active" />
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="fleet_vehicle_door_action" model="ir.actions.act_window">
+    <field name="name">Vehicle Door Control</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">fleet.vehicle.door</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="help" type="html">
+        <p class="oe_view_nocontent_create">
+        Click to add a Vehicle Door.
+        </p>
+    </field>
+</record>
+
+<menuitem
+    id="fleet_vehicle_door_menu"
+    name="Vehicle Door Control"
+    parent="fleet.fleet_vehicles"
+    groups="fleet.group_fleet_user"
+    action="fleet_vehicle_door_action"
+/>
+
+</data>
+</openerp>
