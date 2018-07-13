@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acess_user_vehicle_door,Vehicle Door - All Users,model_fleet_vehicle_door,base.group_user,1,0,0,0
+acess_fleet_user_vehicle_door,Vehicle Door - Fleet Users,model_fleet_vehicle_door,fleet.group_fleet_user,1,1,1,1
+acess_fleet_manager_vehicle_door,Vehicle Door - Fleet Managers,model_fleet_vehicle_door,fleet.group_fleet_manager,1,1,1,1
