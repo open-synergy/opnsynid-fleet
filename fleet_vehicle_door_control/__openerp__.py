@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Vehicle Door Control",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.1",
     "website": "https://opensynergy-indonesia.com/",
     "author": "OpenSynergy Indonesia",
     "license": "AGPL-3",
@@ -11,7 +11,7 @@
     "installable": True,
     "depends": [
         "fleet",
-        "proxy_backend"
+        "proxy_backend_serial_relay"
     ],
     "data": [
         "security/ir.model.access.csv",

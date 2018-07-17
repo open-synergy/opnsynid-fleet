@@ -11,20 +11,26 @@ class FleetVehicleDoor(models.Model):
     name = fields.Char(
         string="Name",
         required=True,
-        )
+    )
     vehicle_id = fields.Many2one(
         string="Vehicle",
         comodel_name="fleet.vehicle",
         required=True
     )
-    device_type_id = fields.Many2one(
-        string="Device Type",
-        comodel_name="proxy.backend_device_type",
-        domain="[('door_control', '=', True)]"
+    serial_relay_id = fields.Many2one(
+        string="Serial Relay",
+        comodel_name="proxy.backend_serial_relay",
+        domain="[('type_id.door_control', '=', True)]"
     )
-    device_id = fields.Many2one(
-        string="Device",
-        comodel_name="proxy.backend_device"
+    str_serial_relay_id = fields.Char(
+        string="Serial Relay ID"
+    )
+    serial_relay_channel_id = fields.Many2one(
+        string="Channel",
+        comodel_name="proxy.backend_serial_relay_channel"
+    )
+    str_serial_relay_channel_name = fields.Char(
+        string="Channel Name"
     )
     door_control = fields.Boolean(
         string="Door Control"
@@ -34,17 +40,29 @@ class FleetVehicleDoor(models.Model):
         default=True
     )
 
-    @api.onchange("device_type_id")
-    def onchange_device_id(self):
+    @api.onchange("serial_relay_id")
+    def onchange_serial_relay_channel_id(self):
         result = {
             "domain": {
-                "device_id": [
+                "serial_relay_channel_id": [
                     ("id", "=", False)
                 ]
             }
         }
-        if self.device_type_id:
-            result["domain"]["device_id"] = [
-                ("type_id", "=", self.device_type_id.id)
+        str_serial_relay_id = ""
+        if self.serial_relay_id:
+            result["domain"]["serial_relay_channel_id"] = [
+                ("device_id", "=", self.serial_relay_id.id)
             ]
+            str_serial_relay_id = self.serial_relay_id.id
+        self.str_serial_relay_id = str_serial_relay_id
         return result
+
+    @api.onchange("serial_relay_channel_id")
+    def onchange_str_serial_relay_channel_name(self):
+        str_serial_relay_channel_name = ""
+        if self.serial_relay_channel_id:
+            str_serial_relay_channel_name =\
+                self.serial_relay_channel_id.name
+        self.str_serial_relay_channel_name =\
+            str_serial_relay_channel_name
