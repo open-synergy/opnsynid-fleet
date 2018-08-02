@@ -260,7 +260,7 @@ class FleetWorkOrderPassanger(models.Model):
 
     @api.constrains("partner_id", "work_order_id")
     def check_same_partner(self):
-        obj_passanger = self.env[self._model]
+        obj_passanger = self.env["fleet.work_order_passanger"]
         if self.partner_id:
             criteria = [
                 ("id", "!=", self.id),
