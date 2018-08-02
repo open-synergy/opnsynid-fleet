@@ -12,9 +12,13 @@ class FleetVehicleDoor(models.Model):
         string="Serial Relay",
         comodel_name="proxy.backend_serial_relay"
     )
-
     pin = fields.Integer(
         string="Pin",
         related="serial_relay_id.pin",
+        store=False
+    )
+    device_path = fields.Char(
+        string="Device Path",
+        related="serial_relay_id.device_path",
         store=False
     )
