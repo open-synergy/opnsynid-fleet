@@ -2,7 +2,7 @@
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import models, fields
 
 
 class FleetVehicleDoor(models.Model):
@@ -11,6 +11,12 @@ class FleetVehicleDoor(models.Model):
     serial_relay_id = fields.Many2one(
         string="Serial Relay",
         comodel_name="proxy.backend_serial_relay"
+    )
+    device_relay_id = fields.Many2one(
+        string="Serial Relay",
+        related="serial_relay_id.device_id",
+        comodel_name="proxy.backend_device",
+        store=False
     )
     pin = fields.Integer(
         string="Pin",
