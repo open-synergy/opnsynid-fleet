@@ -15,14 +15,15 @@
                         <page string="Serial Relay" attrs="{'invisible':[('device_type_id','!=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}">
                             <button name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_on_action)d" 
                                 type="action" string="On" 
-                                context="{'device_path':device_path, 'device_id':serial_relay_id, 'pin':pin, 'delay':0}"/>               
+                                context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"/>               
                             <button name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_off_action)d" 
                             type="action" string="Off" 
-                            context="{'device_path':device_path, 'device_id':serial_relay_id, 'pin':pin, 'delay':0}"/>
+                            context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"/>
                             <group>
-                                <field name="serial_relay_id" attrs="{'required':[('door_control','!=',False)]}"/>
-                                <field name="pin" readonly="1"/>
+                                <field name="serial_relay_id" attrs="{'required':[('door_control','!=',False),('device_type_id','=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}"/>
+                                <field name="device_relay_id" invisible="1"/>
                                 <field name="device_path" readonly="1"/>
+                                <field name="pin" readonly="1"/>
                             </group>
                         </page>
                     </xpath>
