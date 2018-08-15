@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acess_all_fleet_work_order_passanger_ticket_sale,Fleet Work Order Passanger Ticket Sale - Fleet Users,model_fleet_work_order_passanger_ticket_sale,,1,1,1,1
