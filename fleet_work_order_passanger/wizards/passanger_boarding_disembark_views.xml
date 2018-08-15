@@ -13,6 +13,9 @@
             <label for="passanger_code"/>
             <h1>
                 <field name="passanger_code"/>
+                <field name="work_order_id" invisible="1"/>
+                <field name="device_raspberry_id" invisible="1"/>
+                <field name="channel" invisible="1"/>
             </h1>
             <group name="doors">
             </group>
