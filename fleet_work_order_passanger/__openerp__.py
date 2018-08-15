@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Passanger Manifest",
-    "version": "8.0.1.2.0",
+    "version": "8.0.1.3.0",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -13,6 +13,7 @@
         "fleet_work_order",
         "fleet_vehicle_seat_number",
         "web_onchange_action",
+        "fleet_vehicle_door_control_raspberry_relay"
     ],
     "data": [
         "security/ir.model.access.csv",
