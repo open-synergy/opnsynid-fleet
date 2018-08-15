@@ -12,6 +12,11 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import math
 
 
+# TODO: Remove me to other module
+def isodd(x):
+    return bool(x % 2)
+
+
 class FleetWorkOrderPassanger(models.Model):
     _name = "fleet.work_order_passanger"
     _inherit = ["mail.thread"]
@@ -149,27 +154,27 @@ class FleetWorkOrderPassanger(models.Model):
 
     end_time = fields.Char(
         string="End Time",
-        compute="_compute_time" 
+        compute="_compute_time"
     )
 
     def ean_checksum(self, eancode):
         if len(eancode) != 13:
             return -1
-        oddsum=0
-        evensum=0
-        total=0
-        eanvalue=eancode
+        oddsum = 0
+        evensum = 0
+        total = 0
+        eanvalue = eancode
         reversevalue = eanvalue[::-1]
-        finalean=reversevalue[1:]
+        finalean = reversevalue[1:]
 
         for i in range(len(finalean)):
             if i % 2 == 0:
                 oddsum += int(finalean[i])
             else:
                 evensum += int(finalean[i])
-        total=(oddsum * 3) + evensum
+        total = (oddsum * 3) + evensum
 
-        check = int(10 - math.ceil(total % 10.0)) %10
+        check = int(10 - math.ceil(total % 10.0)) % 10
         return check
 
     def check_ean(self, eancode):
@@ -182,6 +187,16 @@ class FleetWorkOrderPassanger(models.Model):
         except:
             return False
         return self.ean_checksum(eancode) == int(eancode[-1])
+
+    def _get_ean_key(self, code):
+        sum = 0
+        for i in range(12):
+            if isodd(i):
+                sum += 3 * int(code[i])
+            else:
+                sum += int(code[i])
+        key = (10 - sum % 10) % 10
+        return str(key)
 
     @api.multi
     def _convert_datetime_utc(self, dt):
@@ -209,7 +224,7 @@ class FleetWorkOrderPassanger(models.Model):
     )
     def _compute_time(self):
         for data in self:
-            data.start_time = False      
+            data.start_time = False
             data.end_time = False
             if data.work_order_id:
                 data.start_time =\
@@ -235,7 +250,8 @@ class FleetWorkOrderPassanger(models.Model):
                     except (ValueError, AttributeError):
                         raise Warning(_("Cannot convert into barcode."))
                     barcode_base64 = base64.b64encode(barcode)
-                    data.barcode_image = "data:image/png;base64," + barcode_base64
+                    data.barcode_image = "data:image/png;base64," + \
+                        barcode_base64
 
     @api.multi
     def action_confirm(self):
@@ -327,6 +343,8 @@ class FleetWorkOrderPassanger(models.Model):
         if self._check_sequence:
             name = self.env["ir.sequence"].\
                 next_by_id(self._get_sequence().id) or "/"
+            # TODO: Remove me to different module
+            name = name + self._get_ean_key(name)
             self.write({"name": name})
 
     @api.multi
