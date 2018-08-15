@@ -4,3 +4,4 @@
 
 from . import proxy_backend_device_type
 from . import fleet_vehicle_door
+from . import fleet_vehicle
