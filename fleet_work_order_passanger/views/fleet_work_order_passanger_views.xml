@@ -72,15 +72,16 @@
                 </div>
                 <group name="header1" colspan="4" col="2">
                     <group name="header1_1" colspan="1" col="2">
-                        <field name="type_id"/>
+                        <field name="type_id" domain="[('id','in',allowed_type_ids[0][2])]"/>
+                        <field name="allowed_type_ids" widget="many2many_tags" invisible="1"/>
                         <field name="partner_id"/>
                     </group>
                     <group name="header1_2" colspan="1" col="2">
-                        <field name="work_order_id"/>
+                        <field name="work_order_id" domain="[('state','in',['draft','confirmed'])]"/>
                         <field name="vehicle_id"/>
                         <field name="seat_id"/>
-                        <field name="start_location_id"/>
-                        <field name="end_location_id"/>
+                        <field name="start_location_id" invisible="1"/>
+                        <field name="end_location_id" invisible="1"/>
                     </group>
                 </group>
                 <notebook colspan="4">

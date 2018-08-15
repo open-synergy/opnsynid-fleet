@@ -12,6 +12,20 @@ class FleetWorkOrderPassanger(models.Model):
     _inherit = ["mail.thread"]
     _description = "Fleet Work Order Passanger"
 
+    @api.multi
+    @api.depends("work_order_id")
+    def _compute_allowed_type_ids(self):
+        for passanger in self:
+            passanger.allowed_type_ids = False
+            if passanger.work_order_id and \
+                    passanger.work_order_id.type_id and \
+                    passanger.work_order_id.type_id.passanger_type_ids:
+                result = []
+                for pass_type in passanger.work_order_id.\
+                        type_id.passanger_type_ids:
+                    result.append(pass_type.passanger_type_id.id)
+                passanger.allowed_type_ids = [(6, 0, result)]
+
     work_order_id = fields.Many2one(
         string="# Work Order",
         comodel_name="fleet.work.order",
@@ -40,7 +54,7 @@ class FleetWorkOrderPassanger(models.Model):
         required=True,
     )
     partner_id = fields.Many2one(
-        string="Partner",
+        string="Passanger",
         comodel_name="res.partner",
         readonly=True,
         states={
@@ -84,6 +98,12 @@ class FleetWorkOrderPassanger(models.Model):
         },
         required=True,
         track_visibility="onchange",
+    )
+    allowed_type_ids = fields.Many2many(
+        string="Allowed Type",
+        comodel_name="fleet.work_order_passanger_type",
+        compute="_compute_allowed_type_ids",
+        store=False,
     )
     seat_id = fields.Many2one(
         string="Seat",
@@ -257,6 +277,10 @@ class FleetWorkOrderPassanger(models.Model):
                 ("id", "in", seat_ids),
             ]
         return {"domain": domain}
+
+    @api.onchange("work_order_id")
+    def onchange_type_id(self):
+        self.type_id = False
 
     @api.constrains("partner_id", "work_order_id")
     def check_same_partner(self):

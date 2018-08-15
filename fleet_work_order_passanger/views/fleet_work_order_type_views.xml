@@ -21,6 +21,11 @@
                         <field name="passanger_sequence_id"/>
                     </group>
                 </group>
+                <field name="passanger_type_ids" nolabel="1" colspan="4">
+                    <tree editable="top">
+                        <field name="passanger_type_id"/>
+                    </tree>
+                </field>
             </page>
         </xpath>
     </field>

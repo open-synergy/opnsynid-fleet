@@ -3,3 +3,4 @@ acess_all_passanger_type,Fleet Work Order - All Users,model_fleet_work_order_pas
 acess_employee_passanger_type,Fleet Work Order - Employee,model_fleet_work_order_passanger_type,base.group_user,1,1,1,1
 acess_all_passanger,Fleet Work Order Passanger - All Users,model_fleet_work_order_passanger,,1,0,0,0
 acess_employee_passanger,Fleet Work Order Passanger - Employee,model_fleet_work_order_passanger,base.group_user,1,1,1,1
+acess_all_work_order_type_passanger,Fleet Work Order Type Passanger - All Users,model_fleet_work_order_type_passanger,,1,1,1,1
