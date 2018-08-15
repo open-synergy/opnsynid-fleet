@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="fleet_work_order_view_kanban" model="ir.ui.view">
+    <field name="name">fleet.work.order kanban</field>
+    <field name="model">fleet.work.order</field>
+    <field name="arch" type="xml">
+        <kanban create="false">
+            <templates>
+                <t t-name="kanban-box">
+                    <div class="oe_kanban_card">
+                        <div class="oe_kanban_content">
+                            <h4 class="text-center"><strong><field name="name"/></strong></h4>
+                            <strong>Type:</strong> <field name="type_id"/><br/>
+                            <strong>Origin:</strong> <field name="start_location_id"/><br/>
+                            <strong>Destination:</strong> <field name="end_location_id"/><br/>
+                            <strong>ETD:</strong> <field name="date_start"/><br/>
+                            <strong>ETA:</strong> <field name="date_end"/><br/>
+                            <div class="oe_center">
+                                <button type="object" name="button_buy_ticket">Buy Ticket</button>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </templates>        
+        </kanban>
+    </field>
+</record>
+
+<record id="fleet_work_order_ticket_sale_action" model="ir.actions.act_window">
+    <field name="name">Ticket Counter</field>
+    <field name="res_model">fleet.work.order</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">kanban</field>
+    <field name="view_id" ref="fleet_work_order_view_kanban"/>
+</record>
+
+<menuitem id="fleet_work_order_ticket_sale_menu"
+    parent="fleet_work_order_passanger.fleet_passanger_root_menu"
+    name="Ticket Counter"
+    action="fleet_work_order_ticket_sale_action"
+    sequence="2"/>
+</data>
+</openerp>
