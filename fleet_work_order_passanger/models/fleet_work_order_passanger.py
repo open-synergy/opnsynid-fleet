@@ -5,6 +5,11 @@
 from openerp import models, fields, api
 from openerp.exceptions import Warning as UserError, ValidationError
 from openerp.tools.translate import _
+import base64
+from datetime import datetime
+import pytz
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+import math
 
 
 class FleetWorkOrderPassanger(models.Model):
@@ -70,8 +75,8 @@ class FleetWorkOrderPassanger(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={
-            'draft': [
-                ('readonly', False),
+            "draft": [
+                ("readonly", False),
             ],
         },
         track_visibility="onchange",
@@ -81,8 +86,8 @@ class FleetWorkOrderPassanger(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={
-            'draft': [
-                ('readonly', False),
+            "draft": [
+                ("readonly", False),
             ],
         },
         track_visibility="onchange",
@@ -131,6 +136,106 @@ class FleetWorkOrderPassanger(models.Model):
         required=True,
         track_visibility="onchange",
     )
+
+    barcode_image = fields.Text(
+        string="Barcode image",
+        compute="_compute_barcode_image",
+    )
+
+    start_time = fields.Char(
+        string="Start Time",
+        compute="_compute_time"
+    )
+
+    end_time = fields.Char(
+        string="End Time",
+        compute="_compute_time" 
+    )
+
+    def ean_checksum(self, eancode):
+        if len(eancode) != 13:
+            return -1
+        oddsum=0
+        evensum=0
+        total=0
+        eanvalue=eancode
+        reversevalue = eanvalue[::-1]
+        finalean=reversevalue[1:]
+
+        for i in range(len(finalean)):
+            if i % 2 == 0:
+                oddsum += int(finalean[i])
+            else:
+                evensum += int(finalean[i])
+        total=(oddsum * 3) + evensum
+
+        check = int(10 - math.ceil(total % 10.0)) %10
+        return check
+
+    def check_ean(self, eancode):
+        if not eancode:
+            return True
+        if len(eancode) != 13:
+            return False
+        try:
+            int(eancode)
+        except:
+            return False
+        return self.ean_checksum(eancode) == int(eancode[-1])
+
+    @api.multi
+    def _convert_datetime_utc(self, dt):
+        self.ensure_one()
+        user = self.env.user
+        convert_dt = datetime.strptime(dt, DEFAULT_SERVER_DATETIME_FORMAT)
+
+        if user.tz:
+            tz = pytz.timezone(user.tz)
+        else:
+            tz = pytz.utc
+
+        convert_utc = pytz.utc.localize(convert_dt).astimezone(tz)
+        format_utc = datetime.strftime(
+            convert_utc,
+            "%H:%M"
+        )
+
+        return format_utc
+
+    @api.multi
+    @api.depends(
+        "work_order_id.date_start",
+        "work_order_id.date_end"
+    )
+    def _compute_time(self):
+        for data in self:
+            data.start_time = False      
+            data.end_time = False
+            if data.work_order_id:
+                data.start_time =\
+                    self._convert_datetime_utc(data.work_order_id.date_start)
+                data.end_time =\
+                    self._convert_datetime_utc(data.work_order_id.date_end)
+
+    @api.multi
+    @api.depends("name")
+    def _compute_barcode_image(self):
+        for data in self:
+            data.barcode_image = None
+            if data.name != "/":
+                if self.check_ean(data.name):
+                    try:
+                        barcode = self.env["report"].barcode(
+                            "EAN13",
+                            data.name,
+                            width=300,
+                            height=100,
+                            humanreadable=0
+                        )
+                    except (ValueError, AttributeError):
+                        raise Warning(_("Cannot convert into barcode."))
+                    barcode_base64 = base64.b64encode(barcode)
+                    data.barcode_image = "data:image/png;base64," + barcode_base64
 
     @api.multi
     def action_confirm(self):
