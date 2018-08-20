@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Passanger Manifest",
-    "version": "8.0.1.3.1",
+    "version": "8.0.1.3.2",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
