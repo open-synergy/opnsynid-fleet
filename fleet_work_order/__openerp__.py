@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Fleet Work Order",
-    "version": "8.0.3.3.0",
+    "version": "8.0.3.4.0",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -19,6 +19,7 @@
         "wizard/work_order_depart_views.xml",
         "wizard/work_order_arrive_views.xml",
         "views/fleet_work_order_views.xml",
+        "reports/fleet_work_order_analysis.xml",
     ],
     "demo": [
         "demo/res_partner_demo.xml",
