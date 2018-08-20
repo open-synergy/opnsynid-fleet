@@ -94,7 +94,7 @@ class PassangerBoardingDisembark(models.TransientModel):
             if len(passangers) == 1:
                 warning = {
                     "title": "A",
-                    "message": "B",
+                    "message": "B"
                 }
                 passanger = passangers[0]
                 if passanger.state in ["valid", "disembarking"]:

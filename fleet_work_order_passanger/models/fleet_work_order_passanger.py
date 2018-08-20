@@ -10,6 +10,8 @@ from datetime import datetime
 import pytz
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import math
+import openerp.addons.product.product as t_product
+from random import randint
 
 
 # TODO: Remove me to other module
@@ -157,37 +159,6 @@ class FleetWorkOrderPassanger(models.Model):
         compute="_compute_time"
     )
 
-    def ean_checksum(self, eancode):
-        if len(eancode) != 13:
-            return -1
-        oddsum = 0
-        evensum = 0
-        total = 0
-        eanvalue = eancode
-        reversevalue = eanvalue[::-1]
-        finalean = reversevalue[1:]
-
-        for i in range(len(finalean)):
-            if i % 2 == 0:
-                oddsum += int(finalean[i])
-            else:
-                evensum += int(finalean[i])
-        total = (oddsum * 3) + evensum
-
-        check = int(10 - math.ceil(total % 10.0)) % 10
-        return check
-
-    def check_ean(self, eancode):
-        if not eancode:
-            return True
-        if len(eancode) != 13:
-            return False
-        try:
-            int(eancode)
-        except:
-            return False
-        return self.ean_checksum(eancode) == int(eancode[-1])
-
     def _get_ean_key(self, code):
         sum = 0
         for i in range(12):
@@ -238,7 +209,7 @@ class FleetWorkOrderPassanger(models.Model):
         for data in self:
             data.barcode_image = None
             if data.name != "/":
-                if self.check_ean(data.name):
+                if t_product.check_ean(data.name):
                     try:
                         barcode = self.env["report"].barcode(
                             "EAN13",
@@ -341,11 +312,18 @@ class FleetWorkOrderPassanger(models.Model):
     def _create_sequence(self):
         self.ensure_one()
         if self._check_sequence:
-            name = self.env["ir.sequence"].\
+            seq = self.env["ir.sequence"].\
                 next_by_id(self._get_sequence().id) or "/"
             # TODO: Remove me to different module
-            name = name + self._get_ean_key(name)
-            self.write({"name": name})
+            # name = name + self._get_ean_key(name)
+            first_digit_rnd =\
+                randint(1,9)
+            name =\
+                str(first_digit_rnd) + seq
+            ean13 = t_product.sanitize_ean13(name)
+        else:
+            ean13 = "0000000000000"
+        self.write({"name": ean13})
 
     @api.multi
     def _check_sequence(self):
