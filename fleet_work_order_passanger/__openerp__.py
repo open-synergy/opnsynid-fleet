@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Passanger Manifest",
-    "version": "8.0.1.3.2",
+    "version": "8.0.1.4.0",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -20,6 +20,7 @@
         "data/ir_sequence_data.xml",
         "menu.xml",
         "wizards/passanger_boarding_disembark_views.xml",
+        "reports/fleet_work_order_passanger_analysis.xml",
         "views/fleet_work_order_passanger_type_views.xml",
         "views/fleet_work_order_views.xml",
         "views/fleet_work_order_type_views.xml",

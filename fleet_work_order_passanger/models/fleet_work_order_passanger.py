@@ -9,7 +9,6 @@ import base64
 from datetime import datetime
 import pytz
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-import math
 import openerp.addons.product.product as t_product
 from random import randint
 
@@ -317,7 +316,7 @@ class FleetWorkOrderPassanger(models.Model):
             # TODO: Remove me to different module
             # name = name + self._get_ean_key(name)
             first_digit_rnd =\
-                randint(1,9)
+                randint(1, 9)
             name =\
                 str(first_digit_rnd) + seq
             ean13 = t_product.sanitize_ean13(name)
