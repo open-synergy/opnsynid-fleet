@@ -10,7 +10,6 @@ from datetime import datetime
 import pytz
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import openerp.addons.product.product as t_product
-from random import randint
 
 
 # TODO: Remove me to other module
@@ -311,18 +310,11 @@ class FleetWorkOrderPassanger(models.Model):
     def _create_sequence(self):
         self.ensure_one()
         if self._check_sequence:
-            seq = self.env["ir.sequence"].\
+            name = self.env["ir.sequence"].\
                 next_by_id(self._get_sequence().id) or "/"
             # TODO: Remove me to different module
-            # name = name + self._get_ean_key(name)
-            first_digit_rnd =\
-                randint(1, 9)
-            name =\
-                str(first_digit_rnd) + seq
-            ean13 = t_product.sanitize_ean13(name)
-        else:
-            ean13 = "0000000000000"
-        self.write({"name": ean13})
+            name = name + self._get_ean_key(name)
+            self.write({"name": name})
 
     @api.multi
     def _check_sequence(self):
