@@ -6,3 +6,4 @@ from . import fleet_work_order
 from . import fleet_work_order_passanger
 from . import fleet_work_order_passanger_ticket_sale
 from . import fleet_work_order_type
+from . import res_company

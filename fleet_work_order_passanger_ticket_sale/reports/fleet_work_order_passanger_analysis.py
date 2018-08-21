@@ -10,8 +10,7 @@ class FleetWorkOrderPassangerAnalysis(models.Model):
 
     price_after_tax = fields.Float(
         string="Price After Tax",
-        )
-
+    )
 
     def _select(self):
         _super = super(FleetWorkOrderPassangerAnalysis, self)

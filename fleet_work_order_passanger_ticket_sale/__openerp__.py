@@ -12,6 +12,7 @@
     "depends": [
         "fleet_work_order_passanger",
         "sale",
+        "proxy_backend_ecspos_aeroo"
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -21,5 +22,6 @@
         "views/fleet_work_order_type_views.xml",
         "views/fleet_work_order_passanger_ticket_sale_views.xml",
         "views/fleet_work_order_views.xml",
+        "views/res_company_views.xml"
     ],
 }

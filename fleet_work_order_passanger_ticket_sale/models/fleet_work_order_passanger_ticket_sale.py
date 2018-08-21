@@ -2,7 +2,8 @@
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import models, fields, api, _
+from openerp.exceptions import Warning as UserError
 
 
 class FleetWorkOrderPassangerTicketSale(models.Model):
@@ -251,3 +252,24 @@ class FleetWorkOrderPassangerTicketSale(models.Model):
                 self.work_order_id.type_id.default_passanger_pricelist_id:
             self.pricelist_id = self.work_order_id.type_id.\
                 default_passanger_pricelist_id.id
+
+    @api.multi
+    def print_ticket(self):
+        company =\
+            self.env.user.company_id
+        aeroo_ticket =\
+            company.default_aeroo_ticket
+        if aeroo_ticket:
+            if self.passanger_ids:
+                action = self.env.ref(
+                    "proxy_backend_ecspos_aeroo."
+                    "proxy_backend_ecspos_aeroo_action")
+                context = {
+                    "report_name": aeroo_ticket.report_name,
+                    "object_id": self.passanger_ids.ids
+                }
+                result = action.read()[0]
+                result.update({"context": context})
+                return result
+        else:
+            raise UserError(_("No Aeroo Ticket Defined in Company"))
