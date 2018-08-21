@@ -177,6 +177,7 @@
             </sheet>
             <footer>
                 <button name="action_buy_simple" type="object" states="draft" string="Confirm"/>
+                <button name="print_ticket" type="object" icon="gtk-print" states="valid" string="Print Ticket"/>
                 <button special="cancel" states="valid" string="Close"/>
             </footer>
         </form>
