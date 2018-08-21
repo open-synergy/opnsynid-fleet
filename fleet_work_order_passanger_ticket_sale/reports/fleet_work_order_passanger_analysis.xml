@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="fleet_work_order_passanger_analysis_view_graph" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger_analysis graph</field>
+    <field name="model">fleet.work_order_passanger_analysis</field>
+    <field name="inherit_id" ref="fleet_work_order_passanger.fleet_work_order_passanger_analysis_view_graph"/>
+    <field name="arch" type="xml">
+        <xpath expr="//graph" position="inside">
+            <field name="price_after_tax" type="measure"/>
+        </xpath>
+    </field>
+</record>
+</data>
+</openerp>
