@@ -47,6 +47,13 @@ class FleetWorkOrderPassanger(models.Model):
             ],
         },
     )
+    work_order_type_id = fields.Many2one(
+        string="Work Order Type",
+        comodel_name="fleet.work.order.type",
+        related="work_order_id.type_id",
+        store=True,
+        readonly=True,
+        )
     vehicle_id = fields.Many2one(
         string="Vehicle",
         comodel_name="fleet.vehicle",

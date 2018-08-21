@@ -14,6 +14,7 @@
             <field name="type_id"/>
             <field name="seat_id"/>
             <field name="work_order_id"/>
+            <field name="work_order_type_id"/>
             <field name="state"/>
         </tree>
     </field>
@@ -84,6 +85,7 @@
                     </group>
                     <group name="header1_2" colspan="1" col="2">
                         <field name="work_order_id" domain="[('state','in',['draft','confirmed'])]"/>
+                        <field name="work_order_type_id"/>
                         <field name="vehicle_id"/>
                         <field name="seat_id"/>
                         <field name="start_time" invisible="1"/>
@@ -108,6 +110,36 @@
     <field name="res_model">fleet.work_order_passanger</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
+</record>
+
+<record id="fleet_work_order_passanger_view_search" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger Search</field>
+    <field name="model">fleet.work_order_passanger</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="type_id"/>
+            <field name="work_order_id"/>
+            <field name="work_order_type_id"/>
+            <field name="state"/>
+            <group name="state" string="State">
+                <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter name="filter_confirm" string="Waiting for Approval" domain="[('state','=','confirm')]"/>
+                <filter name="filter_valid" string="Valid" domain="[('state','=','valid')]"/>
+                <filter name="filter_boarding" string="Boarding" domain="[('state','=','boarding')]"/>
+                <filter name="filter_disembarking" string="Disembarking" domain="[('state','=','disembarking')]"/>
+                <filter name="filter_cancel" string="Cancel" domain="[('state','=','cancel')]"/>
+            </group>
+            <group name="group_by" string="Group By..">
+                <filter name="group_partner_id" string="Passanger" context="{'group_by':'partner_id'}"/>
+                <filter name="group_type_id" string="Passanger Type" context="{'group_by':'type_id'}"/>
+                <filter name="group_work_order_id" string="# Work Order" context="{'group_by':'work_order_id'}"/>
+                <filter name="group_work_order_type_id" string="Work Order Type" context="{'group_by':'work_order_type_id'}"/>
+                <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+            </group>
+        </search>
+    </field>
 </record>
 
 <menuitem id="fleet_work_order_passanger_menu"
