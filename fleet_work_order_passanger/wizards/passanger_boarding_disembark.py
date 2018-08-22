@@ -97,13 +97,9 @@ class PassangerBoardingDisembark(models.TransientModel):
                     "message": "B"
                 }
                 passanger = passangers[0]
-                if passanger.state in ["valid", "disembarking"]:
-                    passanger.action_boarding()
-                elif passanger.state == "boarding":
-                    passanger.action_disembarking()
                 self.passanger_code = ""
                 warning.update({
-                    "action": self._open_door_gpio(),
+                    "action": self._open_door_gpio(passanger),
                 })
             else:
                 self.passanger_code = ""
@@ -111,7 +107,7 @@ class PassangerBoardingDisembark(models.TransientModel):
         return {"warning": warning}
 
     @api.multi
-    def _open_door_gpio(self):
+    def _open_door_gpio(self, passanger):
         self.ensure_one()
         action = self.env.ref(
             "proxy_backend_gpio."
@@ -121,6 +117,12 @@ class PassangerBoardingDisembark(models.TransientModel):
             "pin": self.channel,
             "interval": 1
         }
+
+        if passanger.state in ["valid", "disembarking"]:
+            passanger.write({"state": "boarding"})
+        elif passanger.state == "boarding":
+            passanger.write({"state": "disembarking"})
+
         result = action.read()[0]
         result.update({"context": context})
         return result
