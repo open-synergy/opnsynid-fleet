@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+<record id="fleet_work_order_passanger_view_tree" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger Tree</field>
+    <field name="model">fleet.work_order_passanger</field>
+    <field name="inherit_id" ref="fleet_work_order_passanger_ticket_sale.fleet_work_order_passanger_view_tree"/>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='price_unit']" position="before">
+                <field name="onboard_sale"/>
+            </xpath>
+        </data>
+    </field>
+</record>
+
+<record id="fleet_work_order_passanger_view_form" model="ir.ui.view">
+    <field name="name">fleet.work_order_passanger Form</field>
+    <field name="model">fleet.work_order_passanger</field>
+    <field name="inherit_id" ref="fleet_work_order_passanger_ticket_sale.fleet_work_order_passanger_view_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//field[@name='pricelist_id']" position="before">
+                <field name="onboard_sale"/>
+            </xpath>
+        </data>
+    </field>
+</record>
+</data>
+</openerp>

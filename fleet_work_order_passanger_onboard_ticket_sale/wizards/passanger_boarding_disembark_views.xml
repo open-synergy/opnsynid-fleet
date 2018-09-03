@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="fleet_passanger_boarding_disembark_view_form" model="ir.ui.view">
+    <field name="name">Passanger Boarding/Disembark</field>
+    <field name="model">fleet.passanger_boarding_disembark</field>
+    <field name="inherit_id" ref="fleet_work_order_passanger.fleet_passanger_boarding_disembark_view_form"/>
+    <field name="arch" type="xml">
+        <data>
+            <xpath expr="//footer" position="before">
+                <group name="ticket" string="Available Onboard Ticket" colspan="4" col="2">
+                    <field name="onboard_ticket_sale_ids" colspan="2" nolabel="1" mode="kanban" context="{'work_order_id':work_order_id}">
+                        <tree>
+                            <field name="passanger_type_id"/>
+                            <button name="onboard_ticket_sale" string="Buy Ticket" type="object"/>
+                        </tree>
+                        <kanban create="false">
+                            <field name="passanger_type_id"/>
+                            <template>
+                                <t t-name="kanban-box">
+                                    <div class="oe_module_vignete">
+                                        <div class="oe_module_desc">
+                                            <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
+                                                <table class="oe_kanban_table">
+                                                    <tr>
+                                                        <td class="oe_kanban_title1" align="left" valign="middle">
+                                                            <h4><field name="passanger_type_id"/></h4>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </t>
+                            </template>
+                        </kanban>
+                    </field>
+                </group>
+            </xpath>
+        </data>
+    </field>
+</record>
+</data>
+</openerp>
