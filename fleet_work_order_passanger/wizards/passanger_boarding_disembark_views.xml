@@ -20,10 +20,10 @@
             <group name="doors">
             </group>
             <footer>
-                    <button name="action_clear_barcode"
+<!--                     <button name="action_clear_barcode"
                         string="Clear Barcode"
                         type="object"
-                        />
+                        /> -->
                     <button special="cancel"
                         string="Close"
                         />
