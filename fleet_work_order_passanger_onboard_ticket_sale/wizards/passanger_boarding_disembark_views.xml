@@ -12,34 +12,33 @@
     <field name="arch" type="xml">
         <data>
             <xpath expr="//footer" position="before">
-                <group name="ticket" string="Available Onboard Ticket" colspan="4" col="2">
-                    <field name="onboard_ticket_sale_ids" colspan="2" nolabel="1" mode="kanban" context="{'work_order_id':work_order_id}">
-                        <tree>
-                            <field name="passanger_type_id"/>
-                            <button name="onboard_ticket_sale" string="Buy Ticket" type="object"/>
-                        </tree>
-                        <kanban create="false">
-                            <field name="passanger_type_id"/>
-                            <template>
-                                <t t-name="kanban-box">
-                                    <div class="oe_module_vignete">
-                                        <div class="oe_module_desc">
-                                            <div class="oe_kanban_box_content oe_kanban_color_bglight oe_kanban_color_border">
-                                                <table class="oe_kanban_table">
-                                                    <tr>
-                                                        <td class="oe_kanban_title1" align="left" valign="middle">
-                                                            <h4><field name="passanger_type_id"/></h4>
-                                                        </td>
-                                                    </tr>
-                                                </table>
+                    <notebook>
+                        <page string="Available Onboard Ticket" name="onboard_ticket_sale_page">
+                            <field name="onboard_ticket_sale_ids" colspan="2" nolabel="1" widget="many2many_kanban" context="{'work_order_id':work_order_id}">
+                                <kanban create="false">
+                                    <field name="passanger_type_id"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div class="oe_kanban_card">
+                                                <div class="oe_kanban_content">
+                                                    <h4 class="text-center">
+                                                        <strong>
+                                                            <field name="passanger_type_id"/>
+                                                        </strong>
+                                                    </h4>
+                                                    <div class="oe_center">
+                                                        <button name="onboard_ticket_sale" type="object">
+                                                            Buy Ticket
+                                                        </button>
+                                                    </div>
+                                                </div>      
                                             </div>
-                                        </div>
-                                    </div>
-                                </t>
-                            </template>
-                        </kanban>
-                    </field>
-                </group>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
             </xpath>
         </data>
     </field>

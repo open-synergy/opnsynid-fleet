@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api
-from openerp.exceptions import Warning as UserError
 
 
 class WorkOrderTypePassangerType(models.Model):
@@ -23,17 +22,19 @@ class WorkOrderTypePassangerType(models.Model):
 
         sale = obj_sale.create(self._prepare_onboard_ticket_sale_data(
             work_order_id))
-        passanger = obj_passanger.create(self._prepare_onboard_passanger(sale))
+        obj_passanger.create(self._prepare_onboard_passanger(sale))
         sale.action_confirm()
         sale.action_valid()
-
+        return sale.print_ticket()
 
     @api.multi
     def _prepare_onboard_ticket_sale_data(self, work_order_id):
         self.ensure_one()
+        pricelist_id =\
+            self._get_onboard_ticket_pricelist_id(work_order_id)
         return {
             "work_order_id": work_order_id,
-            "pricelist_id": self._get_onboard_ticket_pricelist_id(work_order_id).id,
+            "pricelist_id": pricelist_id.id,
             }
 
     @api.multi
@@ -61,4 +62,3 @@ class WorkOrderTypePassangerType(models.Model):
         self.ensure_one()
         return ticket_sale.pricelist_id.price_get(
             prod_id=self.product_id.id, qty=1.0)[ticket_sale.pricelist_id.id]
-
