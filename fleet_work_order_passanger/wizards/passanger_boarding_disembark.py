@@ -146,5 +146,5 @@ class PassangerBoardingDisembark(models.TransientModel):
     @api.multi
     def action_clear_barcode(self):
         self.ensure_one()
-        self.passanger_barcode = False
+        self.passanger_code = False
         return self._reload_action()
