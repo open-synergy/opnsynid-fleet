@@ -271,5 +271,7 @@ class FleetWorkOrderPassangerTicketSale(models.Model):
                 result = action.read()[0]
                 result.update({"context": context})
                 return result
+            else:
+                raise UserError(_("No Passangers"))
         else:
             raise UserError(_("No Aeroo Ticket Defined in Company"))
