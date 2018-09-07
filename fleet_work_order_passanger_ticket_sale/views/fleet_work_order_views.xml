@@ -37,6 +37,7 @@
     <field name="view_mode">kanban</field>
     <field name="view_id" ref="fleet_work_order_view_kanban"/>
     <field name="context">{'search_default_filter_group_type':1}</field>
+    <field name="domain">[('state','=','confirmed')]</field>
 </record>
 
 <menuitem id="fleet_work_order_ticket_sale_menu"

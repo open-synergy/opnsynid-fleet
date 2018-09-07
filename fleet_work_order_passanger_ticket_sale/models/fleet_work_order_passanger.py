@@ -111,3 +111,12 @@ class FleetWorkOrderPassanger(models.Model):
                 self.pricelist_id:
             self.price_unit = self.pricelist_id.price_get(
                 prod_id=self.product_id.id, qty=1.0)[self.pricelist_id.id]
+
+    @api.onchange("work_order_id")
+    def onchange_type_id(self):
+        self.type_id = False
+        if self.work_order_id and self.work_order_id.type_id and \
+                self.work_order_id.type_id.default_passanger_type_id:
+            self.type_id = \
+                self.work_order_id.type_id.default_passanger_type_id
+
