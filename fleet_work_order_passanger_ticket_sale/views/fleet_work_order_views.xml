@@ -11,8 +11,8 @@
         <kanban create="false">
             <templates>
                 <t t-name="kanban-box">
-                    <div class="oe_kanban_card">
-                        <div class="oe_kanban_content">
+                    <div class="oe_kanban_vignette oe_semantic_html_override">
+                        <div class="oe_kanban_details">
                             <h4 class="text-center"><strong><field name="name"/></strong></h4>
                             <strong>Type:</strong> <field name="type_id"/><br/>
                             <strong>Origin:</strong> <field name="start_location_id"/><br/>
@@ -36,6 +36,7 @@
     <field name="view_type">form</field>
     <field name="view_mode">kanban</field>
     <field name="view_id" ref="fleet_work_order_view_kanban"/>
+    <field name="context">{'search_default_filter_group_type':1}</field>
 </record>
 
 <menuitem id="fleet_work_order_ticket_sale_menu"
