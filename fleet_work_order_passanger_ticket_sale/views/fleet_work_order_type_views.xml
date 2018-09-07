@@ -12,6 +12,8 @@
     <field name="arch" type="xml">
         <xpath expr="//field[@name='passanger_sequence_id']" position="after">
             <field name="default_passanger_pricelist_id"/>
+            <field name="default_passanger_type_id"/>
+            <field name="allowed_to_sell_group_ids" widget="many2many_tags"/>
         </xpath>
         <xpath expr="//field[@name='passanger_type_ids']/tree/field[@name='passanger_type_id']" position="after">
             <field name="product_id"/>
