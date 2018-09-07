@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="driver_interface_actions_server" model="ir.actions.server">
+    <field name="name">Driver Interface</field>
+    <field name="sequence" eval="5"/>
+    <field name="type">ir.actions.server</field>
+    <field name="model_id" ref="fleet_work_order.model_fleet_work_order"/>
+    <field name="condition">True</field>
+    <field name="state">code</field>
+    <field name="code">obj_employee = env["hr.employee"]
+obj_wo = env["fleet.work.order"]
+
+employee_criteria = [
+    ("user_id", "=", env.user.id),
+    ]
+employees = obj_employee.search(employee_criteria)
+if len(employees) == 0:
+    raise Warning("No employee for current user")
+
+if not employees[0].address_home_id:
+    raise Warning("Please configure home address for employee")
+
+wo_criteria = [
+    ("driver_id", "=", employees[0].address_home_id.id),
+    ("state", "=", "depart"),
+    ]
+wos = obj_wo.search(wo_criteria)
+
+if len(wos) == 0:
+    raise Warning("No work order for you")
+
+wo = wos[0]
+
+waction = env.ref("fleet_work_order_passanger.fleet_work_order_driver_interface_action").read()[0]
+waction.update({"res_id": wo.id})
+action = waction
+    </field>
+</record>
+
+<record id="fleet_work_order_driver_interface_action" model="ir.actions.act_window">
+    <field name="name">My Current Work Order</field>
+    <field name="res_model">fleet.work.order</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+</record>
+
+<menuitem id="fleet_work_order_driver_interface_menu"
+    parent="fleet_work_order.fleet_work_order_root_menu"
+    name="Driver Interface"
+    action="driver_interface_actions_server"
+    sequence="2"/>
+
+
+
+</data>
+</openerp>
