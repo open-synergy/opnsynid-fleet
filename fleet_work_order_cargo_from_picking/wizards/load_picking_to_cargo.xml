@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="load_picking_to_cargo_view_form" model="ir.ui.view">
+    <field name="name">Load Wave to Cargo</field>
+    <field name="model">fleet.load_picking_to_cargo</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="group_1" colspan="4" col="2">
+                <field name="work_order_id" groups="base.group_system"/>
+                <field name="allowed_picking_type_ids" widget="many2many_tags" groups="base.group_system"/>
+                <field name="restrict_partner_cargo" groups="base.group_system"/>
+                <field name="allowed_partner_ids" widget="many2many_tags" groups="base.group_system"/>
+            </group>
+            <group name="group_2" colspan="4" col="2">
+                <field name="picking_ids" nolabel="1" colspan="2" domain="['&amp;','&amp;','&amp;',('work_order_id','=',False),('state','in',['assigned','partially_available']),('picking_type_id','in',allowed_picking_type_ids[0][2]),('partner_id.commercial_partner_id.id','in',allowed_partner_ids[0][2])]"/>
+            </group>
+            <footer>
+                <button name="action_load_cargo"
+                        type="object"
+                        string="Load"
+                        class="oe_highlight"/>
+                or
+                <button special="cancel"
+                        string="Cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="load_picking_to_cargo_action" model="ir.actions.act_window">
+    <field name="name">Load Picking to Cargo</field>
+    <field name="res_model">fleet.load_picking_to_cargo</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>
