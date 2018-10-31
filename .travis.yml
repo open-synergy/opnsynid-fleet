@@ -23,15 +23,15 @@ env:
 
   matrix:
   - LINT_CHECK="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
-  - TESTS="1" ODOO_REPO="OCA/OCB"
+  - TESTS="1" ODOO_REPO="odoo/odoo" EXCLUDE="fleet_work_order_passanger,fleet_work_order_passanger_onboard_ticket_sale,fleet_work_order_passanger_ticket_sale,fleet_vehicle_door_control_raspberry_relay,fleet_vehicle_door_control_serial_relay"
+  - TESTS="1" ODOO_REPO="OCA/OCB" EXCLUDE="fleet_work_order_passanger,fleet_work_order_passanger_onboard_ticket_sale,fleet_work_order_passanger_ticket_sale,fleet_vehicle_door_control_raspberry_relay,fleet_vehicle_door_control_serial_relay"
 
 virtualenv:
   system_site_packages: true
 
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
-  - sed -i 's/manifest_required_author\=.*/manifest_required_author="OpenSynergy Indonesia"/g' ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg  
+  - sed -i 's/manifest_required_author\=.*/manifest_required_author="OpenSynergy Indonesia"/g' ${HOME}/maintainer-quality-tools/travis/cfg/travis_run_pylint_pr.cfg
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 
