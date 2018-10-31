@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="fleet_work_order_view_form" model="ir.ui.view">
+    <field name="name">fleet.work.order form</field>
+    <field name="model">fleet.work.order</field>
+    <field name="inherit_id" ref="fleet_work_order_cargo.fleet_work_order_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//header/field[@name='state']" position="before">
+            <button name="%(load_picking_to_cargo_action)d" string="Load Cargo From Picking" type="action" states="draft,confirm"/>
+        </xpath>
+        <xpath expr="//notebook" position="inside">
+            <page name="picking" string="Pickings">
+                <field name="picking_ids" string="Pickings" nolabel="1" colspan="4" readonly="1"/>
+            </page>
+        </xpath>
+        <xpath expr="//field[@name='type_id']" position="after">
+            <field name="allowed_picking_type_ids" widget="many2many_tags" groups="base.group_system"/>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
