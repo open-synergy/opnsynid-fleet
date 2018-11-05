@@ -4,7 +4,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Fleet Work Order Cargo From Picking",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.0",
     "category": "Fleet",
     "website": "https://opensynergy-indonesia.com/",
     "author": "OpenSynergy Indonesia",
