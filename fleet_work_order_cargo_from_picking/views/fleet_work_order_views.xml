@@ -15,7 +15,21 @@
         </xpath>
         <xpath expr="//notebook" position="inside">
             <page name="picking" string="Pickings">
-                <field name="picking_ids" string="Pickings" nolabel="1" colspan="4" readonly="1"/>
+                <field name="picking_ids" string="Pickings" nolabel="1" colspan="4" readonly="0" widget="many2many">
+                    <tree colors="blue:state == 'draft';grey:state == 'cancel';red:state not in ('cancel', 'done') and min_date &lt; current_date" string="Picking list" create="false" edit="false" delete="true">
+                        <field name="name"/>
+                        <field name="location_dest_id"/>
+                        <field name="partner_id"/>
+                        <field name="date"/>
+                        <field name="min_date" invisible="1"/>
+                        <field name="origin"/>
+                        <field name="group_id" invisible="1"/>
+                        <field name="backorder_id"/>
+                        <field name="state"/>
+                        <field name="priority" invisible="1"/>
+                        <field name="picking_type_id" invisible="1"/>
+                    </tree>
+                </field>
             </page>
         </xpath>
         <xpath expr="//field[@name='type_id']" position="after">
