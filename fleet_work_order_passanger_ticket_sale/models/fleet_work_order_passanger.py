@@ -119,4 +119,3 @@ class FleetWorkOrderPassanger(models.Model):
                 self.work_order_id.type_id.default_passanger_type_id:
             self.type_id = \
                 self.work_order_id.type_id.default_passanger_type_id
-
