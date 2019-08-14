@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api, _
-from openerp.exceptions import except_orm
+from openerp.exceptions import Warning as UserError
 
 
 class FleetWorkOrder(models.Model):
@@ -22,7 +22,7 @@ class FleetWorkOrder(models.Model):
         comodel_name="fleet.work.order.type",
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     vehicle_id = fields.Many2one(
@@ -31,9 +31,9 @@ class FleetWorkOrder(models.Model):
         required=False,
         readonly=True,
         states={
-            'draft': [('readonly', False)],
-            'confirmed': [('readonly', False)],
-            'depart': [('required', True)],
+            "draft": [("readonly", False)],
+            "confirmed": [("readonly", False)],
+            "depart": [("required", True)],
         },
     )
     driver_id = fields.Many2one(
@@ -42,9 +42,9 @@ class FleetWorkOrder(models.Model):
         required=False,
         readonly=True,
         states={
-            'draft': [('readonly', False)],
-            'confirmed': [('readonly', False)],
-            'depart': [('required', True)],
+            "draft": [("readonly", False)],
+            "confirmed": [("readonly", False)],
+            "depart": [("required", True)],
         },
     )
     co_driver_id = fields.Many2one(
@@ -53,8 +53,8 @@ class FleetWorkOrder(models.Model):
         required=False,
         readonly=True,
         states={
-            'draft': [('readonly', False)],
-            'confirmed': [('readonly', False)],
+            "draft": [("readonly", False)],
+            "confirmed": [("readonly", False)],
         },
     )
     date_start = fields.Datetime(
@@ -62,7 +62,7 @@ class FleetWorkOrder(models.Model):
         required=True,
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     date_end = fields.Datetime(
@@ -70,7 +70,7 @@ class FleetWorkOrder(models.Model):
         required=True,
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     real_date_depart = fields.Datetime(
@@ -93,7 +93,7 @@ class FleetWorkOrder(models.Model):
         domain="[('customer','=',True)]",
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     start_location_id = fields.Many2one(
@@ -101,7 +101,7 @@ class FleetWorkOrder(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     end_location_id = fields.Many2one(
@@ -109,14 +109,14 @@ class FleetWorkOrder(models.Model):
         comodel_name="res.partner",
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     distance = fields.Float(
         string="Distance",
         readonly=True,
         states={
-            'draft': [('readonly', False)],
+            "draft": [("readonly", False)],
         },
     )
     note = fields.Text(
@@ -163,37 +163,80 @@ class FleetWorkOrder(models.Model):
         for order in self:
             order._action_restart()
 
-    @api.constrains("state", "vehicle_id", "driver_id")
+    @api.constrains(
+        "state",
+        "vehicle_id",
+        "driver_id"
+    )
     def _check_vehicle_driver(self):
         if self.state == "depart":
             if not self.vehicle_id or \
                     not self.driver_id:
-                raise except_orm(_("Warning!"), _(
+                raise UserError(_("Warning!"), _(
                     "Vehicle and driver required"))
 
-    @api.onchange("vehicle_id")
+    @api.onchange(
+        "vehicle_id"
+    )
     def onchange_vehicle_id(self):
         self.driver_id = False
         if self.vehicle_id:
             self.driver_id = self.vehicle_id.driver_id
 
-    @api.onchange('type_id')
-    def onchange_type_id(self):
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_vehicle_id(self):
         self.vehicle_id = False
-        self.driver_id = False
-        self.co_driver_id = False
         if self.type_id:
             wo_type = self.type_id
             self.vehicle_id = wo_type.vehicle_id and \
                 wo_type.vehicle_id.id or False
+
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_driver_id(self):
+        self.driver_id = False
+        if self.type_id:
+            wo_type = self.type_id
             self.driver_id = wo_type.driver_id and \
                 wo_type.driver_id.id or False
+
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_co_driver_id(self):
+        self.co_driver_id = False
+        if self.type_id:
+            wo_type = self.type_id
             self.co_driver_id = wo_type.co_driver_id and \
                 wo_type.co_driver_id.id or False
+
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_start_location_id(self):
+        if self.type_id:
+            wo_type = self.type_id
             self.start_location_id = wo_type.start_location_id and \
                 wo_type.start_location_id.id or False
+
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_end_location_id(self):
+        if self.type_id:
+            wo_type = self.type_id
             self.end_location_id = wo_type.end_location_id and \
                 wo_type.end_location_id.id or False
+
+    @api.onchange(
+        "type_id"
+    )
+    def onchange_distance(self):
+        if self.type_id:
+            wo_type = self.type_id
             self.distance = wo_type.distance
 
     @api.multi
@@ -230,78 +273,78 @@ class FleetWorkOrder(models.Model):
 
     @api.model
     def create(self, vals):
-        if vals.get('name', '/') == '/':
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'fleet.work.order') or '/'
+        if vals.get("name", "/") == "/":
+            vals["name"] = self.env["ir.sequence"].next_by_code(
+                "fleet.work.order") or "/"
         return super(FleetWorkOrder, self).create(vals)
 
     @api.multi
     def _prepare_confirm_data(self):
         self.ensure_one()
         return {
-            'state': 'confirmed'
+            "state": "confirmed"
         }
 
     @api.multi
     def _prepare_depart_data(self, date_depart, starting_odometer):
         self.ensure_one()
         return {
-            'state': 'depart',
-            'real_date_depart': date_depart,
-            'start_odometer': starting_odometer,
+            "state": "depart",
+            "real_date_depart": date_depart,
+            "start_odometer": starting_odometer,
         }
 
     @api.multi
     def _prepare_arrive_data(self, date_arrive, ending_odometer):
         self.ensure_one()
         return {
-            'state': 'arrive',
-            'real_date_arrive': date_arrive,
-            'end_odometer': ending_odometer,
+            "state": "arrive",
+            "real_date_arrive": date_arrive,
+            "end_odometer": ending_odometer,
         }
 
     @api.multi
     def _prepare_cancel_data(self):
         self.ensure_one()
         return {
-            'state': 'cancelled',
+            "state": "cancelled",
         }
 
     @api.multi
     def _prepare_restart_data(self):
         self.ensure_one()
         return {
-            'state': 'draft',
+            "state": "draft",
         }
 
 
 class WorkOrderType(models.Model):
-    _name = 'fleet.work.order.type'
-    _description = 'Work Order Type'
+    _name = "fleet.work.order.type"
+    _description = "Work Order Type"
 
     name = fields.Char(
-        string='Name',
+        string="Name",
         required=True,
     )
     code = fields.Char(
-        string='Code',
+        string="Code",
         required=True,
     )
     active = fields.Boolean(
-        string='Active',
+        string="Active",
         default=True,
     )
     vehicle_id = fields.Many2one(
-        string='Vehicle',
-        comodel_name='fleet.vehicle',
+        string="Vehicle",
+        comodel_name="fleet.vehicle",
     )
     driver_id = fields.Many2one(
-        string='Driver',
-        comodel_name='res.partner',
+        string="Driver",
+        comodel_name="res.partner",
     )
     co_driver_id = fields.Many2one(
-        string='Co-Driver',
-        comodel_name='res.partner',
+        string="Co-Driver",
+        comodel_name="res.partner",
     )
     start_location_id = fields.Many2one(
         string="Start Location",
