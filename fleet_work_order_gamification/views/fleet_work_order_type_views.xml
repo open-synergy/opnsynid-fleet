@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="fleet_work_order_type_view_form" model="ir.ui.view">
+    <field name="name">fleet.work.order.type.gamification.form</field>
+    <field name="model">fleet.work.order.type</field>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//group[@name='group_1_1']" position="after">
+        <group string="Gamification" name="grp_gamification" colspan="1" col="2">
+            <field name="gamification_point"/>
+        </group>
+      </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
