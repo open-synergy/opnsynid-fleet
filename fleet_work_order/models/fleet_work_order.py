@@ -176,14 +176,6 @@ class FleetWorkOrder(models.Model):
                     "Vehicle and driver required"))
 
     @api.onchange(
-        "vehicle_id"
-    )
-    def onchange_vehicle_id(self):
-        self.driver_id = False
-        if self.vehicle_id:
-            self.driver_id = self.vehicle_id.driver_id
-
-    @api.onchange(
         "type_id"
     )
     def onchange_vehicle_id(self):
