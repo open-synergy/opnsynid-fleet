@@ -247,7 +247,6 @@ class FleetDebtCollectionCreate(models.TransientModel):
                 ("partner_id", "=", self.work_order_id.end_location_id.id),
             ]
             result = criteria + criteria_partner
-        raise UserError(_("%s")%(result))
         return result
 
     @api.multi
