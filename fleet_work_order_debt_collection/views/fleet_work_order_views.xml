@@ -12,7 +12,6 @@
     <field name="arch" type="xml">
         <xpath expr="//field[@name='partner_id']" position="after">
             <field name="debt_collection_id" invisible="1"/>
-            <field name="collection_ok" invisible="1"/>
         </xpath>
         <xpath expr="//field[@name='state']" position="before">
             <button
@@ -20,12 +19,12 @@
                 type="action"
                 string="Create Debt Collection"
                 class="oe_highlight"
-                attrs="{'invisible':['|', ('state','!=','confirmed'), ('collection_ok', '=', True)]}"/>
+                attrs="{'invisible':['|', ('state','!=','confirmed'), ('debt_collection_id', '!=', False)]}"/>
             <button
                 name="action_view_debt_collection"
                 type="object"
                 string="View Debt Collection"
-                attrs="{'invisible':[('collection_ok', '=', False)]}"/>
+                attrs="{'invisible':[('debt_collection_id', '!=', False)]}"/>
         </xpath>
     </field>
 </record>

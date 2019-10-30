@@ -10,7 +10,6 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": [
-        "fleet_work_order",
         "fleet_work_order_multiple_route",
         "account_debt_collection",
     ],

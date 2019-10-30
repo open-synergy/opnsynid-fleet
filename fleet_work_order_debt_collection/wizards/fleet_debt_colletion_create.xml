@@ -7,7 +7,7 @@
     <field name="model">fleet.debt_collection_create</field>
     <field name="arch" type="xml">
         <form>
-            <div states="draft,invoice">
+            <div name="div_1" states="draft,invoice">
                 <group name="group_1" colspan="4" col="2">
                     <field invisible="1" name="work_order_id"/>
                     <field invisible="1" name="state"/>
@@ -16,7 +16,7 @@
                     <field name="collector_id"/>
                 </group>
             </div>
-            <div states="invoice">
+            <div name="div_2" states="invoice">
                 <group name="group_2" string="Invoice(s)" colspan="4" col="2">
                     <field name="allowed_invoice_ids" widget="many2many_tags" invisible="1"/>
                     <field name="invoice_ids" domain="[('id', 'in', allowed_invoice_ids[0][2])]" nolabel="1" options="{'no_create': True}">
@@ -34,7 +34,7 @@
                     </field>
                 </group>
             </div>
-            <footer states="draft">
+            <footer name="footer_1" states="draft">
               <button name="action_generate_invoice"
                       type="object"
                       string="Generate Invoice"
@@ -43,7 +43,7 @@
                       <button special="cancel"
                               string="Cancel"/>
             </footer>
-            <footer states="invoice">
+            <footer name="footer_2" states="invoice">
                 <button name="action_create_collection"
                         type="object"
                         string="Create"
@@ -52,15 +52,15 @@
                 <button special="cancel"
                         string="Cancel"/>
             </footer>
-            <div states="failed_invoice">
+            <div name="div_3" states="failed_invoice">
                 <h2>Generate Invoice Failed:</h2>
                 <p>No Invoice Found.</p>
                 <p>Please check your data or contact Administrator.</p>
             </div>
-            <div states="success">
+            <div name="div_4" states="success">
                 <h2>Successfully Created Debt Collection</h2>
             </div>
-            <footer states="success">
+            <footer name="footer_3" states="success">
                 <button special="cancel" string="Close" type="object"/>
             </footer>
         </form>

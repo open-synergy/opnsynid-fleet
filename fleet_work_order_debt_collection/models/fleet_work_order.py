@@ -15,27 +15,11 @@ class FleetWorkOrder(models.Model):
     )
 
     @api.multi
-    @api.depends(
-        "debt_collection_id"
-    )
-    def _default_collection_ok(self):
-        for document in self:
-            document.collection_ok = False
-            if document.debt_collection_id:
-                document.collection_ok = True
-
-    collection_ok = fields.Boolean(
-        string="Collection Marking",
-        compute="_default_collection_ok",
-        store=False,
-    )
-
-    @api.multi
     def button_cancel(self):
         _super = super(FleetWorkOrder, self)
         result = _super.button_cancel()
         for document in self:
-            if self.debt_collection_id.state != "draft":
+            if document.debt_collection_id.state != "draft":
                 msg = _("Debt Collection must be on <Draft> state")
                 raise UserError(msg)
             document.debt_collection_id.unlink()
@@ -43,6 +27,7 @@ class FleetWorkOrder(models.Model):
 
     @api.multi
     def _get_action_debt_collection(self):
+        self.ensure_one()
         action =\
             self.env.ref(
                 "account_debt_collection."

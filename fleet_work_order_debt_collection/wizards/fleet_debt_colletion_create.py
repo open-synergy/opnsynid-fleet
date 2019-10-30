@@ -25,7 +25,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
 
     @api.model
     def _default_date(self):
-        return fields.Datetime.now()
+        return fields.Date.today()
 
     date = fields.Date(
         string="Date",
@@ -247,6 +247,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
                 ("partner_id", "=", self.work_order_id.end_location_id.id),
             ]
             result = criteria + criteria_partner
+        raise UserError(_("%s")%(result))
         return result
 
     @api.multi
