@@ -24,7 +24,7 @@
                 name="action_view_debt_collection"
                 type="object"
                 string="View Debt Collection"
-                attrs="{'invisible':[('debt_collection_id', '!=', False)]}"/>
+                attrs="{'invisible':[('debt_collection_id', '=', False)]}"/>
         </xpath>
     </field>
 </record>
