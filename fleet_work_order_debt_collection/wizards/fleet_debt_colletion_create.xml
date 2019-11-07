@@ -3,7 +3,7 @@
 <data>
 
 <record id="fleet_debt_colletion_create_view_form" model="ir.ui.view">
-    <field name="name">Create Debt Collection</field>
+    <field name="name">Create A/R Collection</field>
     <field name="model">fleet.debt_collection_create</field>
     <field name="arch" type="xml">
         <form>
@@ -58,7 +58,7 @@
                 <p>Please check your data or contact Administrator.</p>
             </div>
             <div name="div_4" states="success">
-                <h2>Successfully Created Debt Collection</h2>
+                <h2>Successfully Created A/R Collection</h2>
             </div>
             <footer name="footer_3" states="success">
                 <button special="cancel" string="Close" type="object"/>
@@ -68,7 +68,7 @@
 </record>
 
 <record id="fleet_debt_colletion_create_action" model="ir.actions.act_window">
-    <field name="name">Create Debt Collection</field>
+    <field name="name">Create A/R Collection</field>
     <field name="res_model">fleet.debt_collection_create</field>
     <field name="view_type">form</field>
     <field name="view_mode">form</field>

@@ -17,13 +17,13 @@
             <button
                 name="%(fleet_debt_colletion_create_action)d"
                 type="action"
-                string="Create Debt Collection"
+                string="Create A/R Collection"
                 class="oe_highlight"
                 attrs="{'invisible':['|', ('state','!=','confirmed'), ('debt_collection_id', '!=', False)]}"/>
             <button
                 name="action_view_debt_collection"
                 type="object"
-                string="View Debt Collection"
+                string="View A/R Collection"
                 attrs="{'invisible':[('debt_collection_id', '=', False)]}"/>
         </xpath>
     </field>

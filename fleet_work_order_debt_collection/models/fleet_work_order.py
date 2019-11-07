@@ -10,7 +10,7 @@ class FleetWorkOrder(models.Model):
     _inherit = "fleet.work.order"
 
     debt_collection_id = fields.Many2one(
-        string="Debt Collection",
+        string="A/R Collection",
         comodel_name="account.debt_collection",
     )
 
@@ -43,7 +43,7 @@ class FleetWorkOrder(models.Model):
             [("id", "=", self.debt_collection_id.id)]
 
         return {
-            "name": "Debt Collection",
+            "name": "A/R Collection",
             "view_type": "form",
             "view_mode": "form",
             "res_model": "account.debt_collection",
