@@ -3,7 +3,7 @@
    :alt: License: AGPL-3
 
 ============================
-Work Order - Debt Collection
+Work Order - A/R Collection
 ============================
 
 
@@ -16,7 +16,7 @@ To install this module, you need to:
 2.  Add the path to this repository in your configuration (addons-path)
 3.  Update the module list
 4.  Go to menu *Setting -> Modules -> Local Modules*
-5.  Search For *Work Order - Debt Collection*
+5.  Search For *Work Order - A/R Collection*
 6.  Install the module
 
 Configuration

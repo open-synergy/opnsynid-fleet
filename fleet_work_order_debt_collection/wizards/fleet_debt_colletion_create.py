@@ -115,7 +115,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
         document = self.work_order_id
 
         if not self._check_debt_collection():
-            msg = _("Debt Collection has been created with number: %s")
+            msg = _("A/R Collection has been created with number: %s")
             raise UserError(msg % (document.debt_collection_id.name))
 
         if self.invoice_ids:
