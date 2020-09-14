@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2016 OpenSynergy Indonesia
+     Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <openerp>
@@ -30,6 +31,28 @@
                         <field name="picking_type_id" invisible="1"/>
                     </tree>
                 </field>
+                <group name="group_picking_1">
+                    <group name="group_picking_1_1" string="Pickings Information">
+                        <group name="group_picking_1_1_1" colspan="3">
+                            <label for="picking_volume"/>
+                            <div>
+                                <field name="picking_volume" class="oe_inline" style="vertical-align:baseline"/> m3
+                            </div>
+                            <label for="picking_weight"/>
+                            <div>
+                                <field name="picking_weight" class="oe_inline" style="vertical-align:baseline"/> kg
+                            </div>
+                            <label for="picking_weight_diff"/>
+                            <div>
+                                <field name="picking_weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
+                            </div>
+                            <label for="picking_volume_diff"/>
+                            <div>
+                                <field name="picking_volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                            </div>
+                        </group>
+                    </group>
+                </group>
             </page>
         </xpath>
         <xpath expr="//field[@name='type_id']" position="after">
