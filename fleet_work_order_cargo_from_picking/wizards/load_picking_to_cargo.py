@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
+# Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, models, fields
@@ -83,4 +84,5 @@ class LoadPickingToCargo(models.TransientModel):
     @api.multi
     def _load_cargo(self):
         self.ensure_one()
-        self.picking_ids.write({"work_order_id": self.work_order_id.id})
+        self.work_order_id.write(
+            {"picking_ids": [(6, 0, self.picking_ids.ids)]})

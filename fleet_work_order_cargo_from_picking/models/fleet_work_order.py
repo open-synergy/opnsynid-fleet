@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
+# Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api
@@ -38,6 +39,54 @@ class FleetWorkOrder(models.Model):
             if wo.type_id:
                 wo.restrict_partner_cargo = wo.type_id.restrict_partner_cargo
 
+    @api.depends(
+        "vehicle_id",
+        "vehicle_id.loading_space",
+        "vehicle_id.load_capacity",
+        "picking_ids",
+        "picking_ids.move_lines",
+        "picking_ids.move_lines.product_id",
+        "picking_ids.move_lines.product_qty",
+    )
+    def _compute_picking(self):
+        for order in self:
+            picking_volume = picking_weight = picking_weight_diff = \
+                picking_volume_diff = 0.0
+            for picking in order.picking_ids:
+                for move in picking.move_lines:
+                    picking_volume += \
+                        (move.product_id.volume * move.product_qty)
+                    picking_weight += \
+                        (move.product_id.weight * move.product_qty)
+            picking_volume_diff = order.loading_space - \
+                picking_volume
+            picking_weight_diff = order.load_capacity - \
+                picking_weight
+            order.picking_volume = picking_volume
+            order.picking_weight = picking_weight
+            order.picking_volume_diff = picking_volume_diff
+            order.picking_weight_diff = picking_weight_diff
+
+    picking_volume = fields.Float(
+        string="Picking Volume",
+        compute="_compute_picking",
+        store=True,
+    )
+    picking_weight = fields.Float(
+        string="Picking Weight",
+        compute="_compute_picking",
+        store=True,
+    )
+    picking_weight_diff = fields.Float(
+        string="Picking Weight Diff",
+        compute="_compute_picking",
+        store=True,
+    )
+    picking_volume_diff = fields.Float(
+        string="Picking Volume Diff",
+        compute="_compute_picking",
+        store=True,
+    )
     picking_ids = fields.One2many(
         string="Pickings",
         comodel_name="stock.picking",
