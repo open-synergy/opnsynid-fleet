@@ -84,6 +84,7 @@ class LoadPickingToCargo(models.TransientModel):
     @api.multi
     def _load_cargo(self):
         self.ensure_one()
-        self.picking_ids.move_lines._compute_measurement()
+        for picking in self.picking_ids:
+            picking.move_lines._compute_measurement()
         self.picking_ids._compute_measurement()
         self.picking_ids.write({"work_order_id": self.work_order_id.id})
