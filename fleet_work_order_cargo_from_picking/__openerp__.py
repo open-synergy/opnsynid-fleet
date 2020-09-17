@@ -5,7 +5,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Fleet Work Order Cargo From Picking",
-    "version": "8.0.1.2.0",
+    "version": "8.0.2.0.0",
     "category": "Fleet",
     "website": "https://simetri-sinergi.id/",
     "author": "PT. Simetri Sinergi Indonesia,OpenSynergy Indonesia",
@@ -13,10 +13,12 @@
     "installable": True,
     "depends": [
         "fleet_work_order_cargo",
+        "stock_picking_measurement",
     ],
     "data": [
         "wizards/load_picking_to_cargo.xml",
         "views/fleet_work_order_type_views.xml",
         "views/fleet_work_order_views.xml",
+        "views/stock_picking_views.xml",
     ],
 }

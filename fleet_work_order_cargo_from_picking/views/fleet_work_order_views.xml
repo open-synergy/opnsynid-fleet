@@ -26,31 +26,42 @@
                         <field name="origin"/>
                         <field name="group_id" invisible="1"/>
                         <field name="backorder_id"/>
+                        <field name="picking_volume"/>
+                        <field name="picking_gross_weight"/>
+                        <field name="picking_net_weight"/>
                         <field name="state"/>
                         <field name="priority" invisible="1"/>
                         <field name="picking_type_id" invisible="1"/>
                     </tree>
                 </field>
-                <group name="group_picking_1">
-                    <group name="group_picking_1_1" string="Pickings Information">
-                        <group name="group_picking_1_1_1" colspan="3">
-                            <label for="picking_volume"/>
+                <group name="group_picking_1" colspan="4" col="2">
+                    <group name="group_picking_1_1" colspan="1" col="2" string="Picking Information">
+                        <label for="picking_volume" string="Volume"/>
+                        <div>
+                            <field name="picking_volume" class="oe_inline" style="vertical-align:baseline"/> m3
+                        </div>
+                        <label for="picking_weight" string="Weight"/>
+                        <div>
+                            <field name="picking_weight" class="oe_inline" style="vertical-align:baseline"/> kg
+                        </div>
+                        <label for="picking_weight_diff" string="Weight Diff"/>
+                        <div>
+                            <field name="picking_weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
+                        </div>
+                        <label for="picking_volume_diff" string="Volume Diff"/>
+                        <div>
+                            <field name="picking_volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                        </div>
+                    </group>
+                    <group name="group_picking_1_2" string="Cargo Capacity">
+                            <label for="loading_space"/>
                             <div>
-                                <field name="picking_volume" class="oe_inline" style="vertical-align:baseline"/> m3
+                                <field name="loading_space" class="oe_inline" style="vertical-align:baseline"/> m3
                             </div>
-                            <label for="picking_weight"/>
+                            <label for="load_capacity"/>
                             <div>
-                                <field name="picking_weight" class="oe_inline" style="vertical-align:baseline"/> kg
+                                <field name="load_capacity" class="oe_inline" style="vertical-align:baseline"/> kg
                             </div>
-                            <label for="picking_weight_diff"/>
-                            <div>
-                                <field name="picking_weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
-                            </div>
-                            <label for="picking_volume_diff"/>
-                            <div>
-                                <field name="picking_volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
-                            </div>
-                        </group>
                     </group>
                 </group>
             </page>
