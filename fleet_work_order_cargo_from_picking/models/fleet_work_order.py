@@ -87,6 +87,39 @@ class FleetWorkOrder(models.Model):
         compute="_compute_picking",
         store=True,
     )
+
+    @api.depends(
+        "loading_space",
+        "load_capacity",
+        "picking_volume",
+        "picking_weight",
+    )
+    def _compute_picking_progress(self):
+        for order in self:
+            progress_volume = progress_weight = 0.0
+            try:
+                progress_volume = (
+                    order.picking_volume / order.loading_space) * 100
+            except ZeroDivisionError:
+                progress_volume = 0.0
+            try:
+                progress_weight = (
+                    order.picking_weight / order.load_capacity) * 100
+            except ZeroDivisionError:
+                progress_weight = 0.0
+            order.picking_volume_progress = progress_volume
+            order.picking_weight_progress = progress_weight
+
+    picking_volume_progress = fields.Float(
+        string="Progress Volume",
+        compute="_compute_picking_progress",
+        store=True,
+    )
+    picking_weight_progress = fields.Float(
+        string="Progress Weight",
+        compute="_compute_picking_progress",
+        store=True,
+    )
     picking_ids = fields.One2many(
         string="Pickings",
         comodel_name="stock.picking",
