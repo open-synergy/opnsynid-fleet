@@ -40,6 +40,14 @@
                         <div>
                             <field name="picking_volume" class="oe_inline" style="vertical-align:baseline"/> m3
                         </div>
+                        <label for="picking_volume_diff" string="Volume Diff"/>
+                        <div>
+                            <field name="picking_volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                        </div>
+                        <label for="picking_volume_progress" string="Volume Progress"/>
+                        <div>
+                            <field name="picking_volume_progress" class="oe_inline" style="vertical-align:baseline" widget="progressbar"/>
+                        </div>
                         <label for="picking_weight" string="Weight"/>
                         <div>
                             <field name="picking_weight" class="oe_inline" style="vertical-align:baseline"/> kg
@@ -48,9 +56,9 @@
                         <div>
                             <field name="picking_weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
                         </div>
-                        <label for="picking_volume_diff" string="Volume Diff"/>
+                        <label for="picking_weight_progress" string="Weight Progress"/>
                         <div>
-                            <field name="picking_volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                            <field name="picking_weight_progress" class="oe_inline" style="vertical-align:baseline" widget="progressbar"/>
                         </div>
                     </group>
                     <group name="group_picking_1_2" string="Cargo Capacity">
@@ -68,6 +76,18 @@
         </xpath>
         <xpath expr="//field[@name='type_id']" position="after">
             <field name="allowed_picking_type_ids" widget="many2many_tags" groups="base.group_system"/>
+        </xpath>
+    </field>
+</record>
+
+<record id="fleet_work_order_view_tree" model="ir.ui.view">
+    <field name="name">fleet.work.order tree</field>
+    <field name="model">fleet.work.order</field>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_view_tree"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='state']" position="before">
+            <field name="picking_volume_progress" widget="progressbar"/>
+            <field name="picking_weight_progress" widget="progressbar"/>
         </xpath>
     </field>
 </record>
