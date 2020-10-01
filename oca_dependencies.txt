@@ -16,4 +16,5 @@ stock-logistics-transport https://github.com/OCA/stock-logistics-transport 8.0
 server-tools https://github.com/oca/server-tools 8.0
 web https://github.com/OCA/web 8.0
 hardware https://github.com/open-synergy/opnsynid-hardware 8.0
-opnsynidaccount-invoicing https://github.com/open-synergy/opnsynid-account-invoicing 8.0
+opnsynid-account-invoicing https://github.com/open-synergy/opnsynid-account-invoicing 8.0
+opnsynid-stock-logistics-workflow https://github.com/open-synergy/opnsynid-stock-logistics-workflow 8.0
