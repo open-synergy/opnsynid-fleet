@@ -16,6 +16,7 @@
         "stock_picking_measurement",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "wizards/load_picking_to_cargo.xml",
         "views/fleet_work_order_type_views.xml",
         "views/fleet_work_order_views.xml",
