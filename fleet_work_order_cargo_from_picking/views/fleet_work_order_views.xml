@@ -73,6 +73,15 @@
                     </group>
                 </group>
             </page>
+            <page string="Picking Summary" name="page_line_summary">
+                <field name="picking_summary_ids" nolabel="1" colspan="4">
+                    <tree create="false" edit="false" delete="true">
+                        <field name="product_id"/>
+                        <field name="reserved_availability"/>
+                        <field name="product_uom_id"/>
+                    </tree>
+                </field>
+            </page>
         </xpath>
         <xpath expr="//field[@name='type_id']" position="after">
             <field name="allowed_picking_type_ids" widget="many2many_tags" groups="base.group_system"/>

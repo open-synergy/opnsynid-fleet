@@ -143,3 +143,8 @@ class FleetWorkOrder(models.Model):
         compute="_compute_allowed_partner_ids",
         store=False,
     )
+    picking_summary_ids = fields.One2many(
+        string="Picking Summary",
+        comodel_name="fleet.work.order.picking_summary",
+        inverse_name="work_order_id",
+    )
