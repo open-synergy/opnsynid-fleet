@@ -3,7 +3,7 @@
 # Copyright 2021 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
+from openerp import models, fields, api
 from openerp import tools
 
 
@@ -26,6 +26,35 @@ class FleetWorkOrderPickingSummary(models.Model):
     product_uom_id = fields.Many2one(
         string="Product UoM",
         comodel_name="product.uom",
+    )
+
+    @api.multi
+    def _prepare_criteria_move_ids(self):
+        self.ensure_one()
+        picking_ids = \
+            self.work_order_id.picking_ids.ids
+        result = [
+            ("picking_id", "in", picking_ids),
+            ("product_id", "=", self.product_id.id)
+        ]
+        return result
+
+    @api.multi
+    def _compute_stock_move_ids(self):
+        obj_stock_move =\
+            self.env["stock.move"]
+
+        for document in self:
+            move_ids =\
+                obj_stock_move.search(
+                    document._prepare_criteria_move_ids())
+            document.stock_move_ids = move_ids.ids
+
+    stock_move_ids = fields.Many2many(
+        string="Moves",
+        comodel_name="stock.move",
+        compute="_compute_stock_move_ids",
+        store=False,
     )
 
     def _select(self):
