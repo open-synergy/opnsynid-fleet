@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="fleet_work_order_type_view_form" model="ir.ui.view">
+            <field name="name">Inherit - Fleet Work Order Cargo Schedule</field>
+            <field name="model">fleet.work.order.type</field>
+            <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="page_cargo_schedule" string="Cargo">
+                            <button name="action_add_schedule" type="object" string="Add Schedule"/>
+                            <field name="cargo_schedule_ids" colspan="4" nolabel="1" context="{'active_test':False}">
+                                <tree string="Schedules" editable="botton" create="false">
+                                    <field name="cron_id" invisible="1"/>
+                                    <field name="name"/>
+                                    <field name="cron_active"/>
+                                    <field name="interval_number"/>
+                                    <field name="interval_type"/>
+                                    <field name="numbercall"/>
+                                    <field name="nextcall"/>
+                                    <field name="start_offset" widget="float_time"/>
+                                </tree>
+                                <form>
+                                    <group name="grp_1">
+                                        <field name="cron_id"/>
+                                        <field name="interval_number"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+    </data>
+</openerp>
