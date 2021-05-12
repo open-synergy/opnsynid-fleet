@@ -14,17 +14,18 @@ class FleetWorkOrder(models.Model):
         "route_ids"
     )
     def _compute_route(self):
-        if self.multiple_route and len(self.route_ids) > 0:
-            self.function_start_location_id = self.route_ids[
-                0].start_location_id.id
-            self.function_end_location_id = self.route_ids[
-                -1].end_location_id.id
-            for route in self.route_ids:
-                self.function_distance += route.distance
-        else:
-            self.function_start_location_id = self.start_location_id.id
-            self.function_end_location_id = self.end_location_id.id
-            self.function_distance = self.distance
+        for document in self:
+            if document.multiple_route and len(document.route_ids) > 0:
+                document.function_start_location_id = document.route_ids[
+                    0].start_location_id.id
+                document.function_end_location_id = document.route_ids[
+                    -1].end_location_id.id
+                for route in document.route_ids:
+                    document.function_distance += route.distance
+            else:
+                document.function_start_location_id = document.start_location_id.id
+                document.function_end_location_id = document.end_location_id.id
+                document.function_distance = document.distance
 
     route_ids = fields.One2many(
         string="Routes",
