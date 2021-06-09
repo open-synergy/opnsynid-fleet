@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
 <record id="driver_interface_actions_server" model="ir.actions.server">
     <field name="name">Driver Interface</field>
-    <field name="sequence" eval="5"/>
+    <field name="sequence" eval="5" />
     <field name="type">ir.actions.server</field>
-    <field name="model_id" ref="fleet_work_order.model_fleet_work_order"/>
+    <field name="model_id" ref="fleet_work_order.model_fleet_work_order" />
     <field name="condition">True</field>
     <field name="state">code</field>
     <field name="code">obj_employee = env["hr.employee"]
@@ -49,11 +48,13 @@ action = waction
     <field name="view_mode">form</field>
 </record>
 
-<menuitem id="fleet_work_order_driver_interface_menu"
-    parent="fleet_work_order.fleet_work_order_root_menu"
-    name="Driver Interface"
-    action="driver_interface_actions_server"
-    sequence="2"/>
+<menuitem
+            id="fleet_work_order_driver_interface_menu"
+            parent="fleet_work_order.fleet_work_order_root_menu"
+            name="Driver Interface"
+            action="driver_interface_actions_server"
+            sequence="2"
+        />
 
 
 

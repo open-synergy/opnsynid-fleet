@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-# pylint: disable=locally-disabled, manifest-required-author
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Fleet Work Order Cargo From Picking",
     "version": "8.0.2.3.0",
     "category": "Fleet",
-    "website": "https://simetri-sinergi.id/",
+    "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia,OpenSynergy Indonesia",
     "license": "AGPL-3",
     "installable": True,

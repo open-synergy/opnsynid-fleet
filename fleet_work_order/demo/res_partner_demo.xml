@@ -1,77 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
 <record id="driver1" model="res.partner">
     <field name="name">Driver 1</field>
-    <field name="parent_id" ref="base.main_partner"/>
-    <field eval="0" name="customer"/>
-    <field eval="1" name="supplier"/>    
+    <field name="parent_id" ref="base.main_partner" />
+    <field eval="0" name="customer" />
+    <field eval="1" name="supplier" />
     <field name="use_parent_address">1</field>
 </record>
 
 <record id="driver2" model="res.partner">
     <field name="name">Driver 2</field>
-    <field name="parent_id" ref="base.main_partner"/>
-    <field eval="0" name="customer"/>
-    <field eval="1" name="supplier"/>    
+    <field name="parent_id" ref="base.main_partner" />
+    <field eval="0" name="customer" />
+    <field eval="1" name="supplier" />
     <field name="use_parent_address">1</field>
 </record>
 
 <record id="point1" model="res.partner">
     <field name="name">Port of Airlie Bus Terminal</field>
-    <field name="is_company" eval="1"/>
-    <field eval="0" name="customer"/>
-    <field eval="0" name="supplier"/>    
+    <field name="is_company" eval="1" />
+    <field eval="0" name="customer" />
+    <field eval="0" name="supplier" />
     <field name="street">The Cove Rd</field>
     <field name="street2">Airlie Beach QLD</field>
     <field name="zip">4802</field>
-    <field name="state_id" ref="base.at"/>
+    <field name="state_id" ref="base.at" />
 </record>
 
 <record id="point2" model="res.partner">
     <field name="name">Caltex Service Station</field>
-    <field name="is_company" eval="1"/>    
-    <field eval="0" name="customer"/>
-    <field eval="0" name="supplier"/>    
+    <field name="is_company" eval="1" />
+    <field eval="0" name="customer" />
+    <field eval="0" name="supplier" />
     <field name="street">Cnr Round Hill Rd &amp; Captain Cook Drive</field>
     <field name="street2">Agnes Water QLD</field>
     <field name="zip">4677</field>
-    <field name="state_id" ref="base.at"/>
+    <field name="state_id" ref="base.at" />
 </record>
 
 <record id="point3" model="res.partner">
     <field name="name">Brisbane Transit Centre</field>
-    <field name="is_company" eval="1"/>    
-    <field eval="0" name="customer"/>
-    <field eval="0" name="supplier"/>    
+    <field name="is_company" eval="1" />
+    <field eval="0" name="customer" />
+    <field eval="0" name="supplier" />
     <field name="street">Level 3</field>
     <field name="street2">Roma St Brisbane QLD</field>
     <field name="zip">4000</field>
-    <field name="state_id" ref="base.at"/>
+    <field name="state_id" ref="base.at" />
 </record>
 
 <record id="point4" model="res.partner">
     <field name="name">Opposite Palace Hostel</field>
-    <field name="is_company" eval="1"/>    
-    <field eval="0" name="customer"/>
-    <field eval="0" name="supplier"/>    
+    <field name="is_company" eval="1" />
+    <field eval="0" name="customer" />
+    <field eval="0" name="supplier" />
     <field name="street">Freshwater St. Cnr Of Bideford</field>
-    <field name="state_id" ref="base.at"/>
+    <field name="state_id" ref="base.at" />
 </record>
 
 <record id="point5" model="res.partner">
     <field name="name">84 Jonson Street</field>
-    <field name="is_company" eval="1"/>    
-    <field eval="0" name="customer"/>
-    <field eval="0" name="supplier"/>    
+    <field name="is_company" eval="1" />
+    <field eval="0" name="customer" />
+    <field eval="0" name="supplier" />
     <field name="street">Byron Bay</field>
     <field name="street2">New South Wales</field>
-    <field name="zip">2481</field>    
-    <field name="state_id" ref="base.at"/>
+    <field name="zip">2481</field>
+    <field name="state_id" ref="base.at" />
 </record>
 </data>
 </openerp>

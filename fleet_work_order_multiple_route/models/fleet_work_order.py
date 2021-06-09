@@ -1,25 +1,23 @@
-# -*- coding: utf-8 -*-
-# © © 2016 OpenSynergy Indonesia
+# Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class FleetWorkOrder(models.Model):
     _inherit = "fleet.work.order"
 
     @api.multi
-    @api.depends(
-        "multiple_route",
-        "route_ids"
-    )
+    @api.depends("multiple_route", "route_ids")
     def _compute_route(self):
         for document in self:
             if document.multiple_route and len(document.route_ids) > 0:
                 document.function_start_location_id = document.route_ids[
-                    0].start_location_id.id
+                    0
+                ].start_location_id.id
                 document.function_end_location_id = document.route_ids[
-                    -1].end_location_id.id
+                    -1
+                ].end_location_id.id
                 for route in document.route_ids:
                     document.function_distance += route.distance
             else:
@@ -68,17 +66,13 @@ class FleetWorkOrder(models.Model):
         readonly=True,
     )
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_multiple_route(self):
         if self.type_id:
             wo_type = self.type_id
             self.multiple_route = wo_type.multiple_route
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_route_ids(self):
         self.route_ids.unlink()
         if self.type_id:

@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
     <data noupdate="1">
         <record model="ir.sequence.type" id="sequence_type_passanger">
@@ -12,7 +11,7 @@
         <record model="ir.sequence" id="sequence_passanger">
             <field name="name">Passanger sequence</field>
             <field name="code">fleet.passanger</field>
-            <field name="padding" eval="4"/>
+            <field name="padding" eval="4" />
             <field name="prefix">PSG/</field>
         </record>
     </data>

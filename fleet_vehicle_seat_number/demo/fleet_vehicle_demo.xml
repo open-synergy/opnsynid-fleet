@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
 <record id="seat1" model="fleet.vehicle.seat">
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="sequence" eval="1"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="sequence" eval="1" />
     <field name="name">1</field>
 </record>
 
 <record id="seat2" model="fleet.vehicle.seat">
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="sequence" eval="2"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="sequence" eval="2" />
     <field name="name">2</field>
 </record>
 
 <record id="seat3" model="fleet.vehicle.seat">
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="sequence" eval="3"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="sequence" eval="3" />
     <field name="name">3</field>
 </record>
 
 <record id="seat4" model="fleet.vehicle.seat">
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="sequence" eval="4"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="sequence" eval="4" />
     <field name="name">4</field>
 </record>
 </data>

@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime, timedelta
-from openerp import models, fields, api
+
+from openerp import api, fields, models
 from openerp.tools.translate import _
 
 
@@ -19,28 +19,30 @@ class FleetWorkOrderType(models.Model):
     @api.multi
     def action_add_schedule(self):
         for order_type in self:
-            self._add_schedule()
+            order_type._add_schedule()
 
     @api.multi
     def _add_schedule(self):
         self.ensure_one()
-        obj_schedule = self.env[
-            "fleet.work.order.type.schedule"]
-        obj_cron = self.env[
-            "ir.cron"]
-        schedule = obj_schedule.create({
-            "fleet_work_order_type_id": self.id,
-        })
+        obj_schedule = self.env["fleet.work.order.type.schedule"]
+        obj_cron = self.env["ir.cron"]
+        schedule = obj_schedule.create(
+            {
+                "fleet_work_order_type_id": self.id,
+            }
+        )
         name = _("Work Order Schedule: %s" % self.name)
         args = "[%s]" % (str(schedule.id))
-        cron = obj_cron.create({
-            "name": name,
-            "user_id": self.env.user.id,
-            "active": False,
-            "model": "fleet.work.order.type.schedule",
-            "function": "run_schedule",
-            "args": args,
-        })
+        cron = obj_cron.create(
+            {
+                "name": name,
+                "user_id": self.env.user.id,
+                "active": False,
+                "model": "fleet.work.order.type.schedule",
+                "function": "run_schedule",
+                "args": args,
+            }
+        )
         schedule.cron_id = cron
 
 
@@ -105,12 +107,13 @@ class FleetWorkOrderTypeSchedule(models.Model):
     @api.model
     def run_schedule(self, schedule_id):
         schedule = self.browse(schedule_id)
-        obj_order = self.env[
-            "fleet.work.order"]
+        obj_order = self.env["fleet.work.order"]
         date_start = datetime.now() + timedelta(hours=+schedule.start_offset)
-        order = obj_order.create({
-            "type_id": schedule.fleet_work_order_type_id.id,
-            "date_start": date_start,
-            "date_end": date_start,
-        })
+        order = obj_order.create(
+            {
+                "type_id": schedule.fleet_work_order_type_id.id,
+                "date_start": date_start,
+                "date_end": date_start,
+            }
+        )
         order.onchange_type_id()

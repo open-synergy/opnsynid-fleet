@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 OpenSynergy Indonesia
 # Copyright 2021 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-from openerp import tools
+from openerp import api, fields, models, tools
+from psycopg2.extensions import AsIs
 
 
 class FleetWorkOrderPickingSummary(models.Model):
@@ -31,23 +30,19 @@ class FleetWorkOrderPickingSummary(models.Model):
     @api.multi
     def _prepare_criteria_move_ids(self):
         self.ensure_one()
-        picking_ids = \
-            self.work_order_id.picking_ids.ids
+        picking_ids = self.work_order_id.picking_ids.ids
         result = [
             ("picking_id", "in", picking_ids),
-            ("product_id", "=", self.product_id.id)
+            ("product_id", "=", self.product_id.id),
         ]
         return result
 
     @api.multi
     def _compute_stock_move_ids(self):
-        obj_stock_move =\
-            self.env["stock.move"]
+        obj_stock_move = self.env["stock.move"]
 
         for document in self:
-            move_ids =\
-                obj_stock_move.search(
-                    document._prepare_criteria_move_ids())
+            move_ids = obj_stock_move.search(document._prepare_criteria_move_ids())
             document.stock_move_ids = move_ids.ids
 
     stock_move_ids = fields.Many2many(
@@ -90,14 +85,15 @@ class FleetWorkOrderPickingSummary(models.Model):
 
     def init(self, cr):
         tools.drop_view_if_exists(cr, self._table)
-        cr.execute("""CREATE or REPLACE VIEW %s as (
+        view_query = """%s
             %s
             %s
-            %s
-            %s
-            )""" % (
-            self._table,
+            %s""" % (
             self._select(),
             self._from(),
             self._where(),
-            self._group_by()))
+            self._group_by(),
+        )
+        cr.execute(
+            "CREATE OR REPLACE VIEW %s AS %s", (AsIs(self._table), AsIs(view_query))
+        )

@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 <record id="type_2" model="fleet.work.order.type">
     <field name="name">Hervey Bay - Brisbane</field>
     <field name="code">0002</field>
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="driver_id" ref="base.user_demo_res_partner"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="driver_id" ref="base.user_demo_res_partner" />
 </record>
 
 <record id="type_3" model="fleet.work.order.type">
     <field name="name">Airlie Beach - Agnes Water</field>
     <field name="code">0003</field>
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="driver_id" ref="base.user_demo_res_partner"/>
-    <field name="start_location_id" ref="point1"/>
-    <field name="end_location_id" ref="point2"/>
-    <field name="distance" eval="123"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="driver_id" ref="base.user_demo_res_partner" />
+    <field name="start_location_id" ref="point1" />
+    <field name="end_location_id" ref="point2" />
+    <field name="distance" eval="123" />
 </record>
 
 <record id="type_4" model="fleet.work.order.type">
     <field name="name">Agnes Water - Airlie Beach</field>
     <field name="code">0004</field>
-    <field name="vehicle_id" ref="fleet.vehicle_1"/>
-    <field name="driver_id" ref="base.user_demo_res_partner"/>
+    <field name="vehicle_id" ref="fleet.vehicle_1" />
+    <field name="driver_id" ref="base.user_demo_res_partner" />
 </record>
 </data>
 </openerp>

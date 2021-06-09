@@ -1,29 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
-<menuitem id="fleet_work_order_root_menu"
-    parent="fleet.menu_root"
-    name="Work Order"
-    sequence="0"/>
-    
+<menuitem
+            id="fleet_work_order_root_menu"
+            parent="fleet.menu_root"
+            name="Work Order"
+            sequence="0"
+        />
+
 <record id="fleet_work_order_view_tree" model="ir.ui.view">
     <field name="name">fleet.work.order Tree</field>
     <field name="model">fleet.work.order</field>
     <field name="arch" type="xml">
         <tree string="Fleet Work Order">
-            <field name="name"/>
-            <field name="date_start"/>
-            <field name="date_end"/>
-            <field name="type_id"/>
-            <field name="partner_id"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
-            <field name="vehicle_id"/>
-            <field name="driver_id"/>
-            <field name="state"/>
+            <field name="name" />
+            <field name="date_start" />
+            <field name="date_end" />
+            <field name="type_id" />
+            <field name="partner_id" />
+            <field name="start_location_id" />
+            <field name="end_location_id" />
+            <field name="vehicle_id" />
+            <field name="driver_id" />
+            <field name="state" />
         </tree>
     </field>
 </record>
@@ -33,21 +34,45 @@
     <field name="model">fleet.work.order</field>
     <field name="arch" type="xml">
         <search string="Fleet Work Order">
-            <field name="date_start"/>
-            <field name="date_end"/>
-            <field name="type_id"/>
-            <field name="partner_id"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
-            <field name="vehicle_id"/>
-            <field name="driver_id"/>
+            <field name="date_start" />
+            <field name="date_end" />
+            <field name="type_id" />
+            <field name="partner_id" />
+            <field name="start_location_id" />
+            <field name="end_location_id" />
+            <field name="vehicle_id" />
+            <field name="driver_id" />
             <group name="group_by" string="Group By..">
-                <filter name="filter_group_type" string="Type" context="{'group_by':'type_id'}"/>
-                <filter name="filter_group_partner" string="Partner" context="{'group_by':'partner_id'}"/>
-                <filter name="filter_group_start_loc" string="Start Location" context="{'group_by':'start_location_id'}"/>
-                <filter name="filter_group_end_loc" string="End Location" context="{'group_by':'end_location_id'}"/>
-                <filter name="filter_group_vehicle" string="Vehicle" context="{'group_by':'vehicle_id'}"/>
-                <filter name="filter_group_driver" string="Driver" context="{'group_by':'driver_id'}"/>
+                <filter
+                            name="filter_group_type"
+                            string="Type"
+                            context="{'group_by':'type_id'}"
+                        />
+                <filter
+                            name="filter_group_partner"
+                            string="Partner"
+                            context="{'group_by':'partner_id'}"
+                        />
+                <filter
+                            name="filter_group_start_loc"
+                            string="Start Location"
+                            context="{'group_by':'start_location_id'}"
+                        />
+                <filter
+                            name="filter_group_end_loc"
+                            string="End Location"
+                            context="{'group_by':'end_location_id'}"
+                        />
+                <filter
+                            name="filter_group_vehicle"
+                            string="Vehicle"
+                            context="{'group_by':'vehicle_id'}"
+                        />
+                <filter
+                            name="filter_group_driver"
+                            string="Driver"
+                            context="{'group_by':'driver_id'}"
+                        />
             </group>
         </search>
     </field>
@@ -59,49 +84,86 @@
     <field name="arch" type="xml">
         <form string="Fleet Work Order">
             <header>
-                <button name="button_confirm" string="Confirm" type="object" class="oe_highlight" states="draft"/>
-                <button name="%(work_order_depart_action)d" string="Depart" type="action" class="oe_highlight" states="confirmed"/>
-                <button name="%(work_order_arrive_action)d" string="Arrive" type="action" class="oe_highlight" states="depart"/>                
-                <button name="button_cancel" string="Cancel" type="object" states="draft,confirmed,depart,arrive"/>
-                <button name="button_restart" string="Set To Draft" type="object" states="cancelled"/>                                
-                <field name="state" widget="statusbar"/>
+                <button
+                            name="button_confirm"
+                            string="Confirm"
+                            type="object"
+                            class="oe_highlight"
+                            states="draft"
+                        />
+                <button
+                            name="%(work_order_depart_action)d"
+                            string="Depart"
+                            type="action"
+                            class="oe_highlight"
+                            states="confirmed"
+                        />
+                <button
+                            name="%(work_order_arrive_action)d"
+                            string="Arrive"
+                            type="action"
+                            class="oe_highlight"
+                            states="depart"
+                        />
+                <button
+                            name="button_cancel"
+                            string="Cancel"
+                            type="object"
+                            states="draft,confirmed,depart,arrive"
+                        />
+                <button
+                            name="button_restart"
+                            string="Set To Draft"
+                            type="object"
+                            states="cancelled"
+                        />
+                <field name="state" widget="statusbar" />
             </header>
             <sheet>
-                <label for="name"/>
+                <label for="name" />
                 <h1>
-                    <field name="name"/>
+                    <field name="name" />
                 </h1>
                 <div class="oe_right oe_button_box">
                 </div>
                 <group name="group_1" colspan="4" col="2">
-                    <group string="Order Information" name="group_1_2" colspan="1" col="2">
-                        <field name="date_start"/>
-                        <field name="date_end"/>
-                        <field name="type_id"/>
-                        <field name="partner_id" context="{'show_address':1}" options="{'always_reload':True}"/>
+                    <group
+                                string="Order Information"
+                                name="group_1_2"
+                                colspan="1"
+                                col="2"
+                            >
+                        <field name="date_start" />
+                        <field name="date_end" />
+                        <field name="type_id" />
+                        <field
+                                    name="partner_id"
+                                    context="{'show_address':1}"
+                                    options="{'always_reload':True}"
+                                />
                     </group>
                     <group string="Vehicle" name="group_1_3" colspan="1" col="2">
-                        <field name="vehicle_id"/>
-                        <field name="driver_id"/>
-                        <field name="co_driver_id"/>
+                        <field name="vehicle_id" />
+                        <field name="driver_id" />
+                        <field name="co_driver_id" />
                     </group>
                 </group>
                 <notebook colspan="4">
                     <page name="page_route" string="Route">
                         <group name="group_route_1" colspan="4" col="4">
-                            <field name="start_location_id"/>
-                            <field name="end_location_id"/>
-                            <field name="distance"/>
+                            <field name="start_location_id" />
+                            <field name="end_location_id" />
+                            <field name="distance" />
                         </group>
                     </page>
                     <page name="page_note" string="Note">
-                        <field name="note" colspan="4" nolabel="1"/>
+                        <field name="note" colspan="4" nolabel="1" />
                     </page>
                 </notebook>
             </sheet>
             <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="message_ids" widget="mail_thread"/>
+                <field name="message_follower_ids" widget="mail_followers" />
+                <field name="message_ids" widget="mail_thread" />
             </div>
         </form>
     </field>
@@ -112,14 +174,16 @@
     <field name="res_model">fleet.work.order</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
-    <field name="search_view_id" ref="fleet_work_order_view_search"/>
+    <field name="search_view_id" ref="fleet_work_order_view_search" />
 </record>
 
-<menuitem id="fleet_work_order_menu"
-    parent="fleet_work_order_root_menu"
-    name="Work Order"
-    action="fleet_work_order_action"
-    sequence="1"/>
+<menuitem
+            id="fleet_work_order_menu"
+            parent="fleet_work_order_root_menu"
+            name="Work Order"
+            action="fleet_work_order_action"
+            sequence="1"
+        />
 
 
 <record id="fleet_work_order_type_view_tree" model="ir.ui.view">
@@ -127,12 +191,12 @@
     <field name="model">fleet.work.order.type</field>
     <field name="arch" type="xml">
         <tree string="Work Order Type">
-            <field name="name"/>
-            <field name="code"/>
-            <field name="vehicle_id"/>
-            <field name="driver_id"/>
-            <field name="start_location_id"/>
-            <field name="end_location_id"/>
+            <field name="name" />
+            <field name="code" />
+            <field name="vehicle_id" />
+            <field name="driver_id" />
+            <field name="start_location_id" />
+            <field name="end_location_id" />
         </tree>
     </field>
 </record>
@@ -142,28 +206,28 @@
     <field name="model">fleet.work.order.type</field>
     <field name="arch" type="xml">
         <form string="Work Order Type">
-            <label for="code"/>
-            <field name="code"/>
-            <label for="name"/>
+            <label for="code" />
+            <field name="code" />
+            <label for="name" />
             <h1>
-                <field name="name"/>
+                <field name="name" />
             </h1>
             <group name="group_1" colspan="4" col="2">
                 <group name="group_1_1" string="Vehicle" colspan="1" col="2">
-                    <field name="vehicle_id"/>
-                    <field name="driver_id"/>
-                    <field name="co_driver_id"/>
+                    <field name="vehicle_id" />
+                    <field name="driver_id" />
+                    <field name="co_driver_id" />
                 </group>
                 <group name="group_1_1" string="Passanger" colspan="1" col="2">
-                    <field name="active"/>
+                    <field name="active" />
                 </group>
             </group>
             <notebook colspan="4">
                 <page name="page_route" string="Route">
                     <group name="group_route_1" colspan="4" col="4">
-                        <field name="start_location_id"/>
-                        <field name="end_location_id"/>
-                        <field name="distance"/>
+                        <field name="start_location_id" />
+                        <field name="end_location_id" />
+                        <field name="distance" />
                     </group>
                 </page>
             </notebook>
@@ -178,10 +242,12 @@
     <field name="view_mode">tree,form</field>
 </record>
 
-<menuitem id="fleet_work_order_type_menu"
-    parent="fleet.fleet_configuration"
-    name="Work Order Type"
-    action="fleet_work_order_type_action"
-    sequence="2"/>
+<menuitem
+            id="fleet_work_order_type_menu"
+            parent="fleet.fleet_configuration"
+            name="Work Order Type"
+            action="fleet_work_order_type_action"
+            sequence="2"
+        />
 </data>
 </openerp>

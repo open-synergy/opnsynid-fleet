@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
 from datetime import datetime
+
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -13,8 +13,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
 
     @api.model
     def _default_work_order_id(self):
-        active_id =\
-            self.env.context.get("active_id", False)
+        active_id = self.env.context.get("active_id", False)
         return active_id
 
     work_order_id = fields.Many2one(
@@ -63,8 +62,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
 
     @api.multi
     def _compute_allowed_invoice_ids(self):
-        allowed_invoice_ids =\
-            self.env.context.get("allowed_invoice_ids", False)
+        allowed_invoice_ids = self.env.context.get("allowed_invoice_ids", False)
 
         for document in self:
             document.allowed_invoice_ids = allowed_invoice_ids
@@ -82,36 +80,28 @@ class FleetDebtCollectionCreate(models.TransientModel):
     state = fields.Selection(
         string="State",
         selection=[
-            ('draft', 'Draft'),
-            ('invoice', 'Invoice'),
-            ('success', 'Success'),
-            ('failed_invoice', 'Invoice Failed'),
-            ('failed', 'Failed'),
+            ("draft", "Draft"),
+            ("invoice", "Invoice"),
+            ("success", "Success"),
+            ("failed_invoice", "Invoice Failed"),
+            ("failed", "Failed"),
         ],
-        default="draft"
+        default="draft",
     )
 
     @api.multi
-    @api.onchange(
-        "collection_type_id"
-    )
+    @api.onchange("collection_type_id")
     def onchange_collector_id(self):
         allowed_collector_ids = []
         if self.collection_type_id:
-            allowed_collector_ids =\
-                self.collection_type_id.allowed_collector_ids.ids
-        return {
-            "domain": {
-                "collector_id": [("id", "in", allowed_collector_ids)]
-            }
-        }
+            allowed_collector_ids = self.collection_type_id.allowed_collector_ids.ids
+        return {"domain": {"collector_id": [("id", "in", allowed_collector_ids)]}}
 
     @api.multi
     def action_create_collection(self):
         self.ensure_one()
         obj_debt_collection = self.env["account.debt_collection"]
-        obj_debt_collection_detail =\
-            self.env["account.debt_collection_detail"]
+        obj_debt_collection_detail = self.env["account.debt_collection_detail"]
         document = self.work_order_id
 
         if not self._check_debt_collection():
@@ -119,21 +109,15 @@ class FleetDebtCollectionCreate(models.TransientModel):
             raise UserError(msg % (document.debt_collection_id.name))
 
         if self.invoice_ids:
-            debt_collection_id =\
-                obj_debt_collection.create(
-                    self._prepare_debt_collection_header()
-                )
+            debt_collection_id = obj_debt_collection.create(
+                self._prepare_debt_collection_header()
+            )
             for invoice in self.invoice_ids:
                 detail_id = obj_debt_collection_detail.create(
-                    self._prepare_debt_collection_detail(
-                        debt_collection_id,
-                        invoice
-                    )
+                    self._prepare_debt_collection_detail(debt_collection_id, invoice)
                 )
                 detail_id.onchange_amount_due()
-            document.write({
-                "debt_collection_id": debt_collection_id.id
-            })
+            document.write({"debt_collection_id": debt_collection_id.id})
             vals = {
                 "state": "success",
             }
@@ -154,9 +138,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
         self.ensure_one()
         obj_account_invoice = self.env["account.invoice"]
 
-        invoice_ids =\
-            obj_account_invoice.search(
-                self._prepare_criteria_invoice())
+        invoice_ids = obj_account_invoice.search(self._prepare_criteria_invoice())
         if invoice_ids:
             vals = {
                 "invoice_ids": [(6, 0, invoice_ids.ids)],
@@ -175,9 +157,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
             "view_type": "form",
             "res_id": self.id,
             "views": [(False, "form")],
-            "context": {
-                "allowed_invoice_ids": invoice_ids.ids
-            },
+            "context": {"allowed_invoice_ids": invoice_ids.ids},
             "target": "new",
         }
 
@@ -192,11 +172,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
         }
 
     @api.multi
-    def _prepare_debt_collection_detail(
-        self,
-        debt_collection_id,
-        invoice
-    ):
+    def _prepare_debt_collection_detail(self, debt_collection_id, invoice):
         self.ensure_one()
         return {
             "debt_collection_id": debt_collection_id.id,
@@ -207,25 +183,19 @@ class FleetDebtCollectionCreate(models.TransientModel):
     def _prepare_criteria_invoice(self):
         self.ensure_one()
         obj_debt_collection = self.env["account.debt_collection"]
-        result = [
-            ("id", "=", 0)
-        ]
-        collection_type =\
-            self.collection_type_id
-        allowed_journal_ids =\
-            collection_type.allowed_journal_ids.ids
+        result = [("id", "=", 0)]
+        collection_type = self.collection_type_id
+        allowed_journal_ids = collection_type.allowed_journal_ids.ids
         date = datetime.strptime(self.date, "%Y-%m-%d")
-        days_after_due =\
-            collection_type.days_after_due
-        days_before_due =\
-            collection_type.days_before_due
+        days_after_due = collection_type.days_after_due
+        days_before_due = collection_type.days_before_due
 
-        date_after_invoice_due =\
-            obj_debt_collection._get_date_after_invoice_due(
-                date, days_after_due).strftime("%Y-%m-%d")
-        date_before_invoice_due =\
-            obj_debt_collection._get_date_before_invoice_due(
-                date, days_before_due).strftime("%Y-%m-%d")
+        date_after_invoice_due = obj_debt_collection._get_date_after_invoice_due(
+            date, days_after_due
+        ).strftime("%Y-%m-%d")
+        date_before_invoice_due = obj_debt_collection._get_date_before_invoice_due(
+            date, days_before_due
+        ).strftime("%Y-%m-%d")
 
         if allowed_journal_ids:
             criteria = [
@@ -236,8 +206,7 @@ class FleetDebtCollectionCreate(models.TransientModel):
                 ("date_due", "<=", date_after_invoice_due),
             ]
         if self.work_order_id.multiple_route:
-            partner_ids =\
-                self.work_order_id.mapped("route_ids.end_location_id")
+            partner_ids = self.work_order_id.mapped("route_ids.end_location_id")
             criteria_partner = [
                 ("partner_id", "in", partner_ids.ids),
             ]

@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -28,10 +27,9 @@ class FleetWorkOrder(models.Model):
     @api.multi
     def _get_action_debt_collection(self):
         self.ensure_one()
-        action =\
-            self.env.ref(
-                "account_debt_collection."
-                "account_debt_collection_action").read()[0]
+        action = self.env.ref(
+            "account_debt_collection." "account_debt_collection_action"
+        ).read()[0]
         return action
 
     @api.multi
@@ -39,8 +37,7 @@ class FleetWorkOrder(models.Model):
         self.ensure_one()
         action = self._get_action_debt_collection()
 
-        action["domain"] =\
-            [("id", "=", self.debt_collection_id.id)]
+        action["domain"] = [("id", "=", self.debt_collection_id.id)]
 
         return {
             "name": "A/R Collection",

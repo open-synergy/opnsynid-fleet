@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 <record id="fleet_work_order_passanger_ticket_sale_view_tree" model="ir.ui.view">
@@ -9,15 +8,15 @@
     <field name="model">fleet.work_order_passanger_ticket_sale</field>
     <field name="arch" type="xml">
         <tree string="Passanger">
-            <field name="name"/>
-            <field name="date_order"/>
-            <field name="company_id" groups="base.group_multi_company"/>
-            <field name="partner_id"/>
-            <field name="currency_id"/>
-            <field name="amount_before_tax"/>
-            <field name="amount_tax"/>
-            <field name="amount_after_tax"/>
-            <field name="state"/>
+            <field name="name" />
+            <field name="date_order" />
+            <field name="company_id" groups="base.group_multi_company" />
+            <field name="partner_id" />
+            <field name="currency_id" />
+            <field name="amount_before_tax" />
+            <field name="amount_tax" />
+            <field name="amount_after_tax" />
+            <field name="state" />
         </tree>
     </field>
 </record>
@@ -29,98 +28,135 @@
         <form string="Passanger Ticket Sale">
             <header>
                 <button
-                    name="action_confirm" string="Confirm"
-                    class="oe_highlight"
-                    type="object"
-                    states="draft"
-                    />
+                            name="action_confirm"
+                            string="Confirm"
+                            class="oe_highlight"
+                            type="object"
+                            states="draft"
+                        />
                 <button
-                    name="action_valid" string="Valid"
-                    class="oe_highlight"
-                    type="object"
-                    states="confirm"
-                    />
+                            name="action_valid"
+                            string="Valid"
+                            class="oe_highlight"
+                            type="object"
+                            states="confirm"
+                        />
                 <button
-                    name="action_cancel" string="Cancel"
-                    type="object"
-                    states="draft,confirm,valid"
-                    />
+                            name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            states="draft,confirm,valid"
+                        />
                 <button
-                    name="action_restart" string="Reset to Draft"
-                    type="object"
-                    states="cancel"
-                    />
-                <field name="state" widget="statusbar"
-                    statusbar_visible="draft,confirm,valid"
-                    />
+                            name="action_restart"
+                            string="Reset to Draft"
+                            type="object"
+                            states="cancel"
+                        />
+                <field
+                            name="state"
+                            widget="statusbar"
+                            statusbar_visible="draft,confirm,valid"
+                        />
             </header>
             <sheet>
-                <label for="name"/>
+                <label for="name" />
                 <h1>
-                    <field name="name"/>
+                    <field name="name" />
                 </h1>
                 <div class="oe_right oe_button_box">
                 </div>
                 <group name="header1" colspan="4" col="2">
                     <group name="header1_1" colspan="1" col="2">
-                        <field name="partner_id"/>
-                        <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="work_order_id"/>
+                        <field name="partner_id" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                        <field name="work_order_id" />
                     </group>
                     <group name="header1_2" colspan="1" col="2">
-                        <field name="date_order"/>
-                        <field name="pricelist_id"/>
-                        <field name="currency_id"/>
+                        <field name="date_order" />
+                        <field name="pricelist_id" />
+                        <field name="currency_id" />
                     </group>
                 </group>
                 <notebook colspan="4">
                     <page name="passanger" string="Passangers">
-                        <field name="passanger_ids" nolabel="1" colspan="4"
-                            context="{'default_work_order_id':work_order_id, 'default_pricelist_id':pricelist_id, 'default_currency_id':currency_id}"
-                            >
+                        <field
+                                    name="passanger_ids"
+                                    nolabel="1"
+                                    colspan="4"
+                                    context="{'default_work_order_id':work_order_id, 'default_pricelist_id':pricelist_id, 'default_currency_id':currency_id}"
+                                >
                             <tree>
-                                <field name="partner_id"/>
-                                <field name="type_id"/>
-                                <field name="product_id"/>
-                                <field name="price_unit"/>
-                                <field name="tax_ids" widget="many2many_tags"/>
-                                <field name="price_subtotal"/>
-                                <field name="state"/>
+                                <field name="partner_id" />
+                                <field name="type_id" />
+                                <field name="product_id" />
+                                <field name="price_unit" />
+                                <field name="tax_ids" widget="many2many_tags" />
+                                <field name="price_subtotal" />
+                                <field name="state" />
                             </tree>
                         </field>
                     </page>
                 </notebook>
-                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                    <field name="amount_before_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                    <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <group
+                            class="oe_subtotal_footer oe_right"
+                            colspan="2"
+                            name="sale_total"
+                        >
+                    <field
+                                name="amount_before_tax"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
+                    <field
+                                name="amount_tax"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                     <div class="oe_subtotal_footer_separator oe_inline">
                         <label for="amount_after_tax" />
-                        <button name="button_dummy"
-                            states="draft,sent" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                        <button
+                                    name="button_dummy"
+                                    states="draft,sent"
+                                    string="(update)"
+                                    type="object"
+                                    class="oe_edit_only oe_link"
+                                />
                     </div>
-                    <field name="amount_after_tax" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                    <field
+                                name="amount_after_tax"
+                                nolabel="1"
+                                class="oe_subtotal_footer_separator"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                 </group>
             </sheet>
             <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="message_ids" widget="mail_thread"/>
+                <field name="message_follower_ids" widget="mail_followers" />
+                <field name="message_ids" widget="mail_thread" />
             </div>
         </form>
     </field>
 </record>
 
-<record id="fleet_work_order_passanger_ticket_sale_action" model="ir.actions.act_window">
+<record
+            id="fleet_work_order_passanger_ticket_sale_action"
+            model="ir.actions.act_window"
+        >
     <field name="name">Passanger Ticket Sales</field>
     <field name="res_model">fleet.work_order_passanger_ticket_sale</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
 </record>
 
-<menuitem id="fleet_work_order_passanger_ticket_sale_menu"
-    parent="fleet_work_order_passanger.fleet_passanger_root_menu"
-    name="Ticket Sales"
-    action="fleet_work_order_passanger_ticket_sale_action"
-    sequence="2"/>
+<menuitem
+            id="fleet_work_order_passanger_ticket_sale_menu"
+            parent="fleet_work_order_passanger.fleet_passanger_root_menu"
+            name="Ticket Sales"
+            action="fleet_work_order_passanger_ticket_sale_action"
+            sequence="2"
+        />
 
 <record id="fleet_work_order_passanger_ticket_sale_simple_view_form" model="ir.ui.view">
     <field name="name">fleet.work_order_passanger_ticket_sale Form</field>
@@ -128,68 +164,104 @@
     <field name="arch" type="xml">
         <form string="Passanger Ticket Sale">
             <header>
-                <field name="state" widget="statusbar"
-                    statusbar_visible="draft,confirm,valid"
-                    />
+                <field
+                            name="state"
+                            widget="statusbar"
+                            statusbar_visible="draft,confirm,valid"
+                        />
             </header>
             <sheet>
-                <label for="name"/>
+                <label for="name" />
                 <h1>
-                    <field name="name"/>
+                    <field name="name" />
                 </h1>
                 <div class="oe_right oe_button_box">
                 </div>
                 <group name="header1" colspan="4" col="2">
                     <group name="header1_1" colspan="1" col="2">
-                        <field name="partner_id" invisible="1"/>
-                        <field name="company_id" groups="base.group_multi_company"/>
-                        <field name="work_order_id" invisible="1"/>
+                        <field name="partner_id" invisible="1" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                        <field name="work_order_id" invisible="1" />
                     </group>
                     <group name="header1_2" colspan="1" col="2">
-                        <field name="date_order"/>
-                        <field name="pricelist_id" invisible="1"/>
-                        <field name="currency_id" invisible="1"/>
+                        <field name="date_order" />
+                        <field name="pricelist_id" invisible="1" />
+                        <field name="currency_id" invisible="1" />
                     </group>
                 </group>
                 <notebook colspan="4">
                     <page name="passanger" string="Passangers">
-                        <field name="passanger_ids" nolabel="1" colspan="4"
-                            context="{'default_work_order_id':work_order_id, 'default_pricelist_id':pricelist_id, 'default_currency_id':currency_id}"
-                            >
+                        <field
+                                    name="passanger_ids"
+                                    nolabel="1"
+                                    colspan="4"
+                                    context="{'default_work_order_id':work_order_id, 'default_pricelist_id':pricelist_id, 'default_currency_id':currency_id}"
+                                >
                             <tree editable="1">
-                                <field name="name" invisible="1"/>
-                                <field name="work_order_id" invisible="1"/>
-                                <field name="partner_id"/>
-                                <field name="type_id"/>
-                                <field name="product_id" invisible="1"/>
-                                <field name="pricelist_id" invisible="1"/>
-                                <field name="price_unit"/>
-                                <field name="tax_ids" widget="many2many_tags" invisible="1"/>
-                                <field name="price_subtotal" invisible="1"/>
-                                <field name="state" invisible="1"/>
+                                <field name="name" invisible="1" />
+                                <field name="work_order_id" invisible="1" />
+                                <field name="partner_id" />
+                                <field name="type_id" />
+                                <field name="product_id" invisible="1" />
+                                <field name="pricelist_id" invisible="1" />
+                                <field name="price_unit" />
+                                <field
+                                            name="tax_ids"
+                                            widget="many2many_tags"
+                                            invisible="1"
+                                        />
+                                <field name="price_subtotal" invisible="1" />
+                                <field name="state" invisible="1" />
                             </tree>
                         </field>
                     </page>
                 </notebook>
-                <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
-                    <field name="amount_after_tax" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                <group
+                            class="oe_subtotal_footer oe_right"
+                            colspan="2"
+                            name="sale_total"
+                        >
+                    <field
+                                name="amount_after_tax"
+                                nolabel="1"
+                                class="oe_subtotal_footer_separator"
+                                widget='monetary'
+                                options="{'currency_field': 'currency_id'}"
+                            />
                 </group>
             </sheet>
             <footer>
-                <button name="action_buy_simple" type="object" states="draft" string="Confirm"/>
-                <button name="print_ticket" type="object" icon="gtk-print" states="valid" string="Print Ticket"/>
-                <button special="cancel" states="valid" string="Close"/>
+                <button
+                            name="action_buy_simple"
+                            type="object"
+                            states="draft"
+                            string="Confirm"
+                        />
+                <button
+                            name="print_ticket"
+                            type="object"
+                            icon="gtk-print"
+                            states="valid"
+                            string="Print Ticket"
+                        />
+                <button special="cancel" states="valid" string="Close" />
             </footer>
         </form>
     </field>
 </record>
 
-<record id="fleet_work_order_passanger_ticket_sale_simple_action" model="ir.actions.act_window">
+<record
+            id="fleet_work_order_passanger_ticket_sale_simple_action"
+            model="ir.actions.act_window"
+        >
     <field name="name">Passanger Ticket Sales</field>
     <field name="res_model">fleet.work_order_passanger_ticket_sale</field>
     <field name="view_type">form</field>
     <field name="view_mode">form</field>
-    <field name="view_id" ref="fleet_work_order_passanger_ticket_sale_simple_view_form"/>
+    <field
+                name="view_id"
+                ref="fleet_work_order_passanger_ticket_sale_simple_view_form"
+            />
     <field name="target">new</field>
 </record>
 </data>

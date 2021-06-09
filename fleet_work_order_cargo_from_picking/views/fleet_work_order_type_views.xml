@@ -1,24 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2016 OpenSynergy Indonesia
      Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
 <record id="fleet_work_order_type_view_form" model="ir.ui.view">
     <field name="name">fleet.work.order.type form</field>
     <field name="model">fleet.work.order.type</field>
-    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form"/>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form" />
     <field name="arch" type="xml">
         <xpath expr="//notebook" position="inside">
             <page name="picking" string="Allowed Picking Types">
-                <field name="picking_type_ids" string="Pickings" nolabel="1" colspan="4"/>
+                <field
+                            name="picking_type_ids"
+                            string="Pickings"
+                            nolabel="1"
+                            colspan="4"
+                        />
             </page>
             <page name="partner" string="Allowed Partner Cargo">
                 <group name="partner_1" colspan="4" col="2">
-                    <field name="restrict_partner_cargo"/>
-                    <field name="partner_ids" string="Partners" domain="[('parent_id','=',False)]" widget="many2many_tags"/>
+                    <field name="restrict_partner_cargo" />
+                    <field
+                                name="partner_ids"
+                                string="Partners"
+                                domain="[('parent_id','=',False)]"
+                                widget="many2many_tags"
+                            />
                 </group>
             </page>
         </xpath>

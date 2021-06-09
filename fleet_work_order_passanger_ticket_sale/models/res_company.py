@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
+from openerp import fields, models
 
-DOMAIN_AEROO = [
-    ("report_type", "=", "aeroo"),
-    ("in_format", "=", "genshi-raw")
-]
+DOMAIN_AEROO = [("report_type", "=", "aeroo"), ("in_format", "=", "genshi-raw")]
 
 
 class ResCompany(models.Model):

@@ -1,36 +1,57 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 <record id="fleet_work_order_type_view_form" model="ir.ui.view">
-    <field name="name">fleet.work.order.type form on fleet_work_order_multiple_route</field>
+    <field
+                name="name"
+            >fleet.work.order.type form on fleet_work_order_multiple_route</field>
     <field name="model">fleet.work.order.type</field>
-    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form"/>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_form" />
     <field name="arch" type="xml">
-        <xpath expr="//page[@name='page_route']/group[@name='group_route_1']" position="before">
+        <xpath
+                    expr="//page[@name='page_route']/group[@name='group_route_1']"
+                    position="before"
+                >
             <group name="group_route_0" colspan="4" col="2">
-                <field name="multiple_route"/>
+                <field name="multiple_route" />
             </group>
         </xpath>
-        <xpath expr="//page[@name='page_route']/group[@name='group_route_1']" position="attributes">
-            <attribute name="attrs">{'invisible':[('multiple_route','=',True)]}</attribute>
+        <xpath
+                    expr="//page[@name='page_route']/group[@name='group_route_1']"
+                    position="attributes"
+                >
+            <attribute
+                        name="attrs"
+                    >{'invisible':[('multiple_route','=',True)]}</attribute>
         </xpath>
-        <xpath expr="//page[@name='page_route']/group[@name='group_route_1']" position="after">
-            <group name="group_route_2" colspan="4" col="4" attrs="{'invisible':[('multiple_route','=',False)]}">
-                <field name="function_start_location_id"/>
+        <xpath
+                    expr="//page[@name='page_route']/group[@name='group_route_1']"
+                    position="after"
+                >
+            <group
+                        name="group_route_2"
+                        colspan="4"
+                        col="4"
+                        attrs="{'invisible':[('multiple_route','=',False)]}"
+                    >
+                <field name="function_start_location_id" />
                 <field name="function_end_location_id" />
-                <field name="function_distance"/>
+                <field name="function_distance" />
             </group>
-            <field name="route_ids" colspan="4" attrs="{'invisible':[('multiple_route','=',False)]}">
+            <field
+                        name="route_ids"
+                        colspan="4"
+                        attrs="{'invisible':[('multiple_route','=',False)]}"
+                    >
                 <tree string="Routes" editable="bottom">
-                    <field name="sequence" widget="handle"/>
-                    <field name="route_template_id"/>
-                    <field name="name"/>
-                    <field name="start_location_id"/>
-                    <field name="end_location_id"/>
-                    <field name="distance"/>
+                    <field name="sequence" widget="handle" />
+                    <field name="route_template_id" />
+                    <field name="name" />
+                    <field name="start_location_id" />
+                    <field name="end_location_id" />
+                    <field name="distance" />
                 </tree>
             </field>
         </xpath>
@@ -38,17 +59,20 @@
 </record>
 
 <record id="fleet_work_order_type_view_tree" model="ir.ui.view">
-    <field name="name">fleet.work.order.type tree on fleet_work_order_multiple_route</field>
+    <field
+                name="name"
+            >fleet.work.order.type tree on fleet_work_order_multiple_route</field>
     <field name="model">fleet.work.order.type</field>
-    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_tree"/>
+    <field name="priority">99</field>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_type_view_tree" />
     <field name="arch" type="xml">
         <xpath expr="//field[@name='driver_id']" position="after">
-            <field name="function_start_location_id"/>
-            <field name="function_end_location_id"/>
-            <field name="function_distance"/>
+            <field name="function_start_location_id" />
+            <field name="function_end_location_id" />
+            <field name="function_distance" />
         </xpath>
-        <xpath expr="//field[@name='start_location_id']" position="replace"/>
-        <xpath expr="//field[@name='end_location_id']" position="replace"/>
+        <xpath expr="//field[@name='start_location_id']" position="replace" />
+        <xpath expr="//field[@name='end_location_id']" position="replace" />
     </field>
 </record>
 </data>

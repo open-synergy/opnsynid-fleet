@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
     <data>
-        <record id="proxy_backend_gpio.proxy_backend_device_type_raspberry_relay" model="proxy.backend_device_type">
+        <record
+            id="proxy_backend_gpio.proxy_backend_device_type_raspberry_relay"
+            model="proxy.backend_device_type"
+        >
             <field name="door_control">1</field>
         </record>
     </data>

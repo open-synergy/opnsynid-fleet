@@ -1,8 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2016 OpenSynergy Indonesia
      Copyright 2020 PT. Simetri Sinergi Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
@@ -12,22 +11,36 @@
     <field name="arch" type="xml">
         <form>
             <group name="group_1" colspan="4" col="2">
-                <field name="work_order_id" groups="base.group_system"/>
-                <field name="allowed_picking_type_ids" widget="many2many_tags" groups="base.group_system"/>
-                <field name="restrict_partner_cargo" groups="base.group_system"/>
-                <field name="allowed_partner_ids" widget="many2many_tags" groups="base.group_system"/>
+                <field name="work_order_id" groups="base.group_system" />
+                <field
+                            name="allowed_picking_type_ids"
+                            widget="many2many_tags"
+                            groups="base.group_system"
+                        />
+                <field name="restrict_partner_cargo" groups="base.group_system" />
+                <field
+                            name="allowed_partner_ids"
+                            widget="many2many_tags"
+                            groups="base.group_system"
+                        />
             </group>
             <group name="group_2" colspan="4" col="2">
-                <field name="picking_ids" nolabel="1" colspan="2" domain="['&amp;','&amp;','&amp;',('work_order_id','=',False),('state','in',['assigned','partially_available']),('picking_type_id','in',allowed_picking_type_ids[0][2]),('partner_id.commercial_partner_id.id','in',allowed_partner_ids[0][2])]"/>
+                <field
+                            name="picking_ids"
+                            nolabel="1"
+                            colspan="2"
+                            domain="['&amp;','&amp;','&amp;',('work_order_id','=',False),('state','in',['assigned','partially_available']),('picking_type_id','in',allowed_picking_type_ids[0][2]),('partner_id.commercial_partner_id.id','in',allowed_partner_ids[0][2])]"
+                        />
             </group>
             <footer>
-                <button name="action_load_cargo"
-                        type="object"
-                        string="Load"
-                        class="oe_highlight"/>
+                <button
+                            name="action_load_cargo"
+                            type="object"
+                            string="Load"
+                            class="oe_highlight"
+                        />
                 or
-                <button special="cancel"
-                        string="Cancel"/>
+                <button special="cancel" string="Cancel" />
             </footer>
         </form>
     </field>

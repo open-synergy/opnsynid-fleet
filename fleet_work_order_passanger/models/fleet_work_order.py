@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class FleetWorkOrder(models.Model):
@@ -18,8 +17,7 @@ class FleetWorkOrder(models.Model):
     def _get_passanger_sequence(self):
         self.ensure_one()
 
-        if self.type_id and \
-                self.type_id.passanger_sequence_id:
+        if self.type_id and self.type_id.passanger_sequence_id:
             result = self.type_id.passanger_sequence_id
         else:
             result = self.env.user.company_id._get_passanger_sequence()

@@ -1,15 +1,15 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-from openerp.exceptions import Warning as UserError, ValidationError
-from openerp.tools.translate import _
 import base64
 from datetime import datetime
-import pytz
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+
 import openerp.addons.product.product as t_product
+import pytz
+from openerp import api, fields, models
+from openerp.exceptions import ValidationError, Warning as UserError
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools.translate import _
 
 
 # TODO: Remove me to other module
@@ -27,12 +27,13 @@ class FleetWorkOrderPassanger(models.Model):
     def _compute_allowed_type_ids(self):
         for passanger in self:
             passanger.allowed_type_ids = False
-            if passanger.work_order_id and \
-                    passanger.work_order_id.type_id and \
-                    passanger.work_order_id.type_id.passanger_type_ids:
+            if (
+                passanger.work_order_id
+                and passanger.work_order_id.type_id
+                and passanger.work_order_id.type_id.passanger_type_ids
+            ):
                 result = []
-                for pass_type in passanger.work_order_id.\
-                        type_id.passanger_type_ids:
+                for pass_type in passanger.work_order_id.type_id.passanger_type_ids:
                     result.append(pass_type.passanger_type_id.id)
                 passanger.allowed_type_ids = [(6, 0, result)]
 
@@ -53,7 +54,7 @@ class FleetWorkOrderPassanger(models.Model):
         related="work_order_id.type_id",
         store=True,
         readonly=True,
-        )
+    )
     vehicle_id = fields.Many2one(
         string="Vehicle",
         comodel_name="fleet.vehicle",
@@ -154,15 +155,9 @@ class FleetWorkOrderPassanger(models.Model):
         compute="_compute_barcode_image",
     )
 
-    start_time = fields.Char(
-        string="Start Time",
-        compute="_compute_time"
-    )
+    start_time = fields.Char(string="Start Time", compute="_compute_time")
 
-    end_time = fields.Char(
-        string="End Time",
-        compute="_compute_time"
-    )
+    end_time = fields.Char(string="End Time", compute="_compute_time")
 
     def _get_ean_key(self, code):
         sum = 0
@@ -186,27 +181,21 @@ class FleetWorkOrderPassanger(models.Model):
             tz = pytz.utc
 
         convert_utc = pytz.utc.localize(convert_dt).astimezone(tz)
-        format_utc = datetime.strftime(
-            convert_utc,
-            "%H:%M"
-        )
+        format_utc = datetime.strftime(convert_utc, "%H:%M")
 
         return format_utc
 
     @api.multi
-    @api.depends(
-        "work_order_id.date_start",
-        "work_order_id.date_end"
-    )
+    @api.depends("work_order_id.date_start", "work_order_id.date_end")
     def _compute_time(self):
         for data in self:
             data.start_time = False
             data.end_time = False
             if data.work_order_id:
-                data.start_time =\
-                    self._convert_datetime_utc(data.work_order_id.date_start)
-                data.end_time =\
-                    self._convert_datetime_utc(data.work_order_id.date_end)
+                data.start_time = self._convert_datetime_utc(
+                    data.work_order_id.date_start
+                )
+                data.end_time = self._convert_datetime_utc(data.work_order_id.date_end)
 
     @api.multi
     @api.depends("name")
@@ -217,17 +206,12 @@ class FleetWorkOrderPassanger(models.Model):
                 if t_product.check_ean(data.name):
                     try:
                         barcode = self.env["report"].barcode(
-                            "EAN13",
-                            data.name,
-                            width=300,
-                            height=100,
-                            humanreadable=0
+                            "EAN13", data.name, width=300, height=100, humanreadable=0
                         )
                     except (ValueError, AttributeError):
                         raise Warning(_("Cannot convert into barcode."))
                     barcode_base64 = base64.b64encode(barcode)
-                    data.barcode_image = "data:image/png;base64," + \
-                        barcode_base64
+                    data.barcode_image = "data:image/png;base64," + barcode_base64
 
     @api.multi
     def action_confirm(self):
@@ -317,8 +301,7 @@ class FleetWorkOrderPassanger(models.Model):
     def _create_sequence(self):
         self.ensure_one()
         if self._check_sequence:
-            name = self.env["ir.sequence"].\
-                next_by_id(self._get_sequence().id) or "/"
+            name = self.env["ir.sequence"].next_by_id(self._get_sequence().id) or "/"
             # TODO: Remove me to different module
             name = name + self._get_ean_key(name)
             self.write({"name": name})
@@ -339,9 +322,15 @@ class FleetWorkOrderPassanger(models.Model):
         return passanger
 
     @api.multi
-    def copy(self, defaults):
-        str_warning = _("You can't copy passanger data")
-        raise UserError(str_warning)
+    def copy(self, default=None):
+        _super = super(FleetWorkOrderPassanger, self)
+        res = _super.copy(default)
+        if default is None:
+            default = {}
+        if default:
+            str_warning = _("You can't copy passanger data")
+            raise UserError(str_warning)
+        return res
 
     @api.onchange("work_order_id")
     def onchange_start_location_id(self):

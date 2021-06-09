@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class WorkOrderTypePassangerType(models.Model):
@@ -10,7 +9,7 @@ class WorkOrderTypePassangerType(models.Model):
 
     onboard_sale = fields.Boolean(
         string="Onboard Ticket Sale",
-        )
+    )
 
     @api.multi
     def onboard_ticket_sale(self):
@@ -20,8 +19,7 @@ class WorkOrderTypePassangerType(models.Model):
 
         work_order_id = self._context.get("work_order_id", False)
 
-        sale = obj_sale.create(self._prepare_onboard_ticket_sale_data(
-            work_order_id))
+        sale = obj_sale.create(self._prepare_onboard_ticket_sale_data(work_order_id))
         obj_passanger.create(self._prepare_onboard_passanger(sale))
         sale.action_confirm()
         sale.action_valid()
@@ -30,12 +28,11 @@ class WorkOrderTypePassangerType(models.Model):
     @api.multi
     def _prepare_onboard_ticket_sale_data(self, work_order_id):
         self.ensure_one()
-        pricelist_id =\
-            self._get_onboard_ticket_pricelist_id(work_order_id)
+        pricelist_id = self._get_onboard_ticket_pricelist_id(work_order_id)
         return {
             "work_order_id": work_order_id,
             "pricelist_id": pricelist_id.id,
-            }
+        }
 
     @api.multi
     def _get_onboard_ticket_pricelist_id(self, work_order_id):
@@ -55,10 +52,11 @@ class WorkOrderTypePassangerType(models.Model):
             "product_id": self.product_id.id,
             "price_unit": self._get_price_unit(ticket_sale),
             "order_id": ticket_sale.id,
-            }
+        }
 
     @api.multi
     def _get_price_unit(self, ticket_sale):
         self.ensure_one()
-        return ticket_sale.pricelist_id.price_get(
-            prod_id=self.product_id.id, qty=1.0)[ticket_sale.pricelist_id.id]
+        return ticket_sale.pricelist_id.price_get(prod_id=self.product_id.id, qty=1.0)[
+            ticket_sale.pricelist_id.id
+        ]

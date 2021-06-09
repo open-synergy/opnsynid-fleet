@@ -1,14 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
-<menuitem id="fleet_passanger_root_menu"
-    parent="fleet.menu_root"
-    name="Passanger"
-    sequence="1"/>
+<menuitem
+            id="fleet_passanger_root_menu"
+            parent="fleet.menu_root"
+            name="Passanger"
+            sequence="1"
+        />
 
 
 </data>

@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
+from openerp import api, fields, models
 from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 
 
 class FleetWorkOrder(models.Model):
@@ -17,7 +16,8 @@ class FleetWorkOrder(models.Model):
         "cargo_ids",
         "cargo_ids.volume",
         "cargo_ids.weight",
-        "cargo_ids.weight_net")
+        "cargo_ids.weight_net",
+    )
     def _compute_cargo(self):
         for order in self:
             order.weight_diff = 0.0
@@ -25,10 +25,8 @@ class FleetWorkOrder(models.Model):
             for cargo in order.cargo_ids:
                 order.cargo_volume += cargo.volume
                 order.cargo_weight += cargo.weight
-            order.weight_diff = order.loading_space - \
-                order.cargo_volume
-            order.volume_diff = order.load_capacity - \
-                order.cargo_weight
+            order.weight_diff = order.loading_space - order.cargo_volume
+            order.volume_diff = order.load_capacity - order.cargo_weight
 
     cargo_ids = fields.One2many(
         string="Cargo",
@@ -72,8 +70,7 @@ class FleetWorkOrder(models.Model):
         string="Cargo Limit Override",
     )
 
-    @api.constrains(
-        "state", "cargo_ids")
+    @api.constrains("state", "cargo_ids")
     def _constraint_cargo(self):
         if not self.cargo_ids:
             pass

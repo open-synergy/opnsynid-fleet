@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2016 OpenSynergy Indonesia
+# Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -144,14 +143,18 @@ class FleetWorkOrder(models.Model):
     @api.multi
     def button_depart(self):
         for order in self:
-            order._action_depart(fields.Datetime.now(),
-                                 order.start_odometer)
+            order._action_depart(
+                date_depart=fields.Datetime.now(),
+                starting_odometer=order.start_odometer,
+            )
 
     @api.multi
     def button_arrive(self):
         for order in self:
-            order._action_arrive(fields.Datetime.now(),
-                                 order.end_odometer)
+            order._action_arrive(
+                date_arrive=fields.Datetime.now(),
+                ending_odometer=order.end_odometer,
+            )
 
     @api.multi
     def button_cancel(self):
@@ -163,77 +166,58 @@ class FleetWorkOrder(models.Model):
         for order in self:
             order._action_restart()
 
-    @api.constrains(
-        "state",
-        "vehicle_id",
-        "driver_id"
-    )
+    @api.constrains("state", "vehicle_id", "driver_id")
     def _check_vehicle_driver(self):
         if self.state == "depart":
-            if not self.vehicle_id or \
-                    not self.driver_id:
-                raise UserError(_("Warning!"), _(
-                    "Vehicle and driver required"))
+            if not self.vehicle_id or not self.driver_id:
+                raise UserError(_("Warning!"), _("Vehicle and driver required"))
 
-    @api.onchange(
-        "vehicle_id"
-    )
-    def onchange_vehicle_id(self):
+    @api.onchange("vehicle_id")
+    def onchange_vehicle_driver_id(self):
         self.driver_id = False
         if self.vehicle_id:
             self.driver_id = self.vehicle_id.driver_id
 
-    @api.onchange(
-        "type_id"
-    )
-    def onchange_vehicle_id(self):
+    @api.onchange("type_id")
+    def onchange_type_vehicle_id(self):
         self.vehicle_id = False
         if self.type_id:
             wo_type = self.type_id
-            self.vehicle_id = wo_type.vehicle_id and \
-                wo_type.vehicle_id.id or False
+            self.vehicle_id = wo_type.vehicle_id and wo_type.vehicle_id.id or False
 
-    @api.onchange(
-        "type_id"
-    )
-    def onchange_driver_id(self):
+    @api.onchange("type_id")
+    def onchange_type_driver_id(self):
         self.driver_id = False
         if self.type_id:
             wo_type = self.type_id
-            self.driver_id = wo_type.driver_id and \
-                wo_type.driver_id.id or False
+            self.driver_id = wo_type.driver_id and wo_type.driver_id.id or False
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_co_driver_id(self):
         self.co_driver_id = False
         if self.type_id:
             wo_type = self.type_id
-            self.co_driver_id = wo_type.co_driver_id and \
-                wo_type.co_driver_id.id or False
+            self.co_driver_id = (
+                wo_type.co_driver_id and wo_type.co_driver_id.id or False
+            )
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_start_location_id(self):
         if self.type_id:
             wo_type = self.type_id
-            self.start_location_id = wo_type.start_location_id and \
-                wo_type.start_location_id.id or False
+            self.start_location_id = (
+                wo_type.start_location_id and wo_type.start_location_id.id or False
+            )
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_end_location_id(self):
         if self.type_id:
             wo_type = self.type_id
-            self.end_location_id = wo_type.end_location_id and \
-                wo_type.end_location_id.id or False
+            self.end_location_id = (
+                wo_type.end_location_id and wo_type.end_location_id.id or False
+            )
 
-    @api.onchange(
-        "type_id"
-    )
+    @api.onchange("type_id")
     def onchange_distance(self):
         if self.type_id:
             wo_type = self.type_id
@@ -245,21 +229,15 @@ class FleetWorkOrder(models.Model):
         self.write(self._prepare_confirm_data())
 
     @api.multi
-    def _action_depart(self,
-                       date_depart=fields.Datetime.now(),
-                       starting_odometer=0.0):
+    def _action_depart(self, date_depart, starting_odometer=0.0):
         self.ensure_one()
 
-        self.write(self._prepare_depart_data(date_depart,
-                                             starting_odometer))
+        self.write(self._prepare_depart_data(date_depart, starting_odometer))
 
     @api.multi
-    def _action_arrive(self,
-                       date_arrive=fields.Datetime.now(),
-                       ending_odometer=0.0):
+    def _action_arrive(self, date_arrive, ending_odometer=0.0):
         self.ensure_one()
-        self.write(self._prepare_arrive_data(date_arrive,
-                                             ending_odometer))
+        self.write(self._prepare_arrive_data(date_arrive, ending_odometer))
 
     @api.multi
     def _action_cancel(self):
@@ -274,16 +252,15 @@ class FleetWorkOrder(models.Model):
     @api.model
     def create(self, vals):
         if vals.get("name", "/") == "/":
-            vals["name"] = self.env["ir.sequence"].next_by_code(
-                "fleet.work.order") or "/"
+            vals["name"] = (
+                self.env["ir.sequence"].next_by_code("fleet.work.order") or "/"
+            )
         return super(FleetWorkOrder, self).create(vals)
 
     @api.multi
     def _prepare_confirm_data(self):
         self.ensure_one()
-        return {
-            "state": "confirmed"
-        }
+        return {"state": "confirmed"}
 
     @api.multi
     def _prepare_depart_data(self, date_depart, starting_odometer):

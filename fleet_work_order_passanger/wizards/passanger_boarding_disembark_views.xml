@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
@@ -10,12 +9,12 @@
     <field name="model">fleet.passanger_boarding_disembark</field>
     <field name="arch" type="xml">
         <form string="Passanger Boarding/Disembark">
-            <label for="passanger_code"/>
+            <label for="passanger_code" />
             <h1>
-                <field name="passanger_code"/>
-                <field name="work_order_id" invisible="1"/>
-                <field name="device_raspberry_id" invisible="1"/>
-                <field name="channel" invisible="1"/>
+                <field name="passanger_code" />
+                <field name="work_order_id" invisible="1" />
+                <field name="device_raspberry_id" invisible="1" />
+                <field name="channel" invisible="1" />
             </h1>
             <group name="doors">
             </group>
@@ -24,9 +23,7 @@
                         string="Clear Barcode"
                         type="object"
                         /> -->
-                    <button special="cancel"
-                        string="Close"
-                        />
+                    <button special="cancel" string="Close" />
             </footer>
         </form>
     </field>
