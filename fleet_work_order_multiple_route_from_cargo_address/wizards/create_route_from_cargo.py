@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, models, fields
+from openerp import api, fields, models
 
 
 class CreateRouteFromCargo(models.TransientModel):
@@ -18,10 +17,16 @@ class CreateRouteFromCargo(models.TransientModel):
         num = 0
         for cargo in wo.cargo_ids:
             num += 1
-            result.append((0, 0, {
-                "sequence": num,
-                "destination_address_id": cargo.to_address_id.id,
-            }))
+            result.append(
+                (
+                    0,
+                    0,
+                    {
+                        "sequence": num,
+                        "destination_address_id": cargo.to_address_id.id,
+                    },
+                )
+            )
         return result
 
     @api.model
@@ -72,13 +77,12 @@ class CreateRouteFromCargo(models.TransientModel):
                 start_address_id = self.start_address_id.id
             else:
                 start_name = self.line_ids[num - 1].destination_address_id.name
-                start_address_id = \
-                    self.line_ids[num - 1].destination_address_id.id
+                start_address_id = self.line_ids[num - 1].destination_address_id.id
 
             end_name = line.destination_address_id.name
             end_address_id = line.destination_address_id.id
 
-            route_name = "%s - %s" % (start_name, end_name)
+            route_name = "{} - {}".format(start_name, end_name)
 
             data = {
                 "order_id": wo.id,
@@ -93,7 +97,7 @@ class CreateRouteFromCargo(models.TransientModel):
         start_address_id = self.line_ids[num - 1].destination_address_id.id
         end_name = self.end_address_id.name
         end_address_id = self.end_address_id.id
-        route_name = "%s - %s" % (start_name, end_name)
+        route_name = "{} - {}".format(start_name, end_name)
 
         data = {
             "order_id": wo.id,
@@ -102,9 +106,11 @@ class CreateRouteFromCargo(models.TransientModel):
             "end_location_id": end_address_id,
         }
         obj_route.create(data)
-        wo.write({
-            "multiple_route": True,
-        })
+        wo.write(
+            {
+                "multiple_route": True,
+            }
+        )
 
 
 class CreateRouteFromCargoLines(models.TransientModel):

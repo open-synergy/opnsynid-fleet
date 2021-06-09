@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
 <data>
 
@@ -9,48 +9,59 @@
         <form>
             <div name="div_1" states="draft,invoice">
                 <group name="group_1" colspan="4" col="2">
-                    <field invisible="1" name="work_order_id"/>
-                    <field invisible="1" name="state"/>
-                    <field name="date"/>
-                    <field name="collection_type_id"/>
-                    <field name="collector_id"/>
+                    <field invisible="1" name="work_order_id" />
+                    <field invisible="1" name="state" />
+                    <field name="date" />
+                    <field name="collection_type_id" />
+                    <field name="collector_id" />
                 </group>
             </div>
             <div name="div_2" states="invoice">
                 <group name="group_2" string="Invoice(s)" colspan="4" col="2">
-                    <field name="allowed_invoice_ids" widget="many2many_tags" invisible="1"/>
-                    <field name="invoice_ids" domain="[('id', 'in', allowed_invoice_ids[0][2])]" nolabel="1" options="{'no_create': True}">
+                    <field
+                                name="allowed_invoice_ids"
+                                widget="many2many_tags"
+                                invisible="1"
+                            />
+                    <field
+                                name="invoice_ids"
+                                domain="[('id', 'in', allowed_invoice_ids[0][2])]"
+                                nolabel="1"
+                                options="{'no_create': True}"
+                            >
                         <tree>
-                            <field name="partner_id"/>
-                            <field name="date_invoice"/>
-                            <field name="date_due"/>
-                            <field name="number"/>
-                            <field name="residual"/>
-                            <field name="amount_untaxed"/>
-                            <field name="amount_tax"/>
-                            <field name="amount_total"/>
-                            <field name="state"/>
+                            <field name="partner_id" />
+                            <field name="date_invoice" />
+                            <field name="date_due" />
+                            <field name="number" />
+                            <field name="residual" />
+                            <field name="amount_untaxed" />
+                            <field name="amount_tax" />
+                            <field name="amount_total" />
+                            <field name="state" />
                         </tree>
                     </field>
                 </group>
             </div>
             <footer name="footer_1" states="draft">
-              <button name="action_generate_invoice"
-                      type="object"
-                      string="Generate Invoice"
-                      class="oe_highlight"/>
+              <button
+                            name="action_generate_invoice"
+                            type="object"
+                            string="Generate Invoice"
+                            class="oe_highlight"
+                        />
                       or
-                      <button special="cancel"
-                              string="Cancel"/>
+                      <button special="cancel" string="Cancel" />
             </footer>
             <footer name="footer_2" states="invoice">
-                <button name="action_create_collection"
-                        type="object"
-                        string="Create"
-                        class="oe_highlight"/>
+                <button
+                            name="action_create_collection"
+                            type="object"
+                            string="Create"
+                            class="oe_highlight"
+                        />
                 or
-                <button special="cancel"
-                        string="Cancel"/>
+                <button special="cancel" string="Cancel" />
             </footer>
             <div name="div_3" states="failed_invoice">
                 <h2>Generate Invoice Failed:</h2>
@@ -61,7 +72,7 @@
                 <h2>Successfully Created A/R Collection</h2>
             </div>
             <footer name="footer_3" states="success">
-                <button special="cancel" string="Close" type="object"/>
+                <button special="cancel" string="Close" type="object" />
             </footer>
         </form>
     </field>

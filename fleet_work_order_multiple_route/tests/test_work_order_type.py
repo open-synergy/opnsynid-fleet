@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-# © 2016 OpenSynergy Indonesia
+# Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
 from datetime import datetime
+
+from openerp.tests.common import TransactionCase
 
 
 class TestWorkOrder(TransactionCase):
-
     def setUp(self, *args, **kwargs):
         result = super(TestWorkOrder, self).setUp(*args, **kwargs)
         self.driver = self.env.ref("fleet_work_order.driver1")
@@ -16,14 +15,14 @@ class TestWorkOrder(TransactionCase):
         self.obj_depart = self.env["fleet.work.order.depart"]
         self.obj_arrive = self.env["fleet.work.order.arrive"]
         self.obj_wo_type = self.env["fleet.work.order.type"]
-        self.obj_wo_type_route = self.env[
-            "fleet.work.order.type.route"]
+        self.obj_wo_type_route = self.env["fleet.work.order.type.route"]
         self.point1 = self.env.ref("fleet_work_order.point1")
         self.point2 = self.env.ref("fleet_work_order.point2")
         self.point3 = self.env.ref("fleet_work_order.point3")
         self.point4 = self.env.ref("fleet_work_order.point4")
         self.route_template_1 = self.env.ref(
-            "fleet_work_order_multiple_route.route_template_2")
+            "fleet_work_order_multiple_route.route_template_2"
+        )
 
         res = {
             "date_start": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -89,12 +88,8 @@ class TestWorkOrder(TransactionCase):
         wo_type_1 = self.obj_wo_type.create(res)
         self.order.type_id = wo_type_1.id
         self.order.onchange_type_id()
-        self.assertEqual(
-            self.order.function_start_location_id.id,
-            self.point3.id)
-        self.assertEqual(
-            self.order.function_end_location_id.id,
-            self.point4.id)
+        self.assertEqual(self.order.function_start_location_id.id, self.point3.id)
+        self.assertEqual(self.order.function_end_location_id.id, self.point4.id)
         wo_type_2 = wo_type_1.copy()
         res1 = {
             "type_id": wo_type_2.id,

@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .base import BaseFleetWorkOrderRouteDistance
 from openerp.exceptions import Warning as UserError
+
+from .base import BaseFleetWorkOrderRouteDistance
 
 
 class TestCalcDistance(BaseFleetWorkOrderRouteDistance):
-
     def _create_work_order(self):
         data = {
             "date_start": "2016-01-01 00:00:00",
@@ -20,7 +19,7 @@ class TestCalcDistance(BaseFleetWorkOrderRouteDistance):
     def test_calc_distance(self):
         order = self._create_work_order()
 
-        msg = ("Start Location and End Location can't be empty")
+        msg = "Start Location and End Location can't be empty"
 
         with self.assertRaises(UserError) as error:
             order.button_calc_distance()

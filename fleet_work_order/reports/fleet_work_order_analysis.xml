@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="fleet_work_order_analysis_view_graph" model="ir.ui.view">
@@ -9,8 +8,8 @@
     <field name="model">fleet.work_order_analysis</field>
     <field name="arch" type="xml">
         <graph type="pivot">
-            <field name="odometer" type="measure"/>
-            <field name="distance" type="measure"/>
+            <field name="odometer" type="measure" />
+            <field name="distance" type="measure" />
         </graph>
     </field>
 </record>
@@ -20,36 +19,140 @@
     <field name="model">fleet.work_order_analysis</field>
     <field name="arch" type="xml">
         <search>
-            <filter name="filter_empty" string="Empty" domain="[('id','=',0)]"/>
+            <filter name="filter_empty" string="Empty" domain="[('id','=',0)]" />
             <group name="row_group" string="Row Grouping">
-                <filter name="row_group_type" string="Type" context="{'group_by':'type_id'}"/>
-                <filter name="row_group_vehicle" string="Vehicle" context="{'group_by':'vehicle_id'}"/>
-                <filter name="row_group_driver" string="Driver" context="{'group_by':'driver_id'}"/>
-                <filter name="row_group_codriver" string="Co-Driver" context="{'group_by':'co_driver_id'}"/>
-                <filter name="row_group_state" string="State" context="{'group_by':'state'}"/>
-                <filter name="row_group_eta_year" string="ETA by Year" context="{'group_by':'date_start:year'}"/>
-                <filter name="row_group_eta_month" string="ETA by Month" context="{'group_by':'date_start:month'}"/>
-                <filter name="row_group_eta_week" string="ETA by Week" context="{'group_by':'date_start:week'}"/>
-                <filter name="row_group_eta_day" string="ETA by Day" context="{'group_by':'date_start:day'}"/>
-                <filter name="row_group_etd_year" string="ETD by Year" context="{'group_by':'date_end:year'}"/>
-                <filter name="row_group_etd_month" string="ETD by Month" context="{'group_by':'date_end:month'}"/>
-                <filter name="row_group_etd_week" string="ETD by Week" context="{'group_by':'date_end:week'}"/>
-                <filter name="row_group_etd_day" string="ETD by Day" context="{'group_by':'date_end:day'}"/>
+                <filter
+                            name="row_group_type"
+                            string="Type"
+                            context="{'group_by':'type_id'}"
+                        />
+                <filter
+                            name="row_group_vehicle"
+                            string="Vehicle"
+                            context="{'group_by':'vehicle_id'}"
+                        />
+                <filter
+                            name="row_group_driver"
+                            string="Driver"
+                            context="{'group_by':'driver_id'}"
+                        />
+                <filter
+                            name="row_group_codriver"
+                            string="Co-Driver"
+                            context="{'group_by':'co_driver_id'}"
+                        />
+                <filter
+                            name="row_group_state"
+                            string="State"
+                            context="{'group_by':'state'}"
+                        />
+                <filter
+                            name="row_group_eta_year"
+                            string="ETA by Year"
+                            context="{'group_by':'date_start:year'}"
+                        />
+                <filter
+                            name="row_group_eta_month"
+                            string="ETA by Month"
+                            context="{'group_by':'date_start:month'}"
+                        />
+                <filter
+                            name="row_group_eta_week"
+                            string="ETA by Week"
+                            context="{'group_by':'date_start:week'}"
+                        />
+                <filter
+                            name="row_group_eta_day"
+                            string="ETA by Day"
+                            context="{'group_by':'date_start:day'}"
+                        />
+                <filter
+                            name="row_group_etd_year"
+                            string="ETD by Year"
+                            context="{'group_by':'date_end:year'}"
+                        />
+                <filter
+                            name="row_group_etd_month"
+                            string="ETD by Month"
+                            context="{'group_by':'date_end:month'}"
+                        />
+                <filter
+                            name="row_group_etd_week"
+                            string="ETD by Week"
+                            context="{'group_by':'date_end:week'}"
+                        />
+                <filter
+                            name="row_group_etd_day"
+                            string="ETD by Day"
+                            context="{'group_by':'date_end:day'}"
+                        />
             </group>
             <group name="col_group" string="Col Grouping">
-                <filter name="col_group_type" string="Type" context="{'col_group_by':'type_id'}"/>
-                <filter name="col_group_vehicle" string="Vehicle" context="{'col_group_by':'vehicle_id'}"/>
-                <filter name="col_group_driver" string="Driver" context="{'col_group_by':'driver_id'}"/>
-                <filter name="col_group_codriver" string="Co-Driver" context="{'col_group_by':'co_driver_id'}"/>
-                <filter name="col_group_state" string="State" context="{'col_group_by':'state'}"/>
-                <filter name="col_group_eta_year" string="ETA by Year" context="{'col_group_by':'date_start:year'}"/>
-                <filter name="col_group_eta_month" string="ETA by Month" context="{'col_group_by':'date_start:month'}"/>
-                <filter name="col_group_eta_week" string="ETA by Week" context="{'col_group_by':'date_start:week'}"/>
-                <filter name="col_group_eta_day" string="ETA by Day" context="{'col_group_by':'date_start:day'}"/>
-                <filter name="col_group_etd_year" string="ETD by Year" context="{'col_group_by':'date_end:year'}"/>
-                <filter name="col_group_etd_month" string="ETD by Month" context="{'col_group_by':'date_end:month'}"/>
-                <filter name="col_group_etd_week" string="ETD by Week" context="{'col_group_by':'date_end:week'}"/>
-                <filter name="col_group_etd_day" string="ETD by Day" context="{'col_group_by':'date_end:day'}"/>
+                <filter
+                            name="col_group_type"
+                            string="Type"
+                            context="{'col_group_by':'type_id'}"
+                        />
+                <filter
+                            name="col_group_vehicle"
+                            string="Vehicle"
+                            context="{'col_group_by':'vehicle_id'}"
+                        />
+                <filter
+                            name="col_group_driver"
+                            string="Driver"
+                            context="{'col_group_by':'driver_id'}"
+                        />
+                <filter
+                            name="col_group_codriver"
+                            string="Co-Driver"
+                            context="{'col_group_by':'co_driver_id'}"
+                        />
+                <filter
+                            name="col_group_state"
+                            string="State"
+                            context="{'col_group_by':'state'}"
+                        />
+                <filter
+                            name="col_group_eta_year"
+                            string="ETA by Year"
+                            context="{'col_group_by':'date_start:year'}"
+                        />
+                <filter
+                            name="col_group_eta_month"
+                            string="ETA by Month"
+                            context="{'col_group_by':'date_start:month'}"
+                        />
+                <filter
+                            name="col_group_eta_week"
+                            string="ETA by Week"
+                            context="{'col_group_by':'date_start:week'}"
+                        />
+                <filter
+                            name="col_group_eta_day"
+                            string="ETA by Day"
+                            context="{'col_group_by':'date_start:day'}"
+                        />
+                <filter
+                            name="col_group_etd_year"
+                            string="ETD by Year"
+                            context="{'col_group_by':'date_end:year'}"
+                        />
+                <filter
+                            name="col_group_etd_month"
+                            string="ETD by Month"
+                            context="{'col_group_by':'date_end:month'}"
+                        />
+                <filter
+                            name="col_group_etd_week"
+                            string="ETD by Week"
+                            context="{'col_group_by':'date_end:week'}"
+                        />
+                <filter
+                            name="col_group_etd_day"
+                            string="ETD by Day"
+                            context="{'col_group_by':'date_end:day'}"
+                        />
             </group>
         </search>
     </field>
@@ -60,15 +163,17 @@
     <field name="res_model">fleet.work_order_analysis</field>
     <field name="view_type">form</field>
     <field name="view_mode">graph</field>
-    <field name="view_id" ref="fleet_work_order_analysis_view_graph"/>
-    <field name="search_view_id" ref="fleet_work_order_analysis_view_search"/>
+    <field name="view_id" ref="fleet_work_order_analysis_view_graph" />
+    <field name="search_view_id" ref="fleet_work_order_analysis_view_search" />
     <field name="context">{'search_default_filter_empty':1}</field>
 </record>
 
-<menuitem id="fleet_work_order_analysis_menu"
-    parent="fleet.menu_fleet_reporting"
-    name="Work Order Analysis"
-    action="fleet_work_order_analysis_action"
-    sequence="5"/>
+<menuitem
+            id="fleet_work_order_analysis_menu"
+            parent="fleet.menu_fleet_reporting"
+            name="Work Order Analysis"
+            action="fleet_work_order_analysis_action"
+            sequence="5"
+        />
 </data>
 </openerp>

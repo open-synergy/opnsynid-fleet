@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
-# © 2016 OpenSynergy Indonesia
+# Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
 from openerp.exceptions import except_orm
+from openerp.tests.common import TransactionCase
 
 
 class TestWorkOrder(TransactionCase):
-
     def setUp(self, *args, **kwargs):
         result = super(TestWorkOrder, self).setUp(*args, **kwargs)
         # Data
@@ -94,9 +92,7 @@ class TestWorkOrder(TransactionCase):
         order.onchange_vehicle_id()
         self.assertIsNotNone(order)
         self.assertEqual(order.state, "draft")
-        self.assertEqual(
-            order.driver_id,
-            order.vehicle_id.driver_id)
+        self.assertEqual(order.driver_id, order.vehicle_id.driver_id)
 
         return order
 
@@ -105,24 +101,12 @@ class TestWorkOrder(TransactionCase):
         order.onchange_type_id()
         self.assertIsNotNone(order)
         self.assertEqual(order.state, "draft")
-        self.assertEqual(
-            order.start_location_id,
-            order.type_id.start_location_id)
-        self.assertEqual(
-            order.end_location_id,
-            order.type_id.end_location_id)
-        self.assertEqual(
-            order.distance,
-            order.type_id.distance)
-        self.assertEqual(
-            order.vehicle_id,
-            order.type_id.vehicle_id)
-        self.assertEqual(
-            order.driver_id,
-            order.type_id.driver_id)
-        self.assertEqual(
-            order.co_driver_id,
-            order.type_id.co_driver_id)
+        self.assertEqual(order.start_location_id, order.type_id.start_location_id)
+        self.assertEqual(order.end_location_id, order.type_id.end_location_id)
+        self.assertEqual(order.distance, order.type_id.distance)
+        self.assertEqual(order.vehicle_id, order.type_id.vehicle_id)
+        self.assertEqual(order.driver_id, order.type_id.driver_id)
+        self.assertEqual(order.co_driver_id, order.type_id.co_driver_id)
 
         return order
 
@@ -131,14 +115,15 @@ class TestWorkOrder(TransactionCase):
         self.assertEqual(order.state, "confirmed")
 
     def _depart_no_error(self, order):
-        wzd_depart = self.obj_depart.create({
-            "date_depart": order.date_start,
-            "start_odometer": 0
-        })
+        wzd_depart = self.obj_depart.create(
+            {"date_depart": order.date_start, "start_odometer": 0}
+        )
 
-        wzd_depart.with_context({
-            "active_ids": [order.id],
-        }).button_depart()
+        wzd_depart.with_context(
+            {
+                "active_ids": [order.id],
+            }
+        ).button_depart()
         self.assertEqual(order.state, "depart")
         self.assertNotEqual(order.name, "/")
 
@@ -147,14 +132,18 @@ class TestWorkOrder(TransactionCase):
             order.button_depart()
 
     def _arrive_no_error(self, order):
-        wzd_arrive = self.obj_arrive.create({
-            "date_arrive": order.date_end,
-            "end_odometer": order.distance,
-        })
+        wzd_arrive = self.obj_arrive.create(
+            {
+                "date_arrive": order.date_end,
+                "end_odometer": order.distance,
+            }
+        )
 
-        wzd_arrive.with_context({
-            "active_ids": [order.id],
-        }).button_arrive()
+        wzd_arrive.with_context(
+            {
+                "active_ids": [order.id],
+            }
+        ).button_arrive()
         self.assertEqual(order.state, "arrive")
 
     def _cancel_no_error(self, order):

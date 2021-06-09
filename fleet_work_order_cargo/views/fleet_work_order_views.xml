@@ -1,48 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
 <record id="fleet_work_order_view_form" model="ir.ui.view">
     <field name="name">Cargo information on fleet work order</field>
     <field name="model">fleet.work.order</field>
-    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_view_form"/>
+    <field name="inherit_id" ref="fleet_work_order.fleet_work_order_view_form" />
     <field name="arch" type="xml">
         <xpath expr="//notebook" position="inside">
             <page name="page_cargo" string="Cargo">
-                <field name="cargo_ids" colspan="4" nolabel="1" widget="many2many" readonly="1"/>
+                <field
+                            name="cargo_ids"
+                            colspan="4"
+                            nolabel="1"
+                            widget="many2many"
+                            readonly="1"
+                        />
                 <group name="group_cargo_1">
                     <group name="group_cargo_1_1" string="Cargo Information">
                         <group name="group_cargo_1_1_1" colspan="3">
-                            <label for="cargo_volume"/>
+                            <label for="cargo_volume" />
                             <div>
-                                <field name="cargo_volume" class="oe_inline" style="vertical-align:baseline"/> m3
+                                <field
+                                            name="cargo_volume"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> m3
                             </div>
-                            <label for="cargo_weight"/>
+                            <label for="cargo_weight" />
                             <div>
-                                <field name="cargo_weight" class="oe_inline" style="vertical-align:baseline"/> kg
+                                <field
+                                            name="cargo_weight"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> kg
                             </div>
-                            <label for="weight_diff"/>
+                            <label for="weight_diff" />
                             <div>
-                                <field name="weight_diff" class="oe_inline" style="vertical-align:baseline"/> kg
+                                <field
+                                            name="weight_diff"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> kg
                             </div>
-                            <label for="volume_diff"/>
+                            <label for="volume_diff" />
                             <div>
-                                <field name="volume_diff" class="oe_inline" style="vertical-align:baseline"/> m3
+                                <field
+                                            name="volume_diff"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> m3
                             </div>
                         </group>
                     </group>
                     <group name="group_cargo_1_2" string="Cargo Capacity">
                         <group name="group_cargo_1_2_1" colspan="3">
-                            <label for="loading_space"/>
+                            <label for="loading_space" />
                             <div>
-                                <field name="loading_space" class="oe_inline" style="vertical-align:baseline"/> m3
+                                <field
+                                            name="loading_space"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> m3
                             </div>
-                            <label for="load_capacity"/>
+                            <label for="load_capacity" />
                             <div>
-                                <field name="load_capacity" class="oe_inline" style="vertical-align:baseline"/> kg
+                                <field
+                                            name="load_capacity"
+                                            class="oe_inline"
+                                            style="vertical-align:baseline"
+                                        /> kg
                             </div>
                         </group>
                     </group>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <openerp>
 <data>
 
@@ -7,7 +7,7 @@
     <field name="model">fleet.vehicle.door</field>
     <field name="arch" type="xml">
         <tree>
-            <field name="name"/>
+            <field name="name" />
             <field name="vehicle_id" />
         </tree>
     </field>
@@ -18,13 +18,16 @@
     <field name="model">fleet.vehicle.door</field>
     <field name="arch" type="xml">
         <form string="Vehicle Doors">
-            <header/>
+            <header />
             <sheet>
                 <group colspan="4" col="2">
-                    <field name="name"/>
+                    <field name="name" />
                     <field name="vehicle_id" />
                     <field name="door_control" />
-                    <field name="device_type_id" attrs="{'required':[('door_control','!=',False)]}"/>
+                    <field
+                                name="device_type_id"
+                                attrs="{'required':[('door_control','!=',False)]}"
+                            />
                     <field name="active" />
                 </group>
                 <notebook>
@@ -48,12 +51,12 @@
 </record>
 
 <menuitem
-    id="fleet_vehicle_door_menu"
-    name="Vehicle Door Control"
-    parent="fleet.fleet_vehicles"
-    groups="fleet.group_fleet_user"
-    action="fleet_vehicle_door_action"
-/>
+            id="fleet_vehicle_door_menu"
+            name="Vehicle Door Control"
+            parent="fleet.fleet_vehicles"
+            groups="fleet.group_fleet_user"
+            action="fleet_vehicle_door_action"
+        />
 
 </data>
 </openerp>

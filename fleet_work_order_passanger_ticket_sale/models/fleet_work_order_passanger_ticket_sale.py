@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -238,35 +237,39 @@ class FleetWorkOrderPassangerTicketSale(models.Model):
         self.ensure_one()
         waction = self.env.ref(
             "fleet_work_order_passanger_ticket_sale."
-            "fleet_work_order_passanger_ticket_sale_simple_action").read()[0]
-        waction.update({
-            "res_id": self.id,
-        })
+            "fleet_work_order_passanger_ticket_sale_simple_action"
+        ).read()[0]
+        waction.update(
+            {
+                "res_id": self.id,
+            }
+        )
         return waction
 
     @api.onchange("work_order_id")
     def oncange_pricelist_id(self):
         self.pricelist_id = False
-        if self.work_order_id and \
-                self.work_order_id.type_id and \
-                self.work_order_id.type_id.default_passanger_pricelist_id:
-            self.pricelist_id = self.work_order_id.type_id.\
-                default_passanger_pricelist_id.id
+        if (
+            self.work_order_id
+            and self.work_order_id.type_id
+            and self.work_order_id.type_id.default_passanger_pricelist_id
+        ):
+            self.pricelist_id = (
+                self.work_order_id.type_id.default_passanger_pricelist_id.id
+            )
 
     @api.multi
     def print_ticket(self):
-        company =\
-            self.env.user.company_id
-        aeroo_ticket =\
-            company.default_aeroo_ticket
+        company = self.env.user.company_id
+        aeroo_ticket = company.default_aeroo_ticket
         if aeroo_ticket:
             if self.passanger_ids:
                 action = self.env.ref(
-                    "proxy_backend_ecspos_aeroo."
-                    "proxy_backend_ecspos_aeroo_action")
+                    "proxy_backend_ecspos_aeroo." "proxy_backend_ecspos_aeroo_action"
+                )
                 context = {
                     "report_name": aeroo_ticket.report_name,
-                    "object_id": self.passanger_ids.ids
+                    "object_id": self.passanger_ids.ids,
                 }
                 result = action.read()[0]
                 result.update({"context": context})

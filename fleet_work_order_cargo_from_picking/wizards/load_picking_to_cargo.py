@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # Copyright 2020 PT. Simetri Sinergi Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, models, fields
+from openerp import api, fields, models
 
 
 class LoadPickingToCargo(models.TransientModel):
@@ -19,8 +18,9 @@ class LoadPickingToCargo(models.TransientModel):
 
             wiz.allowed_picking_type_ids = []
             if wiz.work_order_id.type_id:
-                wiz.allowed_picking_type_ids = wiz.work_order_id.\
-                    type_id.picking_type_ids.ids
+                wiz.allowed_picking_type_ids = (
+                    wiz.work_order_id.type_id.picking_type_ids.ids
+                )
 
     @api.multi
     @api.depends(
@@ -31,19 +31,17 @@ class LoadPickingToCargo(models.TransientModel):
 
             wiz.allowed_partner_ids = []
             if wiz.work_order_id.type_id:
-                wiz.allowed_partner_ids = wiz.work_order_id.\
-                    type_id.partner_ids.ids
+                wiz.allowed_partner_ids = wiz.work_order_id.type_id.partner_ids.ids
 
     @api.multi
-    @api.depends(
-        "work_order_id"
-    )
+    @api.depends("work_order_id")
     def _compute_restrict_partner_cargo(self):
         for wiz in self:
             wiz.restrict_partner_cargo = False
             if wiz.work_order_id.type_id:
-                wiz.restrict_partner_cargo = wiz.work_order_id.type_id.\
-                    restrict_partner_cargo
+                wiz.restrict_partner_cargo = (
+                    wiz.work_order_id.type_id.restrict_partner_cargo
+                )
 
     @api.model
     def _default_work_order_id(self):

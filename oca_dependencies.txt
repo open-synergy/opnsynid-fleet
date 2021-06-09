@@ -12,6 +12,7 @@
 # sale-workflow https://github.com/OCA/sale-workflow
 #
 # To provide both the URL and a branch, use:
+aeroo_reports https://github.com/aeroo/aeroo_reports 8.0
 stock-logistics-transport https://github.com/OCA/stock-logistics-transport 8.0
 server-tools https://github.com/oca/server-tools 8.0
 web https://github.com/OCA/web 8.0

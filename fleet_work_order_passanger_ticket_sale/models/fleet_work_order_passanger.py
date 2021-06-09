@@ -1,16 +1,14 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class FleetWorkOrderPassanger(models.Model):
     _inherit = ["fleet.work_order_passanger"]
 
     @api.multi
-    @api.depends(
-        "price_unit", "tax_ids")
+    @api.depends("price_unit", "tax_ids")
     def _compute_total(self):
         for passanger in self:
             passanger.price_subtotal = passanger.price_unit
@@ -95,8 +93,7 @@ class FleetWorkOrderPassanger(models.Model):
                 ("passanger_type_id", "=", self.type_id.id),
                 ("wo_type_id", "=", self.work_order_id.type_id.id),
             ]
-            result = self.env[
-                "fleet.work_order_type_passanger"].search(criteria)
+            result = self.env["fleet.work_order_type_passanger"].search(criteria)
             if len(result) > 0:
                 if result[0].product_id:
                     self.product_id = result[0].product_id.id
@@ -107,15 +104,17 @@ class FleetWorkOrderPassanger(models.Model):
     )
     def onchange_price_unit(self):
         self.price_unit = 0.0
-        if self.product_id and \
-                self.pricelist_id:
+        if self.product_id and self.pricelist_id:
             self.price_unit = self.pricelist_id.price_get(
-                prod_id=self.product_id.id, qty=1.0)[self.pricelist_id.id]
+                prod_id=self.product_id.id, qty=1.0
+            )[self.pricelist_id.id]
 
     @api.onchange("work_order_id")
     def onchange_type_id(self):
         self.type_id = False
-        if self.work_order_id and self.work_order_id.type_id and \
-                self.work_order_id.type_id.default_passanger_type_id:
-            self.type_id = \
-                self.work_order_id.type_id.default_passanger_type_id
+        if (
+            self.work_order_id
+            and self.work_order_id.type_id
+            and self.work_order_id.type_id.default_passanger_type_id
+        ):
+            self.type_id = self.work_order_id.type_id.default_passanger_type_id

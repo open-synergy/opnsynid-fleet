@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2016 OpenSynergy Indonesia
+# Copyright 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class FleetVehicleSeat(models.Model):
@@ -26,10 +25,11 @@ class FleetVehicleSeat(models.Model):
 class FleetVehicle(models.Model):
     _inherit = "fleet.vehicle"
 
-    @api.one
+    @api.multi
     @api.depends("seat_ids")
     def _compute_seat(self):
-        self.seats = len(self.seat_ids)
+        for document in self:
+            document.seats = len(document.seat_ids)
 
     seats = fields.Integer(
         string="# Seats",

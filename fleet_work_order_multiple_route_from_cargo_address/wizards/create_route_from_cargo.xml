@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
@@ -11,23 +10,24 @@
     <field name="arch" type="xml">
         <form>
             <group name="group_1" colspan="4" col="2">
-                <field name="start_address_id"/>
-                <field name="end_address_id"/>
+                <field name="start_address_id" />
+                <field name="end_address_id" />
             </group>
             <field name="line_ids" colspan="4" nolabel="1">
                 <tree editable="top">
-                    <field name="sequence" widget="handle"/>
-                    <field name="destination_address_id"/>
+                    <field name="sequence" widget="handle" />
+                    <field name="destination_address_id" />
                 </tree>
             </field>
             <footer>
-                <button name="action_create_route"
-                        type="object"
-                        string="Create Route"
-                        class="oe_highlight"/>
+                <button
+                            name="action_create_route"
+                            type="object"
+                            string="Create Route"
+                            class="oe_highlight"
+                        />
                 or
-                <button special="cancel"
-                        string="Cancel"/>
+                <button special="cancel" string="Cancel" />
             </footer>
         </form>
     </field>

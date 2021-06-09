@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 <record id="fleet_work_order_passanger_view_tree" model="ir.ui.view">
@@ -9,13 +8,13 @@
     <field name="model">fleet.work_order_passanger</field>
     <field name="arch" type="xml">
         <tree string="Passanger">
-            <field name="name"/>
-            <field name="partner_id"/>
-            <field name="type_id"/>
-            <field name="seat_id"/>
-            <field name="work_order_id"/>
-            <field name="work_order_type_id"/>
-            <field name="state"/>
+            <field name="name" />
+            <field name="partner_id" />
+            <field name="type_id" />
+            <field name="seat_id" />
+            <field name="work_order_id" />
+            <field name="work_order_type_id" />
+            <field name="state" />
         </tree>
     </field>
 </record>
@@ -27,79 +26,98 @@
         <form string="Passanger">
             <header>
                 <button
-                    name="action_confirm" string="Confirm"
-                    class="oe_highlight"
-                    type="object"
-                    states="draft"
-                    />
+                            name="action_confirm"
+                            string="Confirm"
+                            class="oe_highlight"
+                            type="object"
+                            states="draft"
+                        />
                 <button
-                    name="action_valid" string="Valid"
-                    class="oe_highlight"
-                    type="object"
-                    states="confirm"
-                    />
+                            name="action_valid"
+                            string="Valid"
+                            class="oe_highlight"
+                            type="object"
+                            states="confirm"
+                        />
                 <button
-                    name="action_boarding" string="Boarding"
-                    type="object"
-                    class="oe_highlight"
-                    states="valid"
-                    />
+                            name="action_boarding"
+                            string="Boarding"
+                            type="object"
+                            class="oe_highlight"
+                            states="valid"
+                        />
                 <button
-                    name="action_disembarking" string="Disembarking"
-                    type="object"
-                    class="oe_highlight"
-                    states="boarding"
-                    />
+                            name="action_disembarking"
+                            string="Disembarking"
+                            type="object"
+                            class="oe_highlight"
+                            states="boarding"
+                        />
                 <button
-                    name="action_cancel" string="Cancel"
-                    type="object"
-                    states="draft,confirm,valid,boarding,disembarking"
-                    />
+                            name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            states="draft,confirm,valid,boarding,disembarking"
+                        />
                 <button
-                    name="action_restart" string="Reset to Draft"
-                    type="object"
-                    states="cancel"
-                    />
+                            name="action_restart"
+                            string="Reset to Draft"
+                            type="object"
+                            states="cancel"
+                        />
                 <button
-                    name="action_restart" string="Reset to Draft"
-                    type="object"
-                    states="cancel"
-                    />
-                <field name="state" widget="statusbar"
-                    statusbar_visible="draft,confirm,valid,boarding,disembarking"
-                    />
+                            name="action_restart"
+                            string="Reset to Draft"
+                            type="object"
+                            states="cancel"
+                        />
+                <field
+                            name="state"
+                            widget="statusbar"
+                            statusbar_visible="draft,confirm,valid,boarding,disembarking"
+                        />
             </header>
             <sheet>
-                <label for="name"/>
+                <label for="name" />
                 <h1>
-                    <field name="name"/>
+                    <field name="name" />
                 </h1>
                 <div class="oe_right oe_button_box">
                 </div>
                 <group name="header1" colspan="4" col="2">
                     <group name="header1_1" colspan="1" col="2">
-                        <field name="type_id" domain="[('id','in',allowed_type_ids[0][2])]"/>
-                        <field name="allowed_type_ids" widget="many2many_tags" invisible="1"/>
-                        <field name="partner_id"/>
-                        <field name="barcode_image" invisible="1"/>
+                        <field
+                                    name="type_id"
+                                    domain="[('id','in',allowed_type_ids[0][2])]"
+                                />
+                        <field
+                                    name="allowed_type_ids"
+                                    widget="many2many_tags"
+                                    invisible="1"
+                                />
+                        <field name="partner_id" />
+                        <field name="barcode_image" invisible="1" />
                     </group>
                     <group name="header1_2" colspan="1" col="2">
-                        <field name="work_order_id" domain="[('state','in',['draft','confirmed'])]"/>
-                        <field name="work_order_type_id"/>
-                        <field name="vehicle_id"/>
-                        <field name="seat_id"/>
-                        <field name="start_time" invisible="1"/>
-                        <field name="end_time" invisible="1"/>
-                        <field name="start_location_id"/>
-                        <field name="end_location_id"/>
+                        <field
+                                    name="work_order_id"
+                                    domain="[('state','in',['draft','confirmed'])]"
+                                />
+                        <field name="work_order_type_id" />
+                        <field name="vehicle_id" />
+                        <field name="seat_id" />
+                        <field name="start_time" invisible="1" />
+                        <field name="end_time" invisible="1" />
+                        <field name="start_location_id" />
+                        <field name="end_location_id" />
                     </group>
                 </group>
                 <notebook colspan="4">
                 </notebook>
             </sheet>
             <div class="oe_chatter">
-                <field name="message_follower_ids" widget="mail_followers"/>
-                <field name="message_ids" widget="mail_thread"/>
+                <field name="message_follower_ids" widget="mail_followers" />
+                <field name="message_ids" widget="mail_thread" />
             </div>
         </form>
     </field>
@@ -117,35 +135,81 @@
     <field name="model">fleet.work_order_passanger</field>
     <field name="arch" type="xml">
         <search>
-            <field name="name"/>
-            <field name="partner_id"/>
-            <field name="type_id"/>
-            <field name="work_order_id"/>
-            <field name="work_order_type_id"/>
-            <field name="state"/>
+            <field name="name" />
+            <field name="partner_id" />
+            <field name="type_id" />
+            <field name="work_order_id" />
+            <field name="work_order_type_id" />
+            <field name="state" />
             <group name="state" string="State">
-                <filter name="filter_draft" string="Draft" domain="[('state','=','draft')]"/>
-                <filter name="filter_confirm" string="Waiting for Approval" domain="[('state','=','confirm')]"/>
-                <filter name="filter_valid" string="Valid" domain="[('state','=','valid')]"/>
-                <filter name="filter_boarding" string="Boarding" domain="[('state','=','boarding')]"/>
-                <filter name="filter_disembarking" string="Disembarking" domain="[('state','=','disembarking')]"/>
-                <filter name="filter_cancel" string="Cancel" domain="[('state','=','cancel')]"/>
+                <filter
+                            name="filter_draft"
+                            string="Draft"
+                            domain="[('state','=','draft')]"
+                        />
+                <filter
+                            name="filter_confirm"
+                            string="Waiting for Approval"
+                            domain="[('state','=','confirm')]"
+                        />
+                <filter
+                            name="filter_valid"
+                            string="Valid"
+                            domain="[('state','=','valid')]"
+                        />
+                <filter
+                            name="filter_boarding"
+                            string="Boarding"
+                            domain="[('state','=','boarding')]"
+                        />
+                <filter
+                            name="filter_disembarking"
+                            string="Disembarking"
+                            domain="[('state','=','disembarking')]"
+                        />
+                <filter
+                            name="filter_cancel"
+                            string="Cancel"
+                            domain="[('state','=','cancel')]"
+                        />
             </group>
             <group name="group_by" string="Group By..">
-                <filter name="group_partner_id" string="Passanger" context="{'group_by':'partner_id'}"/>
-                <filter name="group_type_id" string="Passanger Type" context="{'group_by':'type_id'}"/>
-                <filter name="group_work_order_id" string="# Work Order" context="{'group_by':'work_order_id'}"/>
-                <filter name="group_work_order_type_id" string="Work Order Type" context="{'group_by':'work_order_type_id'}"/>
-                <filter name="group_state" string="State" context="{'group_by':'state'}"/>
+                <filter
+                            name="group_partner_id"
+                            string="Passanger"
+                            context="{'group_by':'partner_id'}"
+                        />
+                <filter
+                            name="group_type_id"
+                            string="Passanger Type"
+                            context="{'group_by':'type_id'}"
+                        />
+                <filter
+                            name="group_work_order_id"
+                            string="# Work Order"
+                            context="{'group_by':'work_order_id'}"
+                        />
+                <filter
+                            name="group_work_order_type_id"
+                            string="Work Order Type"
+                            context="{'group_by':'work_order_type_id'}"
+                        />
+                <filter
+                            name="group_state"
+                            string="State"
+                            context="{'group_by':'state'}"
+                        />
             </group>
         </search>
     </field>
 </record>
 
-<menuitem id="fleet_work_order_passanger_menu"
-    parent="fleet_passanger_root_menu"
-    name="Passangers"
-    action="fleet_work_order_passanger_action"
-    sequence="1"/>
+<menuitem
+            id="fleet_work_order_passanger_menu"
+            parent="fleet_passanger_root_menu"
+            name="Passangers"
+            action="fleet_work_order_passanger_action"
+            sequence="1"
+        />
 </data>
 </openerp>

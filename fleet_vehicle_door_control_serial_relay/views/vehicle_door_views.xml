@@ -1,29 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
     <data>
 
         <record id="fleet_vehicle_door_view_form" model="ir.ui.view">
             <field name="name">fleet.vehicle.door form</field>
             <field name="model">fleet.vehicle.door</field>
-            <field name="inherit_id" ref="fleet_vehicle_door_control.fleet_vehicle_door_view_form"/>    
+            <field
+                name="inherit_id"
+                ref="fleet_vehicle_door_control.fleet_vehicle_door_view_form"
+            />
             <field name="arch" type="xml">
-                <data> 
+                <data>
                     <xpath expr="//notebook" position="inside">
-                        <page string="Serial Relay" attrs="{'invisible':[('device_type_id','!=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}">
-                            <button name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_on_action)d" 
-                                type="action" string="On" 
-                                context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"/>               
-                            <button name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_off_action)d" 
-                            type="action" string="Off" 
-                            context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"/>
+                        <page
+                            string="Serial Relay"
+                            attrs="{'invisible':[('device_type_id','!=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}"
+                        >
+                            <button
+                                name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_on_action)d"
+                                type="action"
+                                string="On"
+                                context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"
+                            />
+                            <button
+                                name="%(proxy_backend_serial_relay.proxy_backend_serial_relay_off_action)d"
+                                type="action"
+                                string="Off"
+                                context="{'device_path':device_path, 'device_id':device_relay_id, 'pin':pin, 'delay':0}"
+                            />
                             <group>
-                                <field name="serial_relay_id" attrs="{'required':[('door_control','!=',False),('device_type_id','=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}"/>
-                                <field name="device_relay_id" invisible="1"/>
-                                <field name="device_path" readonly="1"/>
-                                <field name="pin" readonly="1"/>
+                                <field
+                                    name="serial_relay_id"
+                                    attrs="{'required':[('door_control','!=',False),('device_type_id','=',%(proxy_backend_serial_relay.proxy_backend_device_type_arduino_serial_relay)d)]}"
+                                />
+                                <field name="device_relay_id" invisible="1" />
+                                <field name="device_path" readonly="1" />
+                                <field name="pin" readonly="1" />
                             </group>
                         </page>
                     </xpath>

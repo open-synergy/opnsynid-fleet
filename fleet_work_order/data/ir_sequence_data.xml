@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
     <data noupdate="1">
         <record model="ir.sequence.type" id="seq_type_fleet_wo">
@@ -12,7 +11,7 @@
         <record model="ir.sequence" id="seq_fleet_wo">
             <field name="name">Fleet Work Order sequence</field>
             <field name="code">fleet.work.order</field>
-            <field name="padding" eval="4"/>
+            <field name="padding" eval="4" />
             <field name="prefix">WO/</field>
         </record>
 
@@ -24,7 +23,7 @@
         <record model="ir.sequence" id="seq_fleet_passanger">
             <field name="name">Passanger Manifest sequence</field>
             <field name="code">fleet.passanger.manifest</field>
-            <field name="padding" eval="4"/>
+            <field name="padding" eval="4" />
             <field name="prefix">PSG/</field>
         </record>
     </data>

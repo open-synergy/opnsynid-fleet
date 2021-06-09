@@ -1,35 +1,34 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- © 2016 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
-
 <openerp>
 <data>
 
 <record id="route_template_1" model="fleet.route.template">
     <field name="name">Brisbane - Hervey Bay</field>
-    <field name="start_location_id" ref="fleet_work_order.point3"/>
-    <field name="end_location_id" ref="fleet_work_order.point4"/>
+    <field name="start_location_id" ref="fleet_work_order.point3" />
+    <field name="end_location_id" ref="fleet_work_order.point4" />
     <field name="distance">297</field>
 </record>
 
 <record id="route_template_2" model="fleet.route.template">
     <field name="name">Hervey Bay - Brisbance</field>
-    <field name="start_location_id" ref="fleet_work_order.point4"/>
-    <field name="end_location_id" ref="fleet_work_order.point3"/>
+    <field name="start_location_id" ref="fleet_work_order.point4" />
+    <field name="end_location_id" ref="fleet_work_order.point3" />
     <field name="distance">297</field>
 </record>
 
 <record id="route_template_3" model="fleet.route.template">
     <field name="name">Airlie Beach - Agnes Water</field>
-    <field name="start_location_id" ref="fleet_work_order.point1"/>
-    <field name="end_location_id" ref="fleet_work_order.point2"/>
+    <field name="start_location_id" ref="fleet_work_order.point1" />
+    <field name="end_location_id" ref="fleet_work_order.point2" />
     <field name="distance">708</field>
 </record>
 
 <record id="route_template_4" model="fleet.route.template">
     <field name="name">Agnes Water - Airlie Beach</field>
-    <field name="start_location_id" ref="fleet_work_order.point2"/>
-    <field name="end_location_id" ref="fleet_work_order.point1"/>
+    <field name="start_location_id" ref="fleet_work_order.point2" />
+    <field name="end_location_id" ref="fleet_work_order.point1" />
     <field name="distance">708</field>
 </record>
 </data>
